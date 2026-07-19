@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'self'; frame-ancestors 'self';">
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>AVIDAA TORTOISE — The Living Archive of Shell and Time</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23e3e0c4'/%3E%3Cellipse cx='32' cy='36' rx='22' ry='16' fill='%23bd5b2a'/%3E%3Cpath d='M32 20 L44 30 L40 46 L24 46 L20 30 Z' fill='none' stroke='%23334d22' stroke-width='2'/%3E%3Ccircle cx='14' cy='30' r='5' fill='%23bd5b2a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Newsreader:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G8M1YZQ8WF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G8M1YZQ8WF');</script>
+<style>
+:root{
+  --sand:#e3e0c4;--sand2:#eef0dc;--paper:#f1f4e2;--ink:#20240f;--ink2:#3c4526;
+  --terracotta:#bd5b2a;--terracotta2:#8f3f1c;--olive:#4f6b34;--olive2:#334d22;
+  --gold:#b9862c;--line:#b9c19a;--shell:#6b7a4a;
+  --f-head:'Fraunces',Georgia,serif;--f-body:'Newsreader',Georgia,serif;--f-mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--sand);color:var(--ink);font-family:var(--f-body);overflow-x:hidden;
+  background-image:
+    linear-gradient(rgba(227,224,196,.94),rgba(227,224,196,.94)),
+    repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(107,122,74,.06) 28px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 56'%3E%3Cg opacity='.24'%3E%3Cpath d='M2 44 Q18 34 34 44 T56 38' stroke='%234f6b34' stroke-width='1.3' fill='none'/%3E%3Cg transform='translate(16,16)'%3E%3Cellipse cx='0' cy='-7' rx='4.2' ry='6' fill='%23c79fd6'/%3E%3Cellipse cx='6.6' cy='-2' rx='4.2' ry='6' fill='%23c79fd6' transform='rotate(72 6.6 -2)'/%3E%3Cellipse cx='4' cy='5.6' rx='4.2' ry='6' fill='%23c79fd6' transform='rotate(144 4 5.6)'/%3E%3Cellipse cx='-4' cy='5.6' rx='4.2' ry='6' fill='%23c79fd6' transform='rotate(216 -4 5.6)'/%3E%3Cellipse cx='-6.6' cy='-2' rx='4.2' ry='6' fill='%23c79fd6' transform='rotate(288 -6.6 -2)'/%3E%3Ccircle cx='0' cy='0' r='2.6' fill='%23b9862c'/%3E%3C/g%3E%3Cg transform='translate(40,40)'%3E%3Cellipse cx='0' cy='-7' rx='4.2' ry='6' fill='%23f1f4e2' stroke='%23b9862c' stroke-width='.6'/%3E%3Cellipse cx='6.6' cy='-2' rx='4.2' ry='6' fill='%23f1f4e2' stroke='%23b9862c' stroke-width='.6' transform='rotate(72 6.6 -2)'/%3E%3Cellipse cx='4' cy='5.6' rx='4.2' ry='6' fill='%23f1f4e2' stroke='%23b9862c' stroke-width='.6' transform='rotate(144 4 5.6)'/%3E%3Cellipse cx='-4' cy='5.6' rx='4.2' ry='6' fill='%23f1f4e2' stroke='%23b9862c' stroke-width='.6' transform='rotate(216 -4 5.6)'/%3E%3Cellipse cx='-6.6' cy='-2' rx='4.2' ry='6' fill='%23f1f4e2' stroke='%23b9862c' stroke-width='.6' transform='rotate(288 -6.6 -2)'/%3E%3Ccircle cx='0' cy='0' r='2.6' fill='%23b9862c'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size:auto,auto,92px 92px;
+  background-repeat:repeat,repeat,repeat;
+}
+img,svg{max-width:100%;height:auto}
+a{color:inherit}
+::selection{background:var(--terracotta);color:var(--paper)}
+
+/* ===== TOPBAR ===== */
+header{position:sticky;top:0;z-index:500;background:var(--sand2);border-bottom:2px solid var(--line);
+  box-shadow:0 2px 12px rgba(32,36,15,.08);}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:10px clamp(12px,3vw,28px);
+  max-width:1240px;margin:0 auto;flex-wrap:wrap;gap:8px;}
+.wordmark{font-family:var(--f-head);font-weight:700;font-size:clamp(1.1rem,3vw,1.5rem);letter-spacing:.5px;color:var(--terracotta2);
+  display:flex;align-items:center;gap:8px;}
+.wordmark .scute{width:22px;height:22px;flex:none;}
+.nav-history{display:flex;gap:6px;align-items:center;}
+.nav-history button{-webkit-appearance:none;appearance:none;background:var(--paper);border:1px solid var(--line);
+  color:var(--olive2);font-family:var(--f-mono);font-size:.8rem;line-height:1;padding:6px 10px;border-radius:3px;
+  cursor:pointer;transition:.2s;}
+.nav-history button:hover:not(:disabled){border-color:var(--terracotta);color:var(--terracotta2)}
+.nav-history button:disabled{opacity:.28;cursor:default}
+#lang-toggle.pa-active{background:var(--olive);color:var(--sand2);border-color:var(--olive2)}
+.lang-disclaimer{display:none;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.5px;
+  background:rgba(185,134,44,.12);border:1px solid var(--gold);border-radius:4px;padding:8px 12px;
+  margin:0 0 18px;color:var(--ink2);}
+body.show-pa .lang-disclaimer{display:block}
+#nav-reset{font-size:.92rem}
+#back-home{
+  font-weight:700;text-decoration:none;-webkit-appearance:none;appearance:none;white-space:nowrap;
+  background:linear-gradient(90deg,#ff0080,#ff8c00,#ffe000,#00ff80,#00bfff,#a855f7,#ff0080);
+  background-size:300% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:rainbow 3s linear infinite;font-family:var(--f-mono);font-size:clamp(1.1rem,3.2vw,1.5rem);letter-spacing:2px;
+}
+@keyframes rainbow{to{background-position:300% center}}
+@media (prefers-reduced-motion:reduce){#back-home{animation:none}}
+.navrow{display:flex;flex-wrap:wrap;gap:8px;height:auto;align-items:center;justify-content:flex-start;
+  max-width:1240px;margin:0 auto;padding:0 clamp(12px,3vw,28px) 12px;}
+.tab{-webkit-appearance:none;appearance:none;white-space:nowrap;cursor:pointer;border:1px solid var(--line);
+  background:var(--paper);color:var(--ink2);font-family:var(--f-mono);font-size:clamp(.64rem,1.6vw,.74rem);
+  padding:7px clamp(9px,2.2vw,14px);letter-spacing:1px;text-transform:uppercase;border-radius:2px;transition:.2s;}
+.tab:hover{border-color:var(--terracotta);color:var(--terracotta2)}
+.tab.active{background:var(--olive);color:var(--sand2);border-color:var(--olive2)}
+
+/* ===== HERO / SECTIONS ===== */
+.page{display:none}
+.page.active{display:block}
+.wrap{max-width:1080px;margin:0 auto;padding:clamp(20px,4vw,44px) clamp(14px,3vw,28px) 80px;position:relative;z-index:2}
+.hero{text-align:center;padding:clamp(30px,6vw,60px) 0 clamp(16px,3vw,30px);}
+.hero h1{font-family:var(--f-head);font-weight:700;font-size:clamp(1.9rem,6vw,3.4rem);margin:0 0 10px;color:var(--terracotta2);line-height:1.05}
+.hero p.tag{font-family:var(--f-mono);font-size:clamp(.7rem,2vw,.85rem);letter-spacing:3px;color:var(--olive2);text-transform:uppercase;margin:0}
+.hero .sub{max-width:640px;margin:18px auto 0;font-size:clamp(1rem,2.4vw,1.18rem);color:var(--ink2);line-height:1.6}
+.hero-art{max-width:340px;margin:30px auto 0;filter:drop-shadow(3px 6px 6px rgba(32,36,15,.25));}
+.hero-art svg{display:block;width:100%;height:auto}
+
+h2.sect{font-family:var(--f-head);font-weight:700;font-size:clamp(1.4rem,3.6vw,2rem);color:var(--terracotta2);
+  margin:44px 0 0;padding-bottom:8px;border-bottom:2px solid var(--line);}
+.flower-divider{margin:0 0 22px;opacity:.85}
+.flower-divider svg{display:block;width:100%;max-width:340px;height:auto}
+h3.sub{font-family:var(--f-head);font-weight:600;font-size:clamp(1.1rem,2.6vw,1.3rem);color:var(--olive2);margin:26px 0 10px;}
+p{line-height:1.7;font-size:clamp(.96rem,2vw,1.05rem)}
+.lede{font-size:clamp(1.02rem,2.2vw,1.15rem);color:var(--ink2);font-style:italic}
+
+.card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:clamp(14px,3vw,22px);
+  box-shadow:2px 3px 0 rgba(107,122,74,.12);}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin:18px 0;}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin:18px 0;}
+.stat{font-family:var(--f-mono)}
+.stat .n{font-family:var(--f-head);font-weight:700;font-size:1.6rem;color:var(--terracotta);}
+.stat .l{font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--olive2)}
+
+.homecards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:30px;}
+.homecard{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--terracotta);
+  padding:16px 18px;border-radius:2px;cursor:pointer;transition:.2s;-webkit-appearance:none;text-align:left;}
+.homecard:hover{transform:translateY(-2px);box-shadow:3px 4px 0 rgba(107,122,74,.2);border-left-color:var(--olive)}
+.homecard h4{font-family:var(--f-head);margin:0 0 6px;color:var(--terracotta2);font-size:1.05rem}
+.homecard p{margin:0;font-size:.88rem;color:var(--ink2);line-height:1.5}
+
+table{width:100%;border-collapse:collapse;font-family:var(--f-mono);font-size:.82rem;margin:14px 0;}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;}
+th{background:var(--olive);color:var(--sand2);text-transform:uppercase;letter-spacing:1px;font-size:.68rem;}
+tr:nth-child(even) td{background:rgba(107,122,74,.05)}
+
+.timeline{border-left:3px solid var(--terracotta);margin:20px 0 20px 10px;padding-left:22px;}
+.tl-item{position:relative;padding-bottom:24px;}
+.tl-item::before{content:'';position:absolute;left:-28.5px;top:4px;width:11px;height:11px;border-radius:50%;
+  background:var(--terracotta);border:2px solid var(--sand2);}
+.tl-item .when{font-family:var(--f-mono);font-size:.72rem;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;}
+.tl-item h4{font-family:var(--f-head);margin:3px 0 4px;color:var(--olive2);font-size:1.08rem}
+.tl-item p{margin:0;font-size:.92rem}
+
+.quote{border-left:3px solid var(--gold);background:rgba(185,134,44,.08);padding:14px 18px;margin:18px 0;
+  font-family:var(--f-body);font-style:italic;font-size:.98rem;color:var(--ink2)}
+.quote cite{display:block;margin-top:8px;font-style:normal;font-family:var(--f-mono);font-size:.72rem;
+  letter-spacing:1px;color:var(--olive2)}
+
+.pillbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 20px}
+.pill{font-family:var(--f-mono);font-size:.68rem;letter-spacing:1px;padding:5px 11px;border:1px solid var(--olive);
+  color:var(--olive2);border-radius:20px;text-transform:uppercase;}
+.pill.warn{border-color:var(--terracotta);color:var(--terracotta2)}
+
+/* estimator tool */
+.estimator{background:var(--paper);border:2px solid var(--olive);border-radius:6px;padding:20px;margin:20px 0;}
+.estimator label{display:block;font-family:var(--f-mono);font-size:.72rem;letter-spacing:1px;text-transform:uppercase;
+  color:var(--olive2);margin:14px 0 6px}
+.estimator select,.estimator input{-webkit-appearance:none;appearance:none;width:100%;padding:10px 12px;
+  font-family:var(--f-mono);font-size:.92rem;border:1px solid var(--line);border-radius:3px;background:var(--sand2);color:var(--ink);}
+.estimator button{-webkit-appearance:none;margin-top:16px;background:var(--terracotta);color:var(--paper);
+  border:none;padding:11px 22px;font-family:var(--f-mono);letter-spacing:1px;text-transform:uppercase;
+  font-size:.8rem;border-radius:3px;cursor:pointer;transition:.2s;}
+.estimator button:hover{background:var(--terracotta2)}
+#est-result{margin-top:16px;padding:14px;background:rgba(79,107,52,.1);border-left:3px solid var(--olive);
+  font-family:var(--f-mono);font-size:.85rem;display:none;white-space:pre-wrap;line-height:1.6}
+
+footer{text-align:center;padding:34px 14px 90px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:2px;
+  color:var(--olive2);border-top:1px solid var(--line);margin-top:20px;}
+
+/* ambient canvas */
+#ambient{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55}
+
+@media (max-width:600px){
+  .grid,.grid2,.homecards{grid-template-columns:1fr}
+  h2.sect{margin:32px 0 12px}
+}
+@media (prefers-reduced-motion:reduce){
+  #ambient{display:none}
+}
+
+/* ===== CHATBOT MODULE (self-scoped) ===== */
+#chatbot{--cb-cyan:#b9862c;--cb-purple:#bd5b2a;--cb-green:#4f6b34;--cb-fb:'IBM Plex Mono',monospace;--cb-fd:'IBM Plex Mono',monospace;}
+#chatbot{position:fixed;bottom:48px;right:18px;z-index:9000;width:min(420px,calc(100vw - 24px));font-family:var(--cb-fb);}
+#chat-toggle{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--cb-purple),var(--cb-cyan));border:2px solid rgba(255,255,255,.4);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 24px rgba(189,91,42,.45),0 0 48px rgba(185,134,44,.2);margin-left:auto;-webkit-appearance:none;appearance:none;transition:transform .2s,box-shadow .2s;animation:cb-chatpulse 3s ease-in-out infinite;}
+#chat-toggle:hover{transform:scale(1.08);}
+@keyframes cb-chatpulse{0%,100%{box-shadow:0 0 24px rgba(189,91,42,.45),0 0 48px rgba(185,134,44,.2);}50%{box-shadow:0 0 34px rgba(189,91,42,.7),0 0 64px rgba(185,134,44,.35);}}
+@keyframes cb-rainbow{to{background-position:200% center;}}
+@keyframes cb-livepulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+#chat-box{background:rgba(32,36,15,.97);border:1px solid rgba(185,134,44,.3);backdrop-filter:blur(20px);display:none;flex-direction:column;margin-bottom:10px;overflow:hidden;border-radius:6px;box-shadow:0 0 40px rgba(0,0,0,.5);}
+#chat-box.open{display:flex;}
+#quest-bar{height:3px;background:rgba(185,134,44,.15);position:relative;overflow:hidden;transition:opacity .3s;opacity:0;}
+#quest-bar.active{opacity:1;}
+#quest-fill{height:100%;width:0%;transition:width .8s ease,background .8s ease;background:var(--cb-cyan);}
+#quest-label{font-family:var(--cb-fd);font-size:7px;letter-spacing:3px;color:rgba(185,134,44,.6);padding:4px 16px 0;display:none;}
+#quest-label.active{display:block;}
+#chat-head{padding:12px 16px;border-bottom:1px solid rgba(185,134,44,.2);display:flex;justify-content:space-between;align-items:center;background:rgba(185,134,44,.06);}
+.ch-title{font-family:var(--cb-fd);font-size:9px;letter-spacing:4px;color:var(--cb-cyan);}
+.ch-status{font-size:8px;letter-spacing:2px;color:var(--cb-green);display:flex;align-items:center;gap:5px;}
+.ch-dot{width:5px;height:5px;border-radius:50%;background:var(--cb-green);animation:cb-livepulse 1.5s ease-in-out infinite;}
+.ch-close{color:rgba(245,237,224,.5);cursor:pointer;font-size:16px;line-height:1;padding:0 2px;}
+#chat-msgs{height:240px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin;scrollbar-color:rgba(185,134,44,.3) transparent;}
+.cmsg{font-size:12.5px;letter-spacing:.3px;line-height:1.55;padding:9px 13px;max-width:88%;position:relative;white-space:pre-wrap;}
+.cmsg.ai{background:rgba(185,134,44,.08);border-left:2px solid var(--cb-cyan);color:#f5ede0;align-self:flex-start;border-radius:0 4px 4px 0;}
+.cmsg.ai::before{content:'AVIDAA';font-family:var(--cb-fd);font-size:6px;letter-spacing:2px;color:rgba(185,134,44,.7);display:block;margin-bottom:4px;}
+.cmsg.user{background:rgba(189,91,42,.12);border-right:2px solid var(--cb-purple);color:#f5ede0;align-self:flex-end;text-align:right;border-radius:4px 0 0 4px;}
+.typing-indicator{display:flex;gap:4px;padding:10px 14px;align-self:flex-start;}
+.typing-indicator span{width:5px;height:5px;background:var(--cb-cyan);border-radius:50%;opacity:.4;animation:cb-typedot .8s ease-in-out infinite;}
+.typing-indicator span:nth-child(2){animation-delay:.15s;}
+.typing-indicator span:nth-child(3){animation-delay:.3s;}
+@keyframes cb-typedot{0%,100%{opacity:.2;transform:translateY(0);}50%{opacity:1;transform:translateY(-3px);}}
+#chat-suggestions{display:flex;flex-wrap:wrap;gap:5px;padding:8px 14px;border-top:1px solid rgba(185,134,44,.15);}
+.chat-sugg{font-size:10px;letter-spacing:.5px;padding:3px 10px;border:1px solid rgba(185,134,44,.3);color:rgba(245,237,224,.75);cursor:pointer;background:rgba(185,134,44,.06);transition:all .2s;}
+.chat-sugg:hover{border-color:var(--cb-cyan);color:var(--cb-cyan);background:rgba(185,134,44,.14);}
+#chat-input-row{display:flex;border-top:1px solid rgba(185,134,44,.18);}
+#chat-input{flex:1;background:transparent;border:none;outline:none;color:#f5ede0;font-family:var(--cb-fb);font-size:13px;padding:11px 14px;letter-spacing:.3px;-webkit-appearance:none;appearance:none;}
+#chat-input::placeholder{color:rgba(245,237,224,.3);}
+#chat-send{background:transparent;border:none;border-left:1px solid rgba(185,134,44,.18);color:var(--cb-cyan);padding:0 16px;cursor:pointer;font-size:15px;-webkit-appearance:none;appearance:none;transition:color .2s;}
+#chat-send:hover{color:#fff;}
+#rabbit-avatar{display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 0 6px rgba(185,134,44,.5));}
+#pulse-ring{position:absolute;bottom:-6px;right:-6px;width:58px;height:58px;border-radius:50%;pointer-events:none;z-index:-1;}
+@media (max-width:600px){#chatbot{bottom:14px;right:10px;}#chat-msgs{height:50vh;}}
+@media (prefers-reduced-motion:reduce){#chat-toggle{animation:none;}.ch-dot{animation:none;}}
+</style>
+</head>
+<body>
+
+<canvas id="ambient"></canvas>
+
+<header>
+  <div class="topbar">
+    <div class="wordmark">
+      <svg class="scute" viewBox="0 0 24 24"><path d="M12 4 L20 10 L17 20 L7 20 L4 10 Z" fill="none" stroke="#334d22" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="#bd5b2a"/></svg>
+      TORTOISE
+    </div>
+    <div class="nav-history">
+      <button id="nav-back" onclick="navBack()" title="Back" aria-label="Back">&#9668;</button>
+      <button id="nav-reset" onclick="navReset()" title="Reset to Home" aria-label="Reset to Home">&#x27F3;</button>
+      <button id="nav-fwd" onclick="navForward()" title="Forward" aria-label="Forward">&#9658;</button>
+      <button id="lang-toggle" onclick="toggleLang()" title="Switch language / Kambia idioma">PAP</button>
+    </div>
+    <a id="back-home" href="https://avidaa1.github.io">AVIDAA</a>
+  </div>
+  <div class="navrow" id="navrow">
+    <button class="tab active" data-p="home" onclick="go('home')">Home</button>
+    <button class="tab" data-p="origins" onclick="go('origins')">Origins</button>
+    <button class="tab" data-p="species" onclick="go('species')">Species</button>
+    <button class="tab" data-p="elders" onclick="go('elders')">Elders</button>
+    <button class="tab" data-p="purpose" onclick="go('purpose')">Purpose</button>
+    <button class="tab" data-p="eggs" onclick="go('eggs')">Eggs</button>
+    <button class="tab" data-p="habitat" onclick="go('habitat')">Habitat</button>
+    <button class="tab" data-p="sun" onclick="go('sun')">Sun</button>
+    <button class="tab" data-p="water" onclick="go('water')">Water</button>
+    <button class="tab" data-p="diet" onclick="go('diet')">Diet</button>
+    <button class="tab" data-p="play" onclick="go('play')">Play</button>
+  </div>
+</header>
+
+<div id="page-home" class="page active">
+  <div class="wrap">
+    <div class="lang-disclaimer">Tradukshon AI — hopi di e teksto aki ta i-tradusí ku IA. Korekshon di hende ku ta papia Papiamentu nativo ta bon bini. / AI translation — much of this text was machine-translated. Native-speaker corrections are welcome.</div>
+    <div class="hero">
+      <div class="lang-en">
+        <p class="tag">Est. 2025 · AVIDAA Tortoise</p>
+        <h1>The Shell That Outlives Empires</h1>
+        <p class="sub">A sourced archive of the land tortoise — origin, evolution, the oldest living animal on Earth, why they matter to the ecosystems they shape, and how to raise one from egg to elder. Signal beneath the noise, knowledge made clear — for humans and AI.</p>
+      </div>
+      <div class="lang-pa" style="display:none">
+        <p class="tag">Est. 2025 · AVIDAA Kawama di Tera</p>
+        <h1>E Kaska Ku Ta Sobrevivi Imperionan</h1>
+        <p class="sub">Un archivo verifiká di e kawama di tera — orígen, evolushon, e animal mas bieu bibu riba mundu, dikon nan ta importante pa e ekosistemanan ku nan ta forma, i kon pa kria un for di webu te bieu. Señal bou di ruido, konosementu hasi kla — pa hende i AI.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="shellSheen" cx="35%" cy="28%" r="75%">
+              <stop offset="0%" stop-color="#9a7a4e" stop-opacity=".38"/>
+              <stop offset="100%" stop-color="#9a7a4e" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="160" cy="238" rx="90" ry="9" fill="#241a10" opacity=".12"/>
+          <path d="M24 238 q7 -15 17 -4 M44 244 q6 -13 15 -3 M262 240 q7 -14 17 -4 M282 236 q6 -12 14 -3" fill="none" stroke="#4f6b34" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+
+          <!-- legs drawn first so the shell overlaps and "attaches" them -->
+          <g fill="#2e2115">
+            <ellipse cx="90" cy="96" rx="17" ry="21" transform="rotate(-24 90 96)"/>
+            <ellipse cx="252" cy="96" rx="17" ry="21" transform="rotate(24 252 96)"/>
+            <ellipse cx="95" cy="204" rx="17" ry="21" transform="rotate(24 95 204)"/>
+            <ellipse cx="247" cy="204" rx="17" ry="21" transform="rotate(-24 247 204)"/>
+          </g>
+          <g fill="#bd5b2a" opacity=".9">
+            <circle cx="82" cy="104" r="2.6"/><circle cx="92" cy="110" r="2.3"/>
+            <circle cx="260" cy="104" r="2.6"/><circle cx="250" cy="110" r="2.3"/>
+            <circle cx="86" cy="212" r="2.6"/><circle cx="96" cy="216" r="2.3"/>
+            <circle cx="256" cy="212" r="2.6"/><circle cx="246" cy="216" r="2.3"/>
+          </g>
+
+          <!-- domed shell -->
+          <ellipse cx="172" cy="148" rx="112" ry="84" fill="#3a2a1a"/>
+          <ellipse cx="172" cy="148" rx="112" ry="84" fill="url(#shellSheen)"/>
+          <ellipse cx="172" cy="148" rx="112" ry="84" fill="none" stroke="#6b7a4a" stroke-width="5"/>
+
+          <!-- soft natural seams, radiating from center, no hard pentagon edges -->
+          <g stroke="#241a10" stroke-width="2" fill="none" opacity=".4" stroke-linecap="round">
+            <ellipse cx="172" cy="148" rx="86" ry="60"/>
+            <path d="M172 148 Q172 118 172 92"/>
+            <path d="M172 148 Q146 138 122 118"/>
+            <path d="M172 148 Q198 138 222 118"/>
+            <path d="M172 148 Q146 160 124 182"/>
+            <path d="M172 148 Q198 160 220 182"/>
+            <path d="M172 148 Q172 178 172 200"/>
+          </g>
+
+          <!-- gold scute highlights, following the dome's curve -->
+          <g fill="#c9a24a" opacity=".85">
+            <ellipse cx="172" cy="90" rx="15" ry="11"/>
+            <ellipse cx="126" cy="114" rx="18" ry="14"/>
+            <ellipse cx="218" cy="114" rx="18" ry="14"/>
+            <ellipse cx="172" cy="148" rx="24" ry="19"/>
+            <ellipse cx="128" cy="182" rx="17" ry="13"/>
+            <ellipse cx="216" cy="182" rx="17" ry="13"/>
+            <ellipse cx="172" cy="200" rx="14" ry="11"/>
+          </g>
+
+          <!-- head, overlapping the shell rim directly — no gap; top-down view to match the shell -->
+          <ellipse cx="66" cy="148" rx="32" ry="24" fill="#2e2115"/>
+          <ellipse cx="66" cy="148" rx="32" ry="24" fill="none" stroke="#241a10" stroke-width="1.5" opacity=".4"/>
+          <circle cx="46" cy="136" r="3.6" fill="#c9a24a"/>
+          <circle cx="45" cy="136" r="1.5" fill="#1a1208"/>
+          <circle cx="46" cy="160" r="3.6" fill="#c9a24a"/>
+          <circle cx="45" cy="160" r="1.5" fill="#1a1208"/>
+          <ellipse cx="38" cy="148" rx="6" ry="4" fill="#241a10" opacity=".3"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card stat"><div class="n">~220M yrs</div><div class="l"><span class="lang-en">Shelled ancestor lineage</span><span class="lang-pa" style="display:none">Liña di antepasado ku kaska</span></div></div>
+      <div class="card stat"><div class="n">193</div><div class="l"><span class="lang-en">Age of Jonathan, Dec 2025</span><span class="lang-pa" style="display:none">Edat di Jonathan, Des 2025</span></div></div>
+      <div class="card stat"><div class="n">50+</div><div class="l"><span class="lang-en">Living Testudinidae species</span><span class="lang-pa" style="display:none">Species Testudinidae bibu</span></div></div>
+      <div class="card stat"><div class="n">1–4%</div><div class="l"><span class="lang-en">Body weight fed per day</span><span class="lang-pa" style="display:none">Peso di kurpa duná kada dia</span></div></div>
+    </div>
+
+    <div class="homecards">
+      <button class="homecard" onclick="go('origins')"><h4><span class="lang-en">Origins</span><span class="lang-pa" style="display:none">Orígen</span></h4><p><span class="lang-en">From broadened Permian ribs to the Triassic's fully-shelled Proganochelys — how the shell evolved.</span><span class="lang-pa" style="display:none">For kustianan hancha di e Pérmiko te Proganochelys, e promé tortuga ku kaska kompletu, den e Triásiko — kon e kaska a evolushoná.</span></p></button>
+      <button class="homecard" onclick="go('species')"><h4><span class="lang-en">Species</span><span class="lang-pa" style="display:none">Sorto</span></h4><p><span class="lang-en">Nine tortoises that define the order — Galápagos to Russian to red-footed.</span><span class="lang-pa" style="display:none">Nuebe kawama di tera ku ta definí e ordu — for di Galápagos te Ruso te pia kòrá.</span></p></button>
+      <button class="homecard" onclick="go('elders')"><h4><span class="lang-en">Elders</span><span class="lang-pa" style="display:none">Mas Bieu</span></h4><p><span class="lang-en">Jonathan, Tu'i Malila, and the record of the longest-lived land animals ever documented.</span><span class="lang-pa" style="display:none">Jonathan, Tu'i Malila, i e rekord di e bestianan di tera ku a biba mas largu dokumentá.</span></p></button>
+      <button class="homecard" onclick="go('purpose')"><h4><span class="lang-en">Purpose</span><span class="lang-pa" style="display:none">Propósito</span></h4><p><span class="lang-en">Ecosystem engineers, seed dispersers, and living cultural symbols of patience.</span><span class="lang-pa" style="display:none">Ingenieronan di ekosistema, distribuidó di simia, i símbolo kultural bibu di pasenshi.</span></p></button>
+      <button class="homecard" onclick="go('eggs')"><h4><span class="lang-en">Eggs</span><span class="lang-pa" style="display:none">Webunan</span></h4><p><span class="lang-en">Nesting, incubation, temperature-dependent sex, and the first fragile weeks.</span><span class="lang-pa" style="display:none">Landura, inkubashon, sekso dependiente di temperatura, i e promé siman frágil.</span></p></button>
+      <button class="homecard" onclick="go('habitat')"><h4><span class="lang-en">Habitat</span><span class="lang-pa" style="display:none">Habitat</span></h4><p><span class="lang-en">Enclosure, substrate, temperature gradients, and brumation by climate type.</span><span class="lang-pa" style="display:none">Sirkumbenshon, substrato, gradiente di temperatura, i brumashon segun tipo di klima.</span></p></button>
+      <button class="homecard" onclick="go('sun')"><h4><span class="lang-en">Sun</span><span class="lang-pa" style="display:none">Solo</span></h4><p><span class="lang-en">Why UVB is non-negotiable, and how basking drives calcium metabolism.</span><span class="lang-pa" style="display:none">Dikon UVB no ta negosiabel, i kon tuma solo ta drèif e metabolismo di kalsio.</span></p></button>
+      <button class="homecard" onclick="go('water')"><h4><span class="lang-en">Water</span><span class="lang-pa" style="display:none">Awa</span></h4><p><span class="lang-en">Tortoises cannot swim like turtles — soaking, drinking, and drowning risk.</span><span class="lang-pa" style="display:none">Kawama di tera no por landa manera kawama di laman — plèk den awa, bebe, i risko di hoga.</span></p></button>
+      <button class="homecard" onclick="go('diet')"><h4><span class="lang-en">Diet</span><span class="lang-pa" style="display:none">Dieta</span></h4><p><span class="lang-en">Fiber, calcium ratios, protein limits, and whether to feed daily.</span><span class="lang-pa" style="display:none">Fibra, proporshon di kalsio, límite di proteina, i si bo mester duna kuminda tur dia.</span></p></button>
+      <button class="homecard" onclick="go('play')"><h4><span class="lang-en">Play</span><span class="lang-pa" style="display:none">Hunga</span></h4><p><span class="lang-en">A playable tortoise garden — plant flowers, treat tortoises, watch generations grow.</span><span class="lang-pa" style="display:none">Un hardin di kawama hungabel — planta flor, dun'é dushi, wak generashon krese.</span></p></button>
+    </div>
+  </div>
+</div>
+
+<div id="page-origins" class="page">
+  <div class="wrap">
+    <h2 class="sect">Origins &amp; Evolution</h2>
+    <div class="lang-en">
+    <p class="lede">Tortoises did not merely survive deep time — they are deep time, wearing it as armor.</p>
+    <p>The shell did not appear all at once. It began as a modification of the ribcage: broadened, flattened ribs that gradually fused outward into a rigid case, trading rib-cage flexibility (and the fast breathing it allows) for a portable fortress. That trade has now paid off for a quarter of a billion years.</p>
+    <div class="timeline">
+      <div class="tl-item"><span class="when">Present day</span><h4>~50+ living Testudinidae species</h4><p>True land tortoises persist on every continent except Antarctica and Australia, from Saharan scrub to Mediterranean hillsides to Pacific island atolls.</p></div>
+      <div class="tl-item"><span class="when">~50–60 million years ago · Eocene</span><h4>Testudinidae emerges</h4><p>The family of true land tortoises radiates outward from Asia, later reaching Africa, the Americas, and — by rafting on ocean currents — remote islands such as the Galápagos and Aldabra, where isolation produced giants.</p></div>
+      <div class="tl-item"><span class="when">~66 million years ago</span><h4>The K–Pg extinction</h4><p>The asteroid impact that ended the age of dinosaurs wiped out roughly three-quarters of Earth's species. Turtles and tortoises — already shelled, already slow-metabolism survivors — were among the lineages that made it through.</p></div>
+      <div class="tl-item"><span class="when">~220 million years ago · Triassic</span><h4>Proganochelys quenstedti</h4><p>One of the earliest known fully-shelled turtles. It already carried a complete carapace and plastron, but unlike modern tortoises it could not withdraw its head or limbs — that defense was still to be evolved.</p></div>
+      <div class="tl-item"><span class="when">~260 million years ago · Permian</span><h4>The proto-shell</h4><p>Ancestral reptiles with unusually wide, T-shaped ribs mark the earliest fossil evidence of the anatomical shift that would, over tens of millions of years, become the shell.</p></div>
+    </div>
+    <h3 class="sub">Why the name "tortoise"</h3>
+    <p>English draws the word from Old French <em>tortue</em>/<em>tortre</em>, itself likely from Late Latin <em>tortuca</em> — possibly linked to <em>tortus</em>, "twisted," a nod to the animal's bowed legs. The Galápagos Islands themselves take their name from the tortoises: <em>galápago</em> is an old Spanish word for a type of saddle, which early sailors thought the domed shells resembled.</p>
+    </div>
+    <div class="lang-pa" style="display:none">
+    <p class="lede">Kawama di tera no a sobrevivi tempu profundu numa — nan TA tempu profundu, bistí komo armadura.</p>
+    <p>E kaska no a aparesé di un biaha. El a kuminsá komo un kambio den e kustianan: kustianan hancha i plat ku pokopoko a uni pafó pa forma un kaska duru, kambiando fleksibilidat di e kustianan (i e rèspirashon lihé ku esei ta permití) pa un fòrtalesa portátil. E kambio aki a rendé pa mas ku un kuarto biyon aña kaba.</p>
+    <div class="timeline">
+      <div class="tl-item"><span class="when">Dia di awe</span><h4>50+ species Testudinidae bibu</h4><p>Kawama di tera berdadero ta eksistí riba tur kontinente ekseptu Antártika i Australia, for di mondi seku di Sahara te seru di Mediteráneo te atolnan di isla den Pasífiko.</p></div>
+      <div class="tl-item"><span class="when">~50–60 mion aña pasá · Eoseno</span><h4>Testudinidae ta aparesé</h4><p>E famia di kawama di tera berdadero ta plamá for di Asia, mas despues yegando Áfrika, Amérikanan, i — plamando riba korientenan di laman — islanan leu manera Galápagos i Aldabra, kaminda isolashon a produsí gigantenan.</p></div>
+      <div class="tl-item"><span class="when">~66 mion aña pasá</span><h4>E ekstinshon K–Pg</h4><p>E impakto di asteroide ku a kaba ku e era di dinosaurionan a destruí mas o menos tres kuarto parti di e speciesnan riba Tera. Kawama di laman i di tera — ku ya tabatin kaska i metabolismo lentu — tabata entre e liñanan ku a sobrevivi.</p></div>
+      <div class="tl-item"><span class="when">~220 mion aña pasá · Triásiko</span><h4>Proganochelys quenstedti</h4><p>Un di e promé kawama ku kaska kompletu konosí. E ya tabatin un karapas i plastron kompletu, pero diferente for di kawama moderno e no por a hala su kabes òf pianan bèk paden — e defensa ei tabata bin mas despues den evolushon.</p></div>
+      <div class="tl-item"><span class="when">~260 mion aña pasá · Pérmiko</span><h4>E proto-kaska</h4><p>Reptilnan antepasado ku kustianan hopi hancha, forma T, ta marka e promé evidensia fósil di e kambio anatómiko ku, durante dekádanan di miyonnan di aña, lo bira e kaska.</p></div>
+    </div>
+    <h3 class="sub">Dikon e nòmber "tortoise"</h3>
+    <p>Ingles ta saka e palabra for di Franses Bieu <em>tortue</em>/<em>tortre</em>, ku probablemente ta bini for di Latin Tardio <em>tortuca</em> — kisas relashoná ku <em>tortus</em>, "trosí," referiendo na e pianan kurbá di e bestia. E Islanan Galápagos mes ta saka nan nòmber for di e kawama di tera: <em>galápago</em> ta un palabra bieu Spañó pa un tipo di seya, ku e promé marineronan tabata kere e kaskanan redondo tabata parse.</p>
+    </div>
+  </div>
+</div>
+
+<div id="page-species" class="page">
+  <div class="wrap">
+    <h2 class="sect">Species That Define the Order</h2>
+    <p class="lede lang-en">Nine tortoises, nine strategies for surviving on land — from the Sahara's scrub to Madagascar's spiny forest.</p>
+    <p class="lede lang-pa" style="display:none">Nuebe kawama di tera, nuebe estratégia pa sobrevivi riba tera — for di mondi seku di Sahara te mondi spinoso di Madagaskar.</p>
+    <div id="species-list"></div>
+  </div>
+</div>
+
+<div id="page-elders" class="page">
+  <div class="wrap">
+    <h2 class="sect">The Elders — Maximum Lifespan &amp; the Oldest Ever Recorded</h2>
+    <div class="lang-en">
+    <p class="lede">No land animal outlives a tortoise. The record for oldest-ever is not close.</p>
+    <div class="grid2">
+      <div class="card"><h3 class="sub" style="margin-top:0">Jonathan</h3><p><strong>Seychelles giant tortoise</strong> (<em>Aldabrachelys gigantea hololissa</em>). Believed born around 1832, gifted to St Helena's governor in 1882 already fully mature. He turned <strong>193</strong> on 4 December 2025 and is recognized as the oldest living land animal ever documented — and the oldest chelonian (the group spanning tortoises, turtles, and terrapins) in recorded history.</p></div>
+      <div class="card"><h3 class="sub" style="margin-top:0">Tu'i Malila</h3><p>A <strong>radiated tortoise</strong> presented to the royal family of Tonga by Captain Cook around 1777. She remained in the royal household until her death in 1965 at an estimated <strong>188 years old</strong> — the record Jonathan eventually surpassed.</p></div>
+    </div>
+    <div class="quote">"On mild days, he will sunbathe — his long neck and legs stretched fully out of his shell to absorb heat and transfer it to his core." In cold weather he instead digs into leaf mould and stays there all day.<cite>— Joe Hollins, Jonathan's veterinarian, via Guinness World Records</cite></div>
+    <h3 class="sub">Newest first — the longevity record</h3>
+    <div class="timeline">
+      <div class="tl-item"><span class="when">4 December 2025</span><h4>Jonathan turns 193</h4><p>Still alive on St Helena, still grazing the grounds of Plantation House, still the oldest known land animal.</p></div>
+      <div class="tl-item"><span class="when">2022</span><h4>Jonathan declared oldest tortoise ever</h4><p>At 190, Guinness World Records confirmed Jonathan had surpassed Tu'i Malila's record of at least 188 years.</p></div>
+      <div class="tl-item"><span class="when">1965</span><h4>Tu'i Malila dies</h4><p>The radiated tortoise dies in the care of the Tongan royal family at an estimated 188 years — the record standing for over half a century.</p></div>
+      <div class="tl-item"><span class="when">1882</span><h4>Jonathan arrives at St Helena</h4><p>Gifted to Sir William Grey-Wilson, already fully grown — meaning at least 50 years old at arrival, the anchor point for his estimated birth year.</p></div>
+      <div class="tl-item"><span class="when">c. 1777</span><h4>Tu'i Malila gifted to Tonga</h4><p>Presented by Captain James Cook to the Tongan royal family, beginning a nearly two-century royal residency.</p></div>
+      <div class="tl-item"><span class="when">c. 1832</span><h4>Jonathan believed born</h4><p>In the Seychelles — the estimate GWR and St Helena's governor now treat as his official birth year.</p></div>
+    </div>
+    <h3 class="sub">Typical maximum lifespan by group</h3>
+    <table>
+      <tr><th>Group</th><th>Typical wild lifespan</th><th>Notes</th></tr>
+      <tr><td>Galápagos &amp; Aldabra giants</td><td>100–150+ years</td><td>Largest bodies, slowest metabolism, longest confirmed lifespans besides Jonathan's line.</td></tr>
+      <tr><td>Sulcata (African spurred)</td><td>70–100+ years</td><td>Third-largest tortoise species; long-lived even in captivity with proper care.</td></tr>
+      <tr><td>Mediterranean (Hermann's, Greek)</td><td>75–100+ years</td><td>Small-bodied but famously long-lived; often outlive their keepers.</td></tr>
+      <tr><td>Russian / Horsfield's</td><td>40–100 years</td><td>Wide range reported; captive husbandry quality strongly affects outcome.</td></tr>
+      <tr><td>Desert tortoise (Gopherus)</td><td>50–80 years</td><td>Slow growth in a harsh, resource-poor habitat.</td></tr>
+    </table>
+    <p style="font-size:.85rem;color:var(--ink2)">Figures are typical ranges drawn from zoological and veterinary sources; individual animals vary, and captive longevity depends heavily on husbandry quality.</p>
+
+    <h3 class="sub">Can size or weight tell you a tortoise's age?</h3>
+    <p>Only loosely, and only while it's still growing. The traditional method — counting the growth rings on the shell (scutes) — is now well documented as unreliable past early juvenile age: peer-reviewed studies on several species found the "one ring per year" assumption holds up reasonably well only to about 5–6 years old. Beyond that, tortoises can lay down several rings in a good season, none in a lean one, and wear old rings smooth — so the count stops tracking calendar years. Weight and shell length are a fair proxy for <em>growth stage</em> while an animal is young, but once a tortoise reads as full adult size, it could plausibly be anywhere from its species' age of maturity to 100+ years old — size simply stops being informative.</p>
+    </div>
+    <div class="lang-pa" style="display:none">
+    <p class="lede">Ningun bestia di tera no ta biba mas largu ku un kawama di tera. E rekord di mas bieu no ta kasi ni serka.</p>
+    <div class="grid2">
+      <div class="card"><h3 class="sub" style="margin-top:0">Jonathan</h3><p><strong>Kawama gigantesko di Seychelles</strong> (<em>Aldabrachelys gigantea hololissa</em>). Kreí nasí serka di 1832, regalá na gobernador di St Helena na 1882 ora e tabata ya kompletamente maduro. E a kumpli <strong>193</strong> aña dia 4 di desèmber 2025 i ta rekonosí komo e animal di tera mas bieu bibu dokumentá ku a eksistí— i e kawama mas bieu (e grupo ku ta inkluí kawama di tera, di laman, i terrapin) den historia dokumentá.</p></div>
+      <div class="card"><h3 class="sub" style="margin-top:0">Tu'i Malila</h3><p>Un <strong>kawama radiá</strong> regalá na e famia real di Tonga pa Kapitan Cook serka di 1777. E a keda den e kas real te su morto na 1965 na un edat estimá di <strong>188 aña</strong> — e rekord ku Jonathan a pasa despues.</p></div>
+    </div>
+    <div class="quote">"Riba dianan suave, e ta tuma solo — su garganta i pianan largu ekstendí kompletamente for di su kaska pa absorbe kalor i transferí esaki na su kurpa." Ora tempu ta friu, e ta kaba di kaba den blachi seku i keda einan henter dia.<cite>— Joe Hollins, doktor bèt di Jonathan, via Guinness World Records</cite></div>
+    <h3 class="sub">Mas resiente promé — e rekord di duracion di bida</h3>
+    <div class="timeline">
+      <div class="tl-item"><span class="when">4 di desèmber 2025</span><h4>Jonathan ta kumpli 193 aña</h4><p>Ainda bibu na St Helena, ainda kome sabana na Plantation House, ainda e animal di tera mas bieu konosí.</p></div>
+      <div class="tl-item"><span class="when">2022</span><h4>Jonathan deklará e kawama mas bieu ku a eksistí</h4><p>Na 190 aña, Guinness World Records a konfirmá ku Jonathan a pasa e rekord di Tu'i Malila di por lo menos 188 aña.</p></div>
+      <div class="tl-item"><span class="when">1965</span><h4>Tu'i Malila ta muri</h4><p>E kawama radiá ta muri den kuido di e famia real di Tonga na un edat estimá di 188 aña — e rekord a keda pará pa mas ku medio siglo.</p></div>
+      <div class="tl-item"><span class="when">1882</span><h4>Jonathan yega na St Helena</h4><p>Regalá na Sir William Grey-Wilson, ya kompletamente krisí — nifiká por lo menos 50 aña bieu na yegada, e punto di ankera pa su aña di nasementu estimá.</p></div>
+      <div class="tl-item"><span class="when">serka di 1777</span><h4>Tu'i Malila regalá na Tonga</h4><p>Presentá pa Kapitan James Cook na e famia real di Tonga, kuminsando kasi dos siglo di residensia real.</p></div>
+      <div class="tl-item"><span class="when">serka di 1832</span><h4>Jonathan kreí nasí</h4><p>Na Seychelles — e estimashon ku GWR i gobernador di St Helena awor ta trata komo su aña ofisial di nasementu.</p></div>
+    </div>
+    <h3 class="sub">Duracion di bida máksimo tipiko pa grupo</h3>
+    <table>
+      <tr><th>Grupo</th><th>Duracion di bida salbahe tipiko</th><th>Notanan</th></tr>
+      <tr><td>Gigantenan di Galápagos &amp; Aldabra</td><td>100–150+ aña</td><td>Kurpanan mas grandi, metabolismo mas lentu, duracion di bida konfirmá mas largu fuera di liña di Jonathan.</td></tr>
+      <tr><td>Sulcata (spuela Afrikano)</td><td>70–100+ aña</td><td>Di tres mas grandi entre e speciesnan di kawama di tera; ta biba largu tambe den kautiverio ku bon kuido.</td></tr>
+      <tr><td>Mediteráneo (Hermann's, Griego)</td><td>75–100+ aña</td><td>Kurpa chikitu pero famoso pa biba largu; hopi biaha ta sobrevivi nan kuidadónan.</td></tr>
+      <tr><td>Ruso / Horsfield's</td><td>40–100 aña</td><td>Rango hopi ancho reportá; kalidat di kuido den kautiverio ta afektá e resultado fuertemente.</td></tr>
+      <tr><td>Kawama di desierto (Gopherus)</td><td>50–80 aña</td><td>Krisimentu lentu den un habitat duru i pober na rekurso.</td></tr>
+    </table>
+    <p style="font-size:.85rem;color:var(--ink2)">E sifranan ta rango tipiko saká for di fuentenan zoológiko i veterinario; animalnan individual ta varia, i duracion di bida den kautiverio ta dependé masha hopi riba kalidat di kuido.</p>
+
+    <h3 class="sub">Peso òf tamaño por bisa e edat di un kawama di tera?</h3>
+    <p>Solamente mas o menos, i solamente miéntras e ta sigui krisiendo. E método tradishonal — konta e ringnan di krisimentu riba e kaska (scutes) — awor ta bon dokumentá komo nò konfiabel despues di edat huvenil tempran: studionan revisá pa perito riba vários species a haña ku e suposishon "un ring pa aña" ta funshoná mas o menos bon solamente te mas o menos 5–6 aña bieu. Despues di esei, kawama por pone vários ring den un temporada bon, ningun den un mal, i e ringnan bieu por wòrdu gastá liso — pues e konteo ta stòp di sigui aña kalendario. Peso i largura di kaska ta un bon indikashon di <em>etapa di krisimentu</em> miéntras e animal ta hóben, pero ora un kawama parse tamaño kompleto di adulto, e por ta kaminda ku sea for di edat di madurez di su species te 100+ aña bieu — tamaño simplemente stòp di duna informashon.</p>
+    </div>
+
+    <div class="estimator" id="age-estimator">
+      <h3 class="sub" style="margin-top:0"><span class="lang-en">Growth-Stage &amp; Age-Range Estimator</span><span class="lang-pa" style="display:none">Estimadó di Etapa di Krisimentu &amp; Rango di Edat</span></h3>
+      <p style="font-size:.85rem;margin:0 0 4px;color:var(--ink2)"><span class="lang-en">Offline, rule-based, and approximate — it estimates a growth stage and a rough age band for young tortoises, not a precise age. Diet, climate, and captive vs. wild conditions all shift real growth rate; this is a starting point, not a substitute for known hatch dates or a vet exam.</span><span class="lang-pa" style="display:none">Offline, basá riba reglanan, i aproksimativo — e ta estimá un etapa di krisimentu i un rango di edat aproksimativo pa kawama hóben, no un edat eksakto. Dieta, klima, i kondishon di kautiverio vs. salbahe ta kambia e ritmo di krisimentu real; esaki ta un punto di partida, no un sustituto pa fecha di nasementu konosí òf un eksámen di doktor bèt.</span></p>
+      <label for="age-species"><span class="lang-en">Species</span><span class="lang-pa" style="display:none">Sorto</span></label>
+      <select id="age-species"></select>
+      <label for="age-weight"><span class="lang-en">Current weight (kg) — optional if length given</span><span class="lang-pa" style="display:none">Peso aktual (kg) — opshonal si largura duná</span></label>
+      <input id="age-weight" type="number" min="0" step="0.01" placeholder="e.g. 1.2">
+      <label for="age-length"><span class="lang-en">Current shell (carapace) length (cm) — optional if weight given</span><span class="lang-pa" style="display:none">Largura aktual di kaska (karapas) (cm) — opshonal si peso duná</span></label>
+      <input id="age-length" type="number" min="0" step="0.1" placeholder="e.g. 18">
+      <button id="age-btn" onclick="runAgeEstimator()">Estimate growth stage &amp; age range</button>
+      <div id="age-result"></div>
+    </div>
+  </div>
+</div>
+
+<div id="page-purpose" class="page">
+  <div class="wrap">
+    <h2 class="sect">Why Tortoises Matter</h2>
+    <div class="lang-en">
+    <p class="lede">A slow animal can still be load-bearing for an entire ecosystem.</p>
+    <h3 class="sub">Ecosystem engineers</h3>
+    <p>Burrowing species like the North American desert tortoise (<em>Gopherus agassizii</em>) and the closely related gopher tortoise dig deep, temperature-stable burrows that they do not keep to themselves. Hundreds of other species — burrowing owls, indigo snakes, rabbits, insects, and more — shelter in abandoned or shared tortoise burrows, especially during fire, drought, or extreme heat. Remove the tortoise and an entire underground housing system for the local food web disappears with it.</p>
+    <h3 class="sub">Seed dispersers</h3>
+    <p>Giant tortoises on the Galápagos and Aldabra act as slow-motion gardeners: they range widely, eat large quantities of fruit and vegetation, and pass viable seeds — some from large-seeded plants that few other living animals can disperse — over long distances in their droppings. In places where larger native seed-dispersing animals have gone extinct, giant tortoises are one of the last species still doing that job.</p>
+    <h3 class="sub">Indicator species</h3>
+    <p>Because tortoises are long-lived, site-faithful, and sensitive to habitat quality, temperature, and food availability, population health in a given tortoise species is a useful proxy for the health of the broader habitat around it.</p>
+    <h3 class="sub">Cultural and symbolic weight</h3>
+    <p>Few animals carry as much symbolic freight. Aesop's fable made the tortoise a byword for patience over speed. In Hindu cosmology, Kurma — a tortoise — is one of the avatars of Vishnu, supporting the world on its back during the churning of the cosmic ocean. Related "world turtle" motifs appear across multiple traditions. The Galápagos Islands are literally named after their tortoises. A slow-moving reptile has, repeatedly and independently, become a stand-in for endurance itself.</p>
+    <h3 class="sub">Conservation flagships — and casualties</h3>
+    <p>That same visibility makes tortoises powerful conservation ambassadors, but many species are in genuine danger. The radiated tortoise of Madagascar — the species Tu'i Malila belonged to — is Critically Endangered, driven down by habitat loss and an illegal pet trade that has emptied wild populations by the tens of thousands. Several Galápagos giant tortoise subspecies were pushed to the edge of extinction by 19th-century sailors, who stacked live tortoises in ship holds as a self-sustaining, no-feed, no-water meat supply — a grim footnote in the same history that produced Jonathan's own story.</p>
+    </div>
+    <div class="lang-pa" style="display:none">
+    <p class="lede">Un bestia lentu por ainda ta esensial pa henter un ekosistema.</p>
+    <h3 class="sub">Ingenieronan di ekosistema</h3>
+    <p>Species ku ta koba, manera e kawama di desierto Norte-Amerikano (<em>Gopherus agassizii</em>) i su pariente serka e "gopher tortoise", ta koba buraku profundo ku temperatura stabil ku nan no ta warda pa nan mes. Shen di otro species — koruchi ku ta biba den buraku, kolebra indigo, konew, insekto, i mas — ta buska refugio den buraku di kawama abandoná òf kompartí, spesialmente durante kandela, sekura, òf kalor ekstremo. Kita e kawama i henter un sistema di kas bou di tera pa e kadena alimentario lokal ta disparsé huntu kuné.</p>
+    <h3 class="sub">Distribuidónan di simia</h3>
+    <p>Kawama gigantesko riba Galápagos i Aldabra ta funshoná komo hardineronan lentu: nan ta kana hopi leu, kome gran kantidat di fruta i vegetashon, i pasa simianan bibu — algun for di plantanan ku tin simia grandi ku poko otro bestia bibu por plamá — over di distansia largu den nan kaka. Na lugánan kaminda bestia mas grandi nativo ku tabata plama simia a bira ekstinktu, kawama gigantesko ta un di e último speciesnan ku ainda ta hasi e trabou ei.</p>
+    <h3 class="sub">Species indikadó</h3>
+    <p>Pasobra kawama di tera ta biba largu, ta fiel na nan lugá, i ta sensitivo na kalidat di habitat, temperatura, i disponibilidat di kuminda, e salú di poblashon di un species di kawama spesífiko ta un bon indikashon pa e salú di e habitat mas amplio rond di dje.</p>
+    <h3 class="sub">Peso kultural i simbóliko</h3>
+    <p>Poko bestia ta karga tantu peso simbóliko. E fábula di Esopo a hasi e kawama di tera un simbolo di pasenshi riba velosidat. Den kosmología Hindu, Kurma — un kawama — ta un di e avatarnan di Vishnu, ta karga e mundu riba su lomba durante e bati di e osean kósmiko. Motivonan relashoná di "kawama di mundu" ta parse den vários tradishon. E Islanan Galápagos ta literalmente yamá segun nan kawama. Un reptil ku ta move lento a bira, repetidamente i independientemente, un símbolo di resistensia mes.</p>
+    <h3 class="sub">Símbolo di konservashon — i víktimanan</h3>
+    <p>E mesun visibilidat ei ta hasi kawama di tera embahadónan poderoso pa konservashon, pero hopi species ta den peliger real. E kawama radiá di Madagaskar — e species ku Tu'i Malila tabata pertenesé na dje — ta Kritikamente Amenasá, empuhá abou pa pèrdida di habitat i un komersio ilegal di mascota ku a basha poblashonnan salbahe pa dieznan di míles. Vários subespecies di kawama gigantesko di Galápagos a wòrdu empuhá te na fil di ekstinshon pa marineronan di siglo 19, ku tabata pila kawama bibu den e barkonan komo un provishon di karni ku no mester kuminda ni awa — un nota tristu den e mesun historia ku a produsí e propio historia di Jonathan.</p>
+    </div>
+  </div>
+</div>
+
+<div id="page-eggs" class="page">
+  <div class="wrap">
+    <h2 class="sect">Egg to Hatchling</h2>
+    <div class="lang-en">
+    <p class="lede">Everything about a tortoise's long life starts in a shallow hole in warm ground.</p>
+    <div class="timeline">
+      <div class="tl-item"><span class="when">Step 1 — Nesting</span><h4>The female digs a nest chamber</h4><p>Using her hind legs alone, she excavates a flask-shaped chamber in sun-warmed soil, then lays a clutch ranging from a handful of eggs in small species to 15–30+ in large ones, depending on species and body size.</p></div>
+      <div class="tl-item"><span class="when">Step 2 — Incubation</span><h4>Temperature decides more than time</h4><p>Incubation runs roughly 60–120+ days depending on species and temperature. In most tortoises, incubation temperature also determines the hatchlings' sex — temperature-dependent sex determination — with warmer nests generally producing more females and cooler nests more males.</p></div>
+      <div class="tl-item"><span class="when">Step 3 — Pipping</span><h4>The egg tooth does its one job</h4><p>A hatchling uses a temporary, sharp caruncle ("egg tooth") on its snout to slice through the leathery shell. Pipping to full emergence can take hours to a couple of days — patience, not force, gets it out.</p></div>
+      <div class="tl-item"><span class="when">Step 4 — Yolk absorption</span><h4>The first meal is already inside it</h4><p>Hatchlings still carry an internal yolk sac supplying nutrition for their first several days. They typically should not be fed until that reserve is absorbed — usually 2–5 days after hatching.</p></div>
+      <div class="tl-item"><span class="when">Step 5 — First husbandry</span><h4>Warmth, humidity, and calcium from day one</h4><p>Hatchlings need a warm basking spot, appropriate humidity for the species (too dry or too wet both cause problems), full-spectrum UVB lighting or safe natural sun exposure, and a shallow water dish for regular soaking — they dehydrate far faster than adults.</p></div>
+      <div class="tl-item"><span class="when">Ongoing — Growth-phase feeding</span><h4>Daily meals, careful calcium, controlled growth</h4><p>Young, growing tortoises are typically fed daily with extra calcium support. Growth should be tracked (weight and shell length) against expected curves — too-fast growth from overfeeding or excess protein is a leading cause of pyramiding (raised, bumpy scutes) and other shell deformities.</p></div>
+    </div>
+    <div class="pillbar">
+      <span class="pill">No substrate hatchlings can swallow</span>
+      <span class="pill">Shallow soaks, several times a week</span>
+      <span class="pill warn">Avoid high-protein "growth" diets</span>
+    </div>
+    </div>
+    <div class="lang-pa" style="display:none">
+    <p class="lede">Tur kos tokante e bida largu di un kawama di tera ta kuminsá den un buraku dòf den suela kayente.</p>
+    <div class="timeline">
+      <div class="tl-item"><span class="when">Paso 1 — Landura</span><h4>E famenchi ta koba un kamber di landura</h4><p>Usando solamente su pianan patras, e ta koba un kamber na forma di botter den suela kayentá pa solo, despues e ta pone un cluster ku por ta di un poko webu den species chikitu te 15–30+ den esnan grandi, dependiendo di species i tamaño di kurpa.</p></div>
+      <div class="tl-item"><span class="when">Paso 2 — Inkubashon</span><h4>Temperatura ta disidí mas ku tempu</h4><p>Inkubashon ta dura mas o menos 60–120+ dia dependiendo di species i temperatura. Den mayoria di kawama di tera, temperatura di inkubashon tambe ta disidí sekso di e kriaturanan — determinashon di sekso dependiente di temperatura — ku landuranan mas kayente generalmente ta produsí mas hembra i esnan mas fresku mas macho.</p></div>
+      <div class="tl-item"><span class="when">Paso 3 — Kibra kaska</span><h4>E djente di webu ta hasi su úniko trabou</h4><p>Un kriatura ta usa un caruncle skèrpi temporal ("djente di webu") riba su nanishi pa kòrta e kaska duru. For di kibra kaska te kompletamente sali por dura for di ora te un par di dia — pasenshi, no fòrsa, ta saka e kriatura fó.</p></div>
+      <div class="tl-item"><span class="when">Paso 4 — Absorshon di yema</span><h4>E promé kuminda ta ya paden</h4><p>Kriaturanan ainda ta karga un saku di yema paden ku ta duna nutrishon pa nan promé dianan. Normalmente nan no mester wòrdu alimentá te ora e reserva ei wòrdu absorbí — normalmente 2–5 dia despues di sali for di webu.</p></div>
+      <div class="tl-item"><span class="when">Paso 5 — Promé kuido</span><h4>Kalor, humedat, i kalsio for di dia un</h4><p>Kriaturanan mester un lugá kayente pa tuma solo, humedat apropiado pa e species (muchu seku òf muchu muhá tur dos ta kousa problema), lus UVB spektro kompleto òf eksposishon di solo natural sigur, i un bandeha di awa dòf pa plèk regular — nan ta seka hopi mas lihé ku adulto.</p></div>
+      <div class="tl-item"><span class="when">Kontinuo — Alimentashon den fase di krisimentu</span><h4>Kuminda tur dia, kalsio ku kuidou, krisimentu kontrolá</h4><p>Kawama hóben ku ta krisiendo normalmente ta wòrdu alimentá tur dia ku sosten extra di kalsio. Krisimentu mester wòrdu siguí (peso i largura di kaska) kontra kurvanan speraá — krisimentu muchu lihé di sobrealimentashon òf eksesivo proteina ta un kousa prinsipal di "pyramiding" (scutes lantá, bultu) i otro deformashon di kaska.</p></div>
+    </div>
+    <div class="pillbar">
+      <span class="pill">Ningun substrato ku kriatura por guli</span>
+      <span class="pill">Plèk dòf, vários biaha pa siman</span>
+      <span class="pill warn">Evitá dieta di "krisimentu" ku hopi proteina</span>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-habitat" class="page">
+  <div class="wrap">
+    <h2 class="sect">Habitat &amp; Care</h2>
+    <div class="lang-en">
+    <p class="lede">A tortoise's enclosure is really a miniature climate — get the gradient right and most other problems solve themselves.</p>
+    <h3 class="sub">Temperature by climate type</h3>
+    <table>
+      <tr><th>Group</th><th>Ambient day temp</th><th>Basking spot</th><th>Night</th></tr>
+      <tr><td>Desert / arid (sulcata, leopard, desert tortoise)</td><td>80–90°F / 27–32°C</td><td>95–100°F / 35–38°C</td><td>Not below ~65°F / 18°C</td></tr>
+      <tr><td>Mediterranean (Hermann's, Greek, Russian)</td><td>75–85°F / 24–29°C</td><td>90–95°F / 32–35°C</td><td>Down to ~60°F / 15°C tolerated seasonally</td></tr>
+      <tr><td>Tropical / forest (red-footed, radiated)</td><td>78–88°F / 26–31°C</td><td>90–95°F / 32–35°C</td><td>Not below ~70°F / 21°C</td></tr>
+    </table>
+    <h3 class="sub">Substrate</h3>
+    <p>Organic topsoil (no fertilizers or pesticides), coco coir, or a topsoil/sand blend suits most species; loose sand alone is best avoided, especially for hatchlings, since ingested particles during feeding can cause intestinal impaction. Substrate should hold enough moisture to support natural burrowing and humidity without staying waterlogged.</p>
+    <h3 class="sub">Space, growth, and enclosure sizing</h3>
+    <p>Enclosures need to scale with the animal — a sulcata or Aldabra tortoise that starts the size of a coin will eventually need yards of outdoor space, not a tank. Undersized, permanent indoor housing is one of the most common welfare failures in tortoise keeping.</p>
+    <h3 class="sub">Brumation</h3>
+    <p>Temperate species — Russian, Hermann's, Greek — evolved with a true winter and will brumate (a reptile's version of hibernation) if conditions call for it; done incorrectly, brumation is dangerous, so temperature and health need veterinary-level attention beforehand. Desert and tropical species generally do not require brumation and should stay warm year-round.</p>
+    </div>
+    <div class="lang-pa" style="display:none">
+    <p class="lede">E sirkumbenshon di un kawama di tera ta realmente un klima miniatura — hasi e gradiente korekto i mayoria di otro problemanan ta resolvé nan mes.</p>
+    <h3 class="sub">Temperatura segun tipo di klima</h3>
+    <table>
+      <tr><th>Grupo</th><th>Temperatura ambiente di dia</th><th>Lugá pa tuma solo</th><th>Anochi</th></tr>
+      <tr><td>Desierto / seku (sulcata, leopardo, kawama di desierto)</td><td>80–90°F / 27–32°C</td><td>95–100°F / 35–38°C</td><td>No abou di ~65°F / 18°C</td></tr>
+      <tr><td>Mediteráneo (Hermann's, Griego, Ruso)</td><td>75–85°F / 24–29°C</td><td>90–95°F / 32–35°C</td><td>Te ~60°F / 15°C tolerá segun temporada</td></tr>
+      <tr><td>Tropikal / mondi (pia kòrá, radiá)</td><td>78–88°F / 26–31°C</td><td>90–95°F / 32–35°C</td><td>No abou di ~70°F / 21°C</td></tr>
+    </table>
+    <h3 class="sub">Substrato</h3>
+    <p>Tera órgániko (sin fertilisante ni pestisida), fibra di koko, òf un mesun tera/santu ta bon pa mayoria di species; santu suelto solo ta mihó evitá, spesialmente pa kriaturanan, pasobra partikulanan ingerí durante kuminda por kousa impakshon intestinal. Substrato mester tene sufisiente humedat pa sosten koba natural i humedat sin keda muhá permanentemente.</p>
+    <h3 class="sub">Espasio, krisimentu, i tamaño di sirkumbenshon</h3>
+    <p>Sirkumbenshonnan mester krese huntu ku e animal — un kawama sulcata òf Aldabra ku ta kuminsá tamaño di un plaka lo eventualmente mester yardanan di espasio pafó, no un tanki. Kas paden, permanente i muchu chikitu, ta un di e fayonan di bienestar mas komun den kuido di kawama di tera.</p>
+    <h3 class="sub">Brumashon</h3>
+    <p>Species di klima temperado — Ruso, Hermann's, Griego — a evolushoná ku un invierno real i lo brumá (e vershon di reptil di hibernashon) si kondishonnan ta pidié; hasí robes, brumashon ta peligroso, pues temperatura i salú mester atenshon di nivel veterinario di antemano. Species di desierto i tropikal generalmente no mester brumashon i mester keda kayente henter aña.</p>
+    </div>
+  </div>
+</div>
+
+<div id="page-sun" class="page">
+  <div class="wrap">
+    <h2 class="sect">Sun Exposure</h2>
+    <div class="lang-en">
+    <p class="lede">Sunlight is not ambience for a tortoise — it is the trigger for building its own skeleton and shell.</p>
+    <h3 class="sub">Why UVB is non-negotiable</h3>
+    <p>Ultraviolet-B light lets a tortoise's skin synthesize vitamin D3, which in turn is required to absorb dietary calcium. Without adequate UVB, calcium intake barely matters — the body cannot use it, leading to metabolic bone disease and soft, deformed shells. Ordinary window glass and most plastics filter out UVB almost entirely, so a tortoise basking indoors "in the sun" through a window is not getting the wavelength it actually needs.</p>
+    <h3 class="sub">Natural sun vs. bulbs</h3>
+    <p>Unfiltered outdoor sunlight is the gold standard and free. Indoor-only tortoises need a dedicated reptile UVB bulb (commonly a T5 high-output tube) positioned at the manufacturer's recommended distance, replaced on schedule — UVB output fades well before the bulb stops producing visible light, so a bulb can look fine and still be nutritionally useless.</p>
+    <h3 class="sub">Basking behavior</h3>
+    <p>Tortoises thermoregulate by moving, not by internal control — they bask to raise body temperature and retreat to shade or burrows to cool down. Jonathan's veterinarian describes exactly this: on mild days, stretching neck and legs fully out of the shell to soak up heat; on cold days, burying into leaf litter instead. Any enclosure, indoor or outdoor, needs both a genuine basking zone and a genuine cool/shaded retreat so the animal can regulate itself.</p>
+    </div>
+    <div class="lang-pa" style="display:none">
+    <p class="lede">Solo no ta ambiente numa pa un kawama di tera — e ta e señal pa konstruí su propio eskeleto i kaska.</p>
+    <h3 class="sub">Dikon UVB no ta negosiabel</h3>
+    <p>Lus ultravioleta-B ta laga e kueru di kawama sintetisá vitamina D3, ku na su turno ta nesesario pa absorbe kalsio for di dieta. Sin sufisiente UVB, konsumo di kalsio kasi no ta importá — e kurpa no por usé, ta hiba na malesa metabóliko di wesu i kaska blandu i deformá. Glas normal di bentana i mayoria plástiko ta filtra UVB kasi kompletamente, pues un kawama ku ta tuma "solo" paden dor di un bentana no ta risibí e onda ku e realmente mester.</p>
+    <h3 class="sub">Solo natural vs. lampi</h3>
+    <p>Solo pafó sin filtro ta e estándar di oro i ta gratis. Kawama ku ta biba solamente paden mester un lampi UVB dediká pa reptil (komunmente un tubo T5 di haltu produkshon) posishoná na e distansia rekomendá pa fabrikante, kambiá segun horario — produkshon di UVB ta baha muchu promé ku e lampi stòp di produsí lus visibel, pues un lampi por parse bon i tòg no tin balor nutrishonal.</p>
+    <h3 class="sub">Komportashon di tuma solo</h3>
+    <p>Kawama di tera ta regulá nan temperatura dor di move, no dor di kontrol interno — nan ta tuma solo pa hisa temperatura di kurpa i bai den sombra òf buraku pa friu. Doktor bèt di Jonathan ta deskribí eksaktamente esaki: riba dianan suave, ekstendé garganta i pianan kompletamente for di e kaska pa absorbe kalor; riba dianan friu, kaba den blachi seku en bes di. Kualke sirkumbenshon, paden òf pafó, mester tantu un zona di tuma solo real komo un lugá fresku/ku sombra real pa e animal por regulá su mes.</p>
+    </div>
+  </div>
+</div>
+
+<div id="page-water" class="page">
+  <div class="wrap">
+    <h2 class="sect">Water &amp; Swimming</h2>
+    <div class="lang-en">
+    <p class="lede">Tortoises and turtles get lumped together constantly — in water, that mix-up can kill a tortoise.</p>
+    <h3 class="sub">Can tortoises swim?</h3>
+    <p>Not well, and not like aquatic turtles. Turtles have flattened, streamlined shells and paddle-like limbs built for buoyancy and propulsion. Tortoises have heavy, high-domed shells and stumpy, column-like legs built for walking, not floating. Dropped into water deeper than they can stand in, a tortoise can struggle, exhaust itself, and drown — it is not a natural swimmer finding its footing, it is a land animal in the wrong medium.</p>
+    <h3 class="sub">Drinking and hydration</h3>
+    <p>In the wild, tortoises often drink opportunistically from puddles after rain, sometimes even appearing to anticipate rainfall. In captivity, they should always have access to a shallow, sturdy water dish they can climb in and out of easily, filled no deeper than the underside of their shell.</p>
+    <h3 class="sub">Soaking — the actual water need</h3>
+    <p>Regular shallow soaks (lukewarm water, head kept comfortably above the surface) support hydration, help with shedding and defecation, and are especially important for hatchlings and young tortoises, who dehydrate far faster than adults and benefit from soaks several times a week. Any water feature in an enclosure needs an easy, sloped exit — never a sheer-sided container a tortoise could tip into and be unable to climb out of.</p>
+    </div>
+    <div class="lang-pa" style="display:none">
+    <p class="lede">Kawama di tera i kawama di laman ta wòrdu konfundí konstantemente — den awa, e konfushon ei por mata un kawama di tera.</p>
+    <h3 class="sub">Kawama di tera por landa?</h3>
+    <p>No bon, i no manera kawama akwátiko. Kawama di laman tin kaska plat, aerodinámiko i pianan manera remo trahá pa flotashon i propulshon. Kawama di tera tin kaska pisá, haltu i redondo i pianan stòmpi manera koló trahá pa kana, no pa floto. Kaí den awa mas profundo ku nan por para den dje, un kawama di tera por lucha, kansa su mes kompletamente, i hoga — e no ta un nadadó natural buskando su pia, e ta un bestia di tera den e medio robes.</p>
+    <h3 class="sub">Bebementu i hidratashon</h3>
+    <p>Den naturalesa, kawama di tera hopi biaha ta bebe oportunistikamente for di poso di awa despues di áwaseru, algun biaha te aparentemente antisipando áwaseru. Den kautiverio, nan mester semper tin akseso na un bandeha di awa dòf i firmi ku nan por subi paden i sali fasilmente, yená no mas profundo ku e parti abou di nan kaska.</p>
+    <h3 class="sub">Plèk den awa — e nesesidat di awa real</h3>
+    <p>Plèk regular i dòf (awa tibi, kabes keda kómodamente ariba di e superfisie) ta yuda ku hidratashon, ta yuda ku muda di kueru i defekashon, i ta importante spesialmente pa kriaturanan i kawama hóben, ku ta seka hopi mas lihé ku adulto i ta benefisiá for di plèk vários biaha pa siman. Kualke elemento di awa den un sirkumbenshon mester tin un salida fásil i ku pendiente — nunka un kontenedor ku banda dreit kaminda un kawama por kai paden i no por sali fó atrobe.</p>
+    </div>
+  </div>
+</div>
+
+<div id="page-diet" class="page">
+  <div class="wrap">
+    <h2 class="sect">Diet, Feeding &amp; Nutrition</h2>
+    <div class="lang-en">
+    <p class="lede">Most captive tortoise health problems trace back to one thing: a diet that looks like a salad bar instead of a scrubby field.</p>
+    <h3 class="sub">The wild baseline</h3>
+    <p>Wild tortoises graze low-calorie, high-fiber, calcium-rich weeds and grasses growing in mineral-poor, calcium-heavy soils — plants most people would consider poor eating. That profile, not supermarket produce, is the target for a healthy captive diet.</p>
+    </div>
+    <div class="lang-pa" style="display:none">
+    <p class="lede">Mayoria di problema di salú di kawama di tera den kautiverio ta bini for di un kos: un dieta ku ta parse un bar di salad en bes di un mondi seku.</p>
+    <h3 class="sub">E base salbahe</h3>
+    <p>Kawama di tera salbahe ta kome yerba i mata di baho kalorí, halto fibra, rijo na kalsio ku ta krese den suela pober na mineral pero rijo na kalsio — mata ku mayoria hende lo konsiderá mal kuminda. E perfil ei, no produkto di supermerkado, ta e meta pa un dieta sano den kautiverio.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--olive);margin:18px 0">
+      <div style="max-width:280px;margin:0 auto 8px">
+        <svg viewBox="0 0 340 34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 20 Q60 6 90 20 T170 20 T250 20 T336 20" fill="none" stroke="#4f6b34" stroke-width="2" opacity=".6"/>
+          <g transform="translate(60,18)"><ellipse cx="0" cy="-7" rx="6" ry="8.4" fill="#c79fd6" stroke="#8a5fa3" stroke-width=".8"/><ellipse cx="9.2" cy="-2.8" rx="6" ry="8.4" fill="#c79fd6" stroke="#8a5fa3" stroke-width=".8" transform="rotate(72 9.2 -2.8)"/><ellipse cx="5.6" cy="7.8" rx="6" ry="8.4" fill="#c79fd6" stroke="#8a5fa3" stroke-width=".8" transform="rotate(144 5.6 7.8)"/><ellipse cx="-5.6" cy="7.8" rx="6" ry="8.4" fill="#c79fd6" stroke="#8a5fa3" stroke-width=".8" transform="rotate(216 -5.6 7.8)"/><ellipse cx="-9.2" cy="-2.8" rx="6" ry="8.4" fill="#c79fd6" stroke="#8a5fa3" stroke-width=".8" transform="rotate(288 -9.2 -2.8)"/><circle cx="0" cy="0" r="3.6" fill="#b9862c"/></g>
+          <g transform="translate(180,16)"><ellipse cx="0" cy="-7" rx="6" ry="8.4" fill="#f1f4e2" stroke="#b9862c" stroke-width=".8"/><ellipse cx="9.2" cy="-2.8" rx="6" ry="8.4" fill="#f1f4e2" stroke="#b9862c" stroke-width=".8" transform="rotate(72 9.2 -2.8)"/><ellipse cx="5.6" cy="7.8" rx="6" ry="8.4" fill="#f1f4e2" stroke="#b9862c" stroke-width=".8" transform="rotate(144 5.6 7.8)"/><ellipse cx="-5.6" cy="7.8" rx="6" ry="8.4" fill="#f1f4e2" stroke="#b9862c" stroke-width=".8" transform="rotate(216 -5.6 7.8)"/><ellipse cx="-9.2" cy="-2.8" rx="6" ry="8.4" fill="#f1f4e2" stroke="#b9862c" stroke-width=".8" transform="rotate(288 -9.2 -2.8)"/><circle cx="0" cy="0" r="3.6" fill="#b9862c"/></g>
+          <g transform="translate(270,19)"><ellipse cx="0" cy="-7" rx="6" ry="8.4" fill="#c79fd6" stroke="#8a5fa3" stroke-width=".8"/><ellipse cx="9.2" cy="-2.8" rx="6" ry="8.4" fill="#c79fd6" stroke="#8a5fa3" stroke-width=".8" transform="rotate(72 9.2 -2.8)"/><ellipse cx="5.6" cy="7.8" rx="6" ry="8.4" fill="#c79fd6" stroke="#8a5fa3" stroke-width=".8" transform="rotate(144 5.6 7.8)"/><ellipse cx="-5.6" cy="7.8" rx="6" ry="8.4" fill="#c79fd6" stroke="#8a5fa3" stroke-width=".8" transform="rotate(216 -5.6 7.8)"/><ellipse cx="-9.2" cy="-2.8" rx="6" ry="8.4" fill="#c79fd6" stroke="#8a5fa3" stroke-width=".8" transform="rotate(288 -9.2 -2.8)"/><circle cx="0" cy="0" r="3.6" fill="#b9862c"/></g>
+        </svg>
+      </div>
+      <h3 class="sub" style="margin-top:0;text-align:center"><span class="lang-en">Field note — Asystasia gangetica</span><span class="lang-pa" style="display:none">Nota di kampo — Asystasia gangetica</span></h3>
+      <p style="margin:0"><span class="lang-en">Also known as Chinese violet or creeping foxglove, this low sprawling groundcover (purple and white five-petal flowers, above) is a good example of appropriate forage: palatable, high in fiber, and calcium-rich relative to phosphorus. Widely fed to sulcata, leopard, and other grazing species as part of a varied diet — never as a sole food source — and only from pesticide-free growing areas.</span><span class="lang-pa" style="display:none">Tambe konosí komo "Chinese violet", e mata di baho ku ta plama abou (flor mòrá i blanku ku sinku pétalo, ariba) ta un bon ehèmpel di kuminda apropiado: sabroso, halto na fibra, i rijo na kalsio relativo na fósforo. Duná hopi na sulcata, leopardo, i otro species ku ta kome yerba komo parti di un dieta variá — nunka komo úniko fuente di kuminda — i solamente for di lugá ku no ta usa pestisida.</span></p>
+    </div>
+    <h3 class="sub">Target macronutrient ranges</h3>
+    <div class="lang-en">
+    <table>
+      <tr><th>Nutrient</th><th>Target range (dry-matter basis, most species)</th><th>Why</th></tr>
+      <tr><td>Crude protein</td><td>~15–20% max (some sources recommend even lower for adults)</td><td>Excess protein is linked to pyramiding and shell/kidney problems.</td></tr>
+      <tr><td>Crude fiber</td><td>~15–30%, higher is generally safer</td><td>Drives healthy gut motility; mimics the wild grazing diet.</td></tr>
+      <tr><td>Fat</td><td>Under ~12–15%</td><td>Herbivore digestive systems handle fat poorly in quantity.</td></tr>
+      <tr><td>Calcium : phosphorus ratio</td><td>At least 2:1, ideally higher</td><td>Supports shell and bone density; an inverted ratio drives metabolic bone disease.</td></tr>
+      <tr><td>Fruit share of total diet</td><td>Under ~10–20%, less for desert-grazing species, more tolerated by tropical species</td><td>High sugar content unbalances gut flora and calcium uptake.</td></tr>
+    </table>
+    <h3 class="sub">Portion size</h3>
+    <p>A widely used veterinary rule of thumb: feed roughly <strong>1–4% of body weight per day</strong>. Smaller and juvenile tortoises sit toward the higher end of that range because of faster growth and metabolism; large adult tortoises need a smaller percentage of their (much greater) body weight.</p>
+    <h3 class="sub">Daily, or not?</h3>
+    <p>It depends on age and species. Young, actively growing tortoises generally do best fed daily, with attentive calcium supplementation. Many adult tortoises, especially smaller Mediterranean species, do well on 3–4 feedings a week rather than daily meals. Tortoises with year-round outdoor grazing access are effectively "fed daily" through pasture, with supplemental feeding used mainly to fill gaps.</p>
+    <h3 class="sub">Foods to avoid or limit</h3>
+    <p>High-oxalate greens (spinach, beet greens, chard) bind calcium into a form the body cannot use if fed too often. Brassica-family vegetables (cabbage, kale, broccoli) in excess can interfere with iodine uptake. Processed, high-sugar, or high-protein "treat" foods — including most fruit beyond an occasional small portion — should stay occasional, not staple.</p>
+    </div>
+    <div class="lang-pa" style="display:none">
+    <table>
+      <tr><th>Nutriente</th><th>Rango meta (base materia seku, mayoria species)</th><th>Dikon</th></tr>
+      <tr><td>Proteina krudo</td><td>~15–20% máks (algun fuente ta rekomendá te mas abou pa adulto)</td><td>Eksesivo proteina ta relashoná ku "pyramiding" i problema di kaska/ rñon.</td></tr>
+      <tr><td>Fibra krudo</td><td>~15–30%, mas halto ta generalmente mas sigur</td><td>Ta stimulá bon movementu di stoma; ta imitá e dieta salbahe.</td></tr>
+      <tr><td>Grasa</td><td>Bou di ~12–15%</td><td>Sistema digestivo di herbívoro no ta manehá grasa bon den gran kantidat.</td></tr>
+      <tr><td>Proporshon kalsio : fósforo</td><td>Por lo menos 2:1, mihó mas halto</td><td>Ta sosten densidat di kaska i wesu; un proporshon invertí ta kousa malesa metabóliko di wesu.</td></tr>
+      <tr><td>Parti di fruta den dieta total</td><td>Bou di ~10–20%, ménos pa species di desierto, mas toleré pa species tropikal</td><td>Kontenido halto di suku ta desbalansá flora di stoma i absorshon di kalsio.</td></tr>
+    </table>
+    <h3 class="sub">Tamaño di porshon</h3>
+    <p>Un regla di dedo veterinario hopi usá: duna mas o menos <strong>1–4% di peso di kurpa pa dia</strong>. Kawama chikitu i huvenil ta sinta mas serka di e parti halto di e rango ei pa motibu di krisimentu i metabolismo mas lihé; kawama adulto grandi mester un porshentahe mas chikitu di nan peso (muchu mas grandi) di kurpa.</p>
+    <h3 class="sub">Tur dia, òf no?</h3>
+    <p>E ta dependé di edat i species. Kawama hóben ku ta krisiendo aktivamente generalmente ta hasi mihó ku kuminda tur dia, ku suplementashon di kalsio ku atenshon. Hopi kawama adulto, spesialmente species Mediteráneo mas chikitu, ta hasi bon ku 3–4 kuminda pa siman en bes di kuminda tur dia. Kawama ku tin akseso pafó pa kome henter aña ta efektivamente "wòrdu alimentá tur dia" via pastu, ku alimentashon suplementario usá primeramente pa yena vaсío.</p>
+    <h3 class="sub">Kuminda pa evitá òf limitá</h3>
+    <p>Bèrdenan ku halto oxalato (spinasi, bèrde di remolacha, chard) ta mará kalsio den un forma ku e kurpa no por usa si duná muchu tantu biaha. Bèrdenan di famia Brassica (kool, kale, broccoli) den eksesivo por interferí ku absorshon di yodo. Kuminda prosesá, halto na suku, òf halto na proteina komo "delikatèsa" — inkluyendo mayoria fruta pasa un porshon chikitu okashonal — mester keda okashonal, no básiko.</p>
+    </div>
+
+    <div class="estimator" id="estimator">
+      <h3 class="sub" style="margin-top:0"><span class="lang-en">Feeding Portion Estimator</span><span class="lang-pa" style="display:none">Estimadó di Porshon di Kuminda</span></h3>
+      <p style="font-size:.85rem;margin:0 0 4px;color:var(--ink2)"><span class="lang-en">Offline estimate only — a starting point, not veterinary guidance. Adjust to your tortoise's body condition and consult an exotics vet for specifics.</span><span class="lang-pa" style="display:none">Solamente un estimashon offline — un punto di partida, no guia veterinario. Ahustá segun kondishon di kurpa di bo kawama i konsultá un doktor bèt spesialisá pa detaye.</span></p>
+      <label for="est-group"><span class="lang-en">Species group</span><span class="lang-pa" style="display:none">Grupo di species</span></label>
+      <select id="est-group">
+        <option value="desert" data-en="Desert / arid grazer (sulcata, leopard, desert tortoise)" data-pa="Kome yerba di desierto / seku (sulcata, leopardo, kawama di desierto)">Desert / arid grazer (sulcata, leopard, desert tortoise)</option>
+        <option value="med" data-en="Mediterranean (Hermann's, Greek, Russian)" data-pa="Mediteráneo (Hermann's, Griego, Ruso)">Mediterranean (Hermann's, Greek, Russian)</option>
+        <option value="trop" data-en="Tropical / forest (red-footed, radiated)" data-pa="Tropikal / mondi (pia kòrá, radiá)">Tropical / forest (red-footed, radiated)</option>
+      </select>
+      <label for="est-age"><span class="lang-en">Life stage</span><span class="lang-pa" style="display:none">Etapa di bida</span></label>
+      <select id="est-age">
+        <option value="hatch" data-en="Hatchling / juvenile (growing)" data-pa="Kriatura / huvenil (kresiendo)">Hatchling / juvenile (growing)</option>
+        <option value="adult" data-en="Adult" data-pa="Adulto">Adult</option>
+      </select>
+      <label for="est-weight"><span class="lang-en">Body weight (grams)</span><span class="lang-pa" style="display:none">Peso di kurpa (gram)</span></label>
+      <input id="est-weight" type="number" min="10" step="1" placeholder="e.g. 250">
+      <button id="est-btn" onclick="runEstimator()">Estimate daily portion</button>
+      <div id="est-result"></div>
+    </div>
+  </div>
+</div>
+
+<div id="page-play" class="page">
+  <div class="wrap">
+    <h2 class="sect">Play — Tortoise Garden</h2>
+    <div class="lang-en">
+    <p class="lede">A small, playable version of the garden you've seen wandering in the background — click the ground to plant Asystasia flowers, click a tortoise to give it a treat.</p>
+    </div>
+    <div class="lang-pa" style="display:none">
+    <p class="lede">Un vershon chikitu i hungabel di e hardin ku bo a mira wandando na fondo — klik riba suela pa planta flor di Asystasia, klik riba un kawama pa dun'é un dushi.</p>
+    </div>
+    <div class="card" style="padding:10px">
+      <div id="garden-hud" class="pillbar" style="margin:0 0 10px"></div>
+      <canvas id="garden-canvas" style="width:100%;height:420px;display:block;border-radius:4px;background:var(--paper);cursor:pointer;touch-action:manipulation;"></canvas>
+      <p style="font-size:.78rem;color:var(--ink2);margin:10px 0 0" class="lang-en">Offline, runs entirely in your browser — click empty ground to plant, click a tortoise to treat it. Population is capped so the garden never gets overcrowded.</p>
+      <p style="font-size:.78rem;color:var(--ink2);margin:10px 0 0;display:none" class="lang-pa">Offline, ta kore kompletamente den bo brwser — klik riba suela bashí pa planta, klik riba un kawama pa dun'é un dushi. Poblashon tin un límite pa e hardin nunka bira muchu yen.</p>
+    </div>
+  </div>
+</div>
+
+<footer>AVIDAA TORTOISE · signal beneath the noise · knowledge made clear · for humans and AI · Est. 2025 · AVIDAA &#215; IO</footer>
+
+<!-- ===== CHATBOT MODULE ===== -->
+<div id="chatbot">
+  <div id="chat-box">
+    <div id="chat-head">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div id="rabbit-avatar">
+          <svg id="rabbit-svg" width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+            <ellipse id="ear-l" cx="13" cy="10" rx="3.5" ry="7" fill="#3d2c18" stroke="#b9862c" stroke-width="1"/>
+            <ellipse id="ear-r" cx="25" cy="10" rx="3.5" ry="7" fill="#3d2c18" stroke="#b9862c" stroke-width="1"/>
+            <ellipse cx="13" cy="10" rx="1.8" ry="5" fill="#bd5b2a" opacity="0.5"/>
+            <ellipse cx="25" cy="10" rx="1.8" ry="5" fill="#bd5b2a" opacity="0.5"/>
+            <ellipse id="rabbit-head" cx="19" cy="22" rx="10" ry="9" fill="#3d2c18" stroke="#b9862c" stroke-width="1"/>
+            <circle id="eye-l" cx="15" cy="21" r="2" fill="#b9862c" opacity="0.9"/>
+            <circle id="eye-r" cx="23" cy="21" r="2" fill="#b9862c" opacity="0.9"/>
+            <circle cx="15" cy="21" r="1" fill="#1a1208"/>
+            <circle cx="23" cy="21" r="1" fill="#1a1208"/>
+            <circle cx="15.6" cy="20.4" r="0.4" fill="#fff" opacity="0.8"/>
+            <circle cx="23.6" cy="20.4" r="0.4" fill="#fff" opacity="0.8"/>
+            <ellipse id="nose" cx="19" cy="25" rx="1.2" ry="0.8" fill="#bd5b2a" opacity="0.8"/>
+            <path d="M17.2 26.2 Q19 27.4 20.8 26.2" fill="none" stroke="#b9862c" stroke-width="0.7" opacity="0.6"/>
+            <circle id="glow-ring" cx="19" cy="22" r="12" fill="none" stroke="#b9862c" stroke-width="0.4" opacity="0.2"/>
+          </svg>
+        </div>
+        <div class="ch-title">AVIDAA</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="ch-status"><div class="ch-dot"></div><span id="ch-status-txt">ONLINE</span></div>
+        <div class="ch-close" onclick="toggleChat()">&#x2715;</div>
+      </div>
+    </div>
+    <div id="quest-bar"><div id="quest-fill"></div></div>
+    <div id="quest-label"></div>
+    <div id="chat-msgs"></div>
+    <div id="chat-suggestions">
+      <div class="chat-sugg" id="sugg1" onclick="quickAsk('How old is Jonathan?')">Jonathan?</div>
+      <div class="chat-sugg" id="sugg2" onclick="quickAsk('What should a tortoise eat?')">Diet?</div>
+      <div class="chat-sugg" id="sugg3" onclick="quickAsk('Can tortoises swim?')">Swim?</div>
+    </div>
+    <div id="chat-input-row">
+      <input id="chat-input" placeholder="Ask about tortoises..." maxlength="200">
+      <button id="chat-send" onclick="chatSend()">&#x27A4;</button>
+    </div>
+  </div>
+  <button id="chat-toggle" onclick="toggleChat()" style="position:relative;">
+    <canvas id="pulse-ring" width="58" height="58"></canvas>
+    &#x1F422;
+  </button>
+</div>
+
+<script>
+function escHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+window.pageVisible=true;
+document.addEventListener('visibilitychange',()=>{window.pageVisible=!document.hidden;});
+
+/* ===== NAV / ROUTER (with automatic back/forward history + reset) ===== */
+let navStack=['home'],navPos=0;
+function go(id,fromHistory){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const target=document.getElementById('page-'+id);
+  if(target)target.classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.p===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(!fromHistory && navStack[navPos]!==id){
+    navStack=navStack.slice(0,navPos+1);
+    navStack.push(id);
+    navPos=navStack.length-1;
+  }
+  updateNavHistoryButtons();
+}
+function navBack(){if(navPos>0){navPos--;go(navStack[navPos],true);}}
+function navForward(){if(navPos<navStack.length-1){navPos++;go(navStack[navPos],true);}}
+function navReset(){navStack=['home'];navPos=0;go('home',true);}
+function updateNavHistoryButtons(){
+  const b=document.getElementById('nav-back'),f=document.getElementById('nav-fwd');
+  if(b)b.disabled=(navPos<=0);
+  if(f)f.disabled=(navPos>=navStack.length-1);
+}
+window.go=go;window.navBack=navBack;window.navForward=navForward;window.navReset=navReset;
+
+/* ===== LANGUAGE TOGGLE — English / Papiamentu (full page, inline, no reload) =====
+   currentLang declared later alongside SPECIES data (read by renderSpecies/renderRFQuiz);
+   forward-referenced here is fine since these functions only RUN on button click,
+   long after the whole script has finished its initial top-to-bottom pass. */
+const NAV_LABELS={home:['Home','Home'],origins:['Origins','Orígen'],species:['Species','Sorto'],
+  elders:['Elders','Mas Bieu'],purpose:['Purpose','Propósito'],eggs:['Eggs','Webunan'],
+  habitat:['Habitat','Habitat'],sun:['Sun','Solo'],water:['Water','Awa'],diet:['Diet','Dieta'],
+  play:['Play','Hunga']};
+function setLang(lang){
+  currentLang=lang;
+  const pa=lang==='pa';
+  document.body.classList.toggle('show-pa',pa);
+  document.documentElement.lang=pa?'pap':'en';
+  document.querySelectorAll('.lang-en').forEach(el=>{el.style.display=pa?'none':'';});
+  document.querySelectorAll('.lang-pa').forEach(el=>{el.style.display=pa?'':'none';});
+  const btn=document.getElementById('lang-toggle');
+  if(btn){btn.textContent=pa?'ENG':'PAP';btn.classList.toggle('pa-active',pa);btn.title=pa?'Switch language / Kambia idioma':'Switch language / Kambia idioma';}
+  document.querySelectorAll('.tab[data-p]').forEach(t=>{const l=NAV_LABELS[t.dataset.p];if(l)t.textContent=pa?l[1]:l[0];});
+  const chStat=document.getElementById('ch-status-txt');if(chStat)chStat.textContent=pa?'KONEKTÁ':'ONLINE';
+  const s1=document.getElementById('sugg1'),s2=document.getElementById('sugg2'),s3=document.getElementById('sugg3');
+  if(s1)s1.textContent=pa?'Jonathan?':'Jonathan?';
+  if(s2)s2.textContent=pa?'Dieta?':'Diet?';
+  if(s3)s3.textContent=pa?'Landa?':'Swim?';
+  const inp=document.getElementById('chat-input');if(inp)inp.placeholder=pa?'Puntra tokante kawama di tera...':'Ask about tortoises...';
+  document.querySelectorAll('#est-group option, #est-age option').forEach(o=>{
+    const t=pa?o.getAttribute('data-pa'):o.getAttribute('data-en');
+    if(t)o.textContent=t;
+  });
+  const estBtn=document.getElementById('est-btn');if(estBtn)estBtn.textContent=pa?'Estimá porshon diario':'Estimate daily portion';
+  const ageBtn=document.getElementById('age-btn');if(ageBtn)ageBtn.textContent=pa?'Estimá etapa di krisimentu i rango di edat':'Estimate growth stage & age range';
+  const estW=document.getElementById('est-weight');if(estW)estW.placeholder=pa?'p.e. 250':'e.g. 250';
+  const ageW=document.getElementById('age-weight');if(ageW)ageW.placeholder=pa?'p.e. 1.2':'e.g. 1.2';
+  const ageL=document.getElementById('age-length');if(ageL)ageL.placeholder=pa?'p.e. 18':'e.g. 18';
+  const estRes=document.getElementById('est-result');if(estRes){estRes.style.display='none';estRes.textContent='';}
+  const ageRes=document.getElementById('age-result');if(ageRes){ageRes.style.display='none';ageRes.textContent='';}
+  if(typeof initAgeEstimator==='function')initAgeEstimator();
+  if(typeof renderSpecies==='function')renderSpecies();
+}
+function toggleLang(){setLang(currentLang==='pa'?'en':'pa');}
+window.setLang=setLang;
+window.toggleLang=toggleLang;
+updateNavHistoryButtons();
+
+/* ===== ASYSTASIA FLOWER-MOTIF DIVIDER (original illustration, inserted under every section heading) ===== */
+const FLOWER_SVG = '<svg viewBox="0 0 340 34" xmlns="http://www.w3.org/2000/svg">'+
+  '<path d="M4 20 Q60 6 90 20 T170 20 T250 20 T336 20" fill="none" stroke="#4f6b34" stroke-width="2" opacity=".6"/>'+
+  [24,66,108,150,192,234,276,318].map(function(x,i){
+    var petal = (i%2===0) ? '#c79fd6' : '#f1f4e2';
+    var stroke = (i%2===0) ? '#8a5fa3' : '#b9862c';
+    var y = 20 + (i%3===0?-3:i%3===1?2:-1);
+    return '<g transform="translate('+x+','+y+')">'+
+      '<ellipse cx="0" cy="-7" rx="4.2" ry="6" fill="'+petal+'" stroke="'+stroke+'" stroke-width=".6"/>'+
+      '<ellipse cx="6.6" cy="-2" rx="4.2" ry="6" fill="'+petal+'" stroke="'+stroke+'" stroke-width=".6" transform="rotate(72 6.6 -2)"/>'+
+      '<ellipse cx="4" cy="5.6" rx="4.2" ry="6" fill="'+petal+'" stroke="'+stroke+'" stroke-width=".6" transform="rotate(144 4 5.6)"/>'+
+      '<ellipse cx="-4" cy="5.6" rx="4.2" ry="6" fill="'+petal+'" stroke="'+stroke+'" stroke-width=".6" transform="rotate(216 -4 5.6)"/>'+
+      '<ellipse cx="-6.6" cy="-2" rx="4.2" ry="6" fill="'+petal+'" stroke="'+stroke+'" stroke-width=".6" transform="rotate(288 -6.6 -2)"/>'+
+      '<circle cx="0" cy="0" r="2.6" fill="#b9862c"/>'+
+      '<path d="M0 6 q3 6 -1 11" fill="none" stroke="#4f6b34" stroke-width="1.6" stroke-linecap="round"/>'+
+    '</g>';
+  }).join('')+
+  '</svg>';
+function injectDividers(){
+  document.querySelectorAll('h2.sect').forEach(function(h){
+    var d=document.createElement('div');
+    d.className='flower-divider';
+    d.setAttribute('aria-hidden','true');
+    d.innerHTML=FLOWER_SVG;
+    h.insertAdjacentElement('afterend',d);
+  });
+}
+injectDividers();
+
+/* ===== SPECIES DATA ===== */
+const SPECIES=[
+  {name:"Galápagos giant tortoise",namePa:"Kawama gigantesko di Galápagos",sci:"Chelonoidis niger complex",region:"Galápagos Islands, Ecuador",regionPa:"Islanan Galápagos, Ecuador",size:"Up to ~250 kg, 1.8 m",life:"100–150+ years",lifePa:"100–150+ aña",status:"Vulnerable to Critically Endangered (varies by island subspecies)",statusPa:"Vulnerabel te Kritikamente Amenasá (ta varia segun subspecies di isla)",note:"The largest living tortoise; distinct island populations show saddleback or domed shells shaped by local vegetation.",notePa:"E kawama di tera bibu mas grandi; poblashonnan di isla diferente ta mustra kaska na forma di seya òf redondo formá pa vegetashon lokal."},
+  {name:"Aldabra giant tortoise",namePa:"Kawama gigantesko di Aldabra",sci:"Aldabrachelys gigantea",region:"Aldabra Atoll, Seychelles",regionPa:"Atol di Aldabra, Seychelles",size:"Up to ~250 kg",life:"100–150+ years, individuals reported well beyond",lifePa:"100–150+ aña, algun individuo reportá muchu mas ainda",status:"Vulnerable",statusPa:"Vulnerabel",note:"Jonathan belongs to a related Seychelles lineage (A. g. hololissa); one of only two giant tortoise groups to survive historical mass exploitation.",notePa:"Jonathan ta pertenesé na un liña relashoná di Seychelles (A. g. hololissa); un di solamente dos grupo di kawama gigantesko ku a sobrevivi eksplotashon masivo históriko."},
+  {name:"African spurred tortoise (Sulcata)",namePa:"Kawama spuela Afrikano (Sulcata)",sci:"Centrochelys sulcata",region:"Sahel belt, North-Central Africa",regionPa:"Faha di Sahel, Afrika Norte-Sentral",size:"Up to ~105 kg",life:"70–100+ years",lifePa:"70–100+ aña",status:"Vulnerable",statusPa:"Vulnerabel",note:"Third-largest tortoise species; a prolific digger of long burrows to escape desert heat.",notePa:"Di tres mas grandi entre e speciesnan di kawama di tera; un ekselente kabadó di buraku largu pa skapa kalor di desierto."},
+  {name:"Leopard tortoise",namePa:"Kawama leopardo",sci:"Stigmochelys pardalis",region:"Eastern &amp; Southern Africa",regionPa:"Áfrika Oriental &amp; Sur",size:"Up to ~40 kg",life:"50–100 years",lifePa:"50–100 aña",status:"Least Concern",statusPa:"Poko Preokupashon",note:"Named for its striking spotted shell pattern; a strong grazer of savanna grasses.",notePa:"Yamá pa su patronchi impreshonante di mancha riba kaska; un bon kome-yerba di sabana."},
+  {name:"Radiated tortoise",namePa:"Kawama radiá",sci:"Astrochelys radiata",region:"Southern Madagascar",regionPa:"Sur di Madagaskar",size:"Up to ~16 kg",life:"Tu'i Malila lived at least 188 years",lifePa:"Tu'i Malila a biba por lo menos 188 aña",status:"Critically Endangered",statusPa:"Kritikamente Amenasá",note:"One of the most strikingly patterned tortoises; devastated by poaching for the illegal pet trade.",notePa:"Un di e kawama ku patronchi mas impreshonante; destruí pa kasa ilegal pa komersio di mascota."},
+  {name:"Russian tortoise (Horsfield's)",namePa:"Kawama Ruso (Horsfield's)",sci:"Testudo horsfieldii",region:"Central Asian steppe &amp; desert",regionPa:"Estepa &amp; desierto Sentral-Asiátiko",size:"~1–2.5 kg",life:"40–100 years",lifePa:"40–100 aña",status:"Vulnerable",statusPa:"Vulnerabel",note:"Extensive burrower adapted to extreme seasonal temperature swings and true hibernation.",notePa:"Kabadó ekstensivo adaptá na kambio ekstremo di temperatura di temporada i hibernashon berdadero."},
+  {name:"Hermann's tortoise",namePa:"Kawama di Hermann",sci:"Testudo hermanni",region:"Southern Europe / Mediterranean",regionPa:"Sur di Oropa / Mediteráneo",size:"~2–5 kg",life:"75–100+ years",lifePa:"75–100+ aña",status:"Near Threatened",statusPa:"Serka di Amenasá",note:"A classic Mediterranean tortoise; brumates through cool winters in its native range.",notePa:"Un kawama klásiko Mediteráneo; ta brumá durante invierno friu den su área nativo."},
+  {name:"Desert tortoise",namePa:"Kawama di desierto",sci:"Gopherus agassizii",region:"Mojave &amp; Sonoran deserts, USA/Mexico",regionPa:"Desiertonan Mojave &amp; Sonora, EU/Mékiko",size:"~5–7 kg",life:"50–80 years",lifePa:"50–80 aña",status:"Threatened / Vulnerable",statusPa:"Amenasá / Vulnerabel",note:"A true ecosystem engineer — its burrows shelter hundreds of other desert species.",notePa:"Un berdadero ingeniero di ekosistema — su burakunan ta duna refugio na shen di otro species di desierto."},
+  {name:"Red-footed tortoise",namePa:"Kawama pia kòrá",sci:"Chelonoidis carbonarius",region:"Northern &amp; Central South America",regionPa:"Norte &amp; Sentro di Suramérika",size:"~4–13 kg",life:"50+ years, some captive accounts well beyond",lifePa:"50+ aña, algun kaso den kautiverio muchu mas ainda",status:"Least Concern (regionally variable)",statusPa:"Poko Preokupashon (ta varia pa region)",note:"A tropical forest species tolerant of more fruit and some animal protein than desert relatives.",notePa:"Un species di mondi tropikal ku ta tolerá mas fruta i un poko proteina animal ku su parientenan di desierto.",
+   extra:"Ranges across the Amazon basin, the Guianas, and neighboring parts of Venezuela, Colombia, Bolivia, Brazil, Paraguay, and Trinidad, moving between humid forest and savanna-transition habitat. Its name comes from the reddish-orange scaled patches on its legs and head — not its diet or shell color. The carapace is slightly elongated and somewhat hourglass-shaped, dark overall with pale gold scute centers (areolae), the same coloring pattern in the illustration above. Diet is more opportunistic than a desert grazer's: alongside leafy greens and grasses, wild red-foots take fallen fruit, fungi, and occasionally carrion or invertebrates. Males are also unusual among tortoises for vocalizing — a clucking sound used during courtship head-bobbing displays.",
+   extraPa:"Ta biba den henter e kuenka di Amazonas, e Guiananan, i partinan bisiña di Venezuela, Kolombia, Bolivia, Brazil, Paraguay, i Trinidad, moviendo entre mondi humedo i habitat di transishon pa sabana. Su nòmber ta bini for di e mancha di eskama koló oraño-kòrá riba su pianan i kabes — no di su dieta ni koló di kaska. E karapas ta un tiki largu i un poko na forma di reloj di aria, skur en general ku sentro di scute (areolae) na koló oro suave, e mesun patronchi di koló den e ilustrashon ariba. Dieta ta mas oportunístiko ku un kome-yerba di desierto: huntu ku bèrde i yerba, e pia-kòrá salbahe ta kome fruta kaí, fungi, i okashonalmente karoña òf invertebrado. Machonan tambe ta straño entre kawama pa nan vokalisashon — un zonido di kluk usá durante ekshibishon di kortesio ku move kabes.",
+   quiz:true}
+];
+let currentLang='en';
+function renderSpecies(){
+  const el=document.getElementById('species-list');
+  const pa=currentLang==='pa';
+  el.innerHTML=SPECIES.map(s=>
+    '<div class="card" style="margin-bottom:14px"><h3 class="sub" style="margin-top:0">'+escHtml(pa?s.namePa:s.name)+'</h3>'+
+    '<p style="font-family:var(--f-mono);font-size:.78rem;color:var(--olive2);margin:0 0 8px">'+escHtml(s.sci)+' &middot; '+(pa?s.regionPa:s.region)+'</p>'+
+    '<div class="pillbar"><span class="pill">'+escHtml(s.size)+'</span><span class="pill">'+escHtml(pa?s.lifePa:s.life)+'</span><span class="pill'+(s.status.includes('Endangered')||s.status.includes('Threatened')||s.status.includes('Vulnerable')?' warn':'')+'">'+escHtml(pa?s.statusPa:s.status)+'</span></div>'+
+    '<p style="margin:0">'+escHtml(pa?s.notePa:s.note)+'</p>'+
+    (s.extra?'<p style="margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line)">'+escHtml(pa?s.extraPa:s.extra)+'</p>':'')+
+    (s.quiz?'<div id="rf-quiz-mount"></div>':'')+
+    '</div>'
+  ).join('');
+  if(document.getElementById('rf-quiz-mount'))renderRFQuiz();
+}
+
+/* ===== RED-FOOTED TORTOISE — INTERACTIVE LEARNING QUIZ (offline, scored) =====
+   Declared before renderSpecies() runs, since renderSpecies() -> renderRFQuiz()
+   reads RF_QUIZ/rfIdx immediately — these must exist before that call, not after. */
+const RF_QUIZ=[
+  {q:"What gives the red-footed tortoise its name?",
+   qPa:"Kiko ta duna e kawama pia kòrá su nòmber?",
+   opts:["A diet of red berries","Reddish-orange scales on its legs and head","Red eyes","A red-colored shell"],
+   optsPa:["Un dieta di bèi kòrá","Eskama koló oraño-kòrá riba su pianan i kabes","Wowo kòrá","Un kaska koló kòrá"],
+   correct:1,
+   explain:"The name comes from the reddish-orange scaled patches on the legs and head — not diet or shell color.",
+   explainPa:"E nòmber ta bini for di e mancha di eskama koló oraño-kòrá riba pianan i kabes — no di dieta ni koló di kaska."},
+  {q:"Compared to a desert-grazing tortoise, the red-footed tortoise's diet is:",
+   qPa:"Kompará ku un kawama ku ta kome yerba di desierto, e dieta di kawama pia kòrá ta:",
+   opts:["Strict grass-only grazing","Semi-omnivorous — fallen fruit, fungi, and occasional invertebrates or carrion","Exclusively carnivorous","Cactus-only"],
+   optsPa:["Solamente yerba, strikto","Semi-omnívoro — fruta kaí, fungi, i okashonalmente invertebrado òf karoña","Eksklusivamente karnívoro","Solamente kaktus"],
+   correct:1,
+   explain:"As a tropical forest species it's more opportunistic than strict desert grazers, occasionally taking fruit, fungi, and animal matter.",
+   explainPa:"Komo un species di mondi tropikal e ta mas oportunístiko ku kome-yerba strikto di desierto, okashonalmente kome fruta, fungi, i materia animal."},
+  {q:"Where is the red-footed tortoise native to?",
+   qPa:"Unda e kawama pia kòrá ta nativo di dje?",
+   opts:["The Sahara desert","The Central Asian steppe","Northern and Central South America","The Mediterranean coast"],
+   optsPa:["Desierto di Sahara","Estepa Sentral-Asiátiko","Norte i Sentro di Suramérika","Kosta Mediteráneo"],
+   correct:2,
+   explain:"It ranges across the Amazon basin, the Guianas, and neighboring South American countries.",
+   explainPa:"E ta biba den henter e kuenka di Amazonas, e Guiananan, i paisnan bisiña di Suramérika."},
+  {q:"What best describes its shell?",
+   qPa:"Kua ta e mihó deskripshon di su kaska?",
+   opts:["Flat, pancake-shaped","Slightly elongated and hourglass-shaped, dark with pale gold scute centers","Fully retractable and hinged shut","Soft and leathery"],
+   optsPa:["Plat, forma di pankeku","Un tiki largu i na forma di reloj di aria, skur ku sentro di scute koló oro suave","Kompletamente por sera kompletamente","Blandu manera kueru"],
+   correct:1,
+   explain:"The dark shell with pale gold areolae (scute centers) is the same pattern shown in the illustration on the Home page.",
+   explainPa:"E kaska skur ku areolae (sentro di scute) koló oro suave ta e mesun patronchi mustrá den e ilustrashon riba e página Home."},
+  {q:"A courtship behavior sometimes seen in males is:",
+   qPa:"Un komportashon di kortesio algun biaha bistá den machonan ta:",
+   opts:["Year-round burrow hibernation","Head-bobbing paired with clucking vocalizations","Group migration in large herds","Strictly nocturnal activity"],
+   optsPa:["Hibernashon den buraku henter aña","Move kabes huntu ku zonido di \"cluck\"","Migrashon na grupo den tou grandi","Aktividat strikto nokturno"],
+   correct:1,
+   explain:"Red-footed tortoises are one of the few tortoises known to vocalize — males cluck during head-bobbing courtship displays.",
+   explainPa:"Kawama pia kòrá ta un di e poko kawama konosí pa vokalisá — machonan ta hasi zonido di \"cluck\" durante ekshibishon di kortesio ku move kabes."}
+];
+let rfIdx=0, rfScore=0, rfAnswered=false;
+renderSpecies();
+
+function renderRFQuiz(){
+  rfIdx=0;rfScore=0;rfAnswered=false;
+  const mount=document.getElementById('rf-quiz-mount');
+  if(!mount)return;
+  const pa=currentLang==='pa';
+  mount.innerHTML='<div class="estimator" style="margin-top:16px">'+
+    '<h3 class="sub" style="margin-top:0">'+(pa?'Siña: Kawama Pia Kòrá':'Learn: Red-Footed Tortoise')+'</h3>'+
+    '<p style="font-size:.85rem;margin:0 0 4px;color:var(--ink2)">'+(pa?'Un quiz offline kòrtiku — sinku pregunta, ku puntu, ku un splikashon despues di kada kontestá.':'A short offline quiz — five questions, scored, with an explanation after each answer.')+'</p>'+
+    '<div id="rf-quiz-body"></div></div>';
+  rfShowQuestion();
+}
+function rfShowQuestion(){
+  const body=document.getElementById('rf-quiz-body');if(!body)return;
+  const pa=currentLang==='pa';
+  rfAnswered=false;
+  if(rfIdx>=RF_QUIZ.length){
+    let tier=pa
+      ?((rfScore===5)?'Nivel di naturalista — puntu perfekto.':(rfScore>=3)?'Bon konosementu di e species.':'Bal la pena lesa e kaart ariba atrobe.')
+      :((rfScore===5)?'Naturalist-grade — perfect score.':(rfScore>=3)?'Solid grasp of the species.':'Worth a re-read of the card above.');
+    body.innerHTML='<p style="font-family:var(--f-mono);font-size:.92rem;margin:14px 0 6px">'+(pa?'Puntu':'Score')+': '+rfScore+' / '+RF_QUIZ.length+' — '+escHtml(tier)+'</p>'+
+      '<button onclick="renderRFQuiz()">'+(pa?'Purba atrobe':'Try again')+'</button>';
+    return;
+  }
+  const q=RF_QUIZ[rfIdx];
+  const opts=pa?q.optsPa:q.opts;
+  body.innerHTML='<p style="font-family:var(--f-mono);font-size:.7rem;letter-spacing:1px;color:var(--olive2);text-transform:uppercase;margin:14px 0 4px">'+(pa?'Pregunta '+(rfIdx+1)+' di '+RF_QUIZ.length:'Question '+(rfIdx+1)+' of '+RF_QUIZ.length)+'</p>'+
+    '<p style="font-weight:600;margin:0 0 10px">'+escHtml(pa?q.qPa:q.q)+'</p>'+
+    opts.map((o,i)=>'<button type="button" style="display:block;width:100%;text-align:left;margin-bottom:8px;background:var(--sand2);color:var(--ink);border:1px solid var(--line)" onclick="rfAnswer('+i+')">'+escHtml(o)+'</button>').join('')+
+    '<div id="rf-feedback"></div>';
+}
+function rfAnswer(i){
+  if(rfAnswered)return;
+  rfAnswered=true;
+  const pa=currentLang==='pa';
+  const q=RF_QUIZ[rfIdx];
+  const correct=(i===q.correct);
+  if(correct)rfScore++;
+  const fb=document.getElementById('rf-feedback');
+  fb.style.cssText='margin-top:10px;padding:12px;border-left:3px solid '+(correct?'var(--olive)':'var(--terracotta)')+';background:rgba(79,107,52,.08);font-size:.88rem;';
+  fb.innerHTML='<strong>'+(correct?(pa?'Korekto.':'Correct.'):(pa?'No masha bon.':'Not quite.'))+'</strong> '+escHtml(pa?q.explainPa:q.explain)+
+    '<div style="margin-top:10px"><button onclick="rfNext()">'+(rfIdx+1<RF_QUIZ.length?(pa?'Siguiente pregunta':'Next question'):(pa?'Wak puntu':'See score'))+'</button></div>';
+}
+function rfNext(){rfIdx++;rfShowQuestion();}
+window.rfAnswer=rfAnswer;
+window.rfNext=rfNext;
+window.renderRFQuiz=renderRFQuiz;
+
+/* ===== FEEDING ESTIMATOR — offline, rule-based, not medical advice ===== */
+function runEstimator(){
+  const pa=currentLang==='pa';
+  const group=document.getElementById('est-group').value;
+  const age=document.getElementById('est-age').value;
+  const w=parseFloat(document.getElementById('est-weight').value);
+  const box=document.getElementById('est-result');
+  box.style.display='block';
+  if(!w||w<=0){box.textContent=pa?'Delná un peso di kurpa na gram pa estimá un porshon.':'Enter a body weight in grams to estimate a portion.';return;}
+  let lowPct,highPct,freq,notes;
+  if(age==='hatch'){lowPct=2.5;highPct=4;freq=pa?'Tur dia':'Daily';}
+  else{lowPct=1;highPct=2.5;freq=pa?((group==='med')?'3–4x pa siman (òf kuminda chikitu tur dia)':'Tur dia te kasi tur dia, ahustá segun kondishon di kurpa'):((group==='med')?'3–4x per week (or small daily meals)':'Daily to near-daily, adjusted to body condition');}
+  if(group==='desert'){notes=pa?'Dieta mester ta ~80–90% yerba, hooi, i mata; minimal fruta.':'Diet should be ~80–90% grasses, hay, and weeds; minimal fruit.';}
+  else if(group==='med'){notes=pa?'Yerba i bèrde halto na fibra; fruta solamente komo delikatèsa okashonal.':'High-fiber weeds and leafy greens; fruit only as an occasional treat.';}
+  else{notes=pa?'Bèrde komo base, ku un tiki mas fruta toleré ku species di desierto.':'Leafy greens as the base, with modestly more fruit tolerated than desert species.';}
+  const lowG=(w*lowPct/100).toFixed(1), highG=(w*highPct/100).toFixed(1);
+  box.textContent=pa
+    ?('Porshon diario estimá: '+lowG+'–'+highG+' g ('+lowPct+'–'+highPct+'% di peso di kurpa)\nFrekuensia di alimentashon: '+freq+'\nKomposishon di dieta: '+notes+'\nSemper kombiná ku un proporshon kalsio:fósforo di 2:1 òf mas i eksposishon apropiado na UVB.')
+    :('Estimated daily portion: '+lowG+'–'+highG+' g ('+lowPct+'–'+highPct+'% of body weight)\nFeeding frequency: '+freq+'\nDiet composition: '+notes+'\nAlways pair with a 2:1+ calcium:phosphorus ratio and appropriate UVB exposure.');
+}
+window.runEstimator=runEstimator;
+
+/* ===== GROWTH-STAGE & AGE-RANGE ESTIMATOR — offline, rule-based, deliberately approximate =====
+   Sizes are typical adult benchmarks (representative single values, not species maxima).
+   Maturity age ranges are broad, sourced estimates — individual and captive/wild variation is large.
+   Method: ratio = current size / typical adult size (weight and length averaged if both given).
+   Below full adult size, stage + a rough age band is estimated by scaling toward the maturity age.
+   At/above adult size, age is explicitly reported as indeterminate from size alone. */
+const AGE_DATA=[
+  {name:"Galápagos giant tortoise",namePa:"Kawama gigantesko di Galápagos",wKg:150,lCm:120,matureLow:20,matureHigh:25},
+  {name:"Aldabra giant tortoise",namePa:"Kawama gigantesko di Aldabra",wKg:150,lCm:110,matureLow:20,matureHigh:25},
+  {name:"African spurred tortoise (Sulcata)",namePa:"Kawama spuela Afrikano (Sulcata)",wKg:60,lCm:65,matureLow:15,matureHigh:20},
+  {name:"Leopard tortoise",namePa:"Kawama leopardo",wKg:20,lCm:45,matureLow:10,matureHigh:15},
+  {name:"Radiated tortoise",namePa:"Kawama radiá",wKg:10,lCm:38,matureLow:20,matureHigh:25},
+  {name:"Russian tortoise (Horsfield's)",namePa:"Kawama Ruso (Horsfield's)",wKg:1.2,lCm:20,matureLow:8,matureHigh:10},
+  {name:"Hermann's tortoise",namePa:"Kawama di Hermann",wKg:3,lCm:25,matureLow:8,matureHigh:12},
+  {name:"Desert tortoise",namePa:"Kawama di desierto",wKg:4,lCm:25,matureLow:15,matureHigh:20},
+  {name:"Red-footed tortoise",namePa:"Kawama pia kòrá",wKg:8,lCm:35,matureLow:8,matureHigh:15}
+];
+function initAgeEstimator(){
+  const sel=document.getElementById('age-species');if(!sel)return;
+  const pa=currentLang==='pa';
+  const prevVal=sel.value;
+  sel.innerHTML=AGE_DATA.map(function(a){return '<option value="'+escHtml(a.name)+'">'+escHtml(pa?a.namePa:a.name)+'</option>';}).join('');
+  if(prevVal)sel.value=prevVal;
+}
+initAgeEstimator();
+function runAgeEstimator(){
+  const pa=currentLang==='pa';
+  const box=document.getElementById('age-result');box.style.display='block';
+  const name=document.getElementById('age-species').value;
+  const a=AGE_DATA.find(function(x){return x.name===name;});
+  const w=parseFloat(document.getElementById('age-weight').value);
+  const l=parseFloat(document.getElementById('age-length').value);
+  if(!a){box.textContent=pa?'Skohe un species.':'Choose a species.';return;}
+  if((!w||w<=0)&&(!l||l<=0)){box.textContent=pa?'Delná un peso aktual òf largura di kaska pa estimá etapa di krisimentu.':'Enter a current weight or shell length to estimate growth stage.';return;}
+  const ratios=[];
+  if(w&&w>0)ratios.push(Math.min(w/a.wKg,1.4));
+  if(l&&l>0)ratios.push(Math.min(l/a.lCm,1.4));
+  const ratio=ratios.reduce(function(s,r){return s+r;},0)/ratios.length;
+  let stage,ageBand;
+  if(pa){
+    if(ratio<0.05){stage='Kriatura';ageBand='tipikamente bou di 1 aña bieu';}
+    else if(ratio<0.25){stage='Huvenil';ageBand='muy mas o menos '+Math.max(1,Math.round(a.matureLow*0.15))+'–'+Math.round(a.matureLow*0.4)+' aña bieu';}
+    else if(ratio<0.6){stage='Subadulto';ageBand='muy mas o menos '+Math.round(a.matureLow*0.4)+'–'+Math.round(a.matureLow*0.85)+' aña bieu, serka di madurez';}
+    else{stage='Tamaño di adulto';ageBand='edat no por wòrdu estimá konfiabelmente for di tamaño so — kaminda ku sea for di mas o menos '+a.matureLow+'–'+a.matureHigh+' aña (e edat di madurez tipiko di e species) te e duracion di bida ekstremo ku e species por yega.';}
+    box.textContent='Species: '+a.namePa+'\nEtapa di krisimentu estimá: '+stage+' (~'+Math.round(ratio*100)+'% di tamaño tipiko di adulto)\nEstimashon di edat: '+ageBand+'\n\nEsaki ta un estimashon edukativo aproksimativo, no un midimentu — kawama den kautiverio ku dieta rijo i kalor konsistente komunmente ta krese mas lihé ku esnan salbahe, i variashon individual ta real. Un fecha di nasementu konosí òf un eksámen di doktor bèt pa reptil ta semper mas konfiabel ku tamaño so.';
+    return;
+  }
+  if(ratio<0.05){stage='Hatchling';ageBand='typically under 1 year old';}
+  else if(ratio<0.25){stage='Juvenile';ageBand='very roughly '+Math.max(1,Math.round(a.matureLow*0.15))+'–'+Math.round(a.matureLow*0.4)+' years old';}
+  else if(ratio<0.6){stage='Subadult';ageBand='very roughly '+Math.round(a.matureLow*0.4)+'–'+Math.round(a.matureLow*0.85)+' years old, approaching maturity';}
+  else{stage='Adult-sized';ageBand='age cannot be reliably estimated from size alone — anywhere from roughly '+a.matureLow+'–'+a.matureHigh+' years (its species\u2019 typical maturity age) up to the extreme longevity that species can reach.';}
+  box.textContent='Species: '+a.name+'\nEstimated growth stage: '+stage+' (~'+Math.round(ratio*100)+'% of typical adult size)\nAge estimate: '+ageBand+'\n\nThis is a rough educational estimate, not a measurement — captive tortoises with rich diet and consistent heat commonly grow faster than wild ones, and individual variation is real. A known hatch date or a reptile vet exam is always more reliable than size alone.';
+}
+window.runAgeEstimator=runAgeEstimator;
+
+/* ===== AMBIENT GENERATIVE BACKGROUND — savanna heat-shimmer + scutes + seeds ===== */
+(function(){
+  const cv=document.getElementById('ambient');if(!cv)return;
+  const cx=cv.getContext('2d');
+  function resize(){cv.width=innerWidth;cv.height=innerHeight;}
+  resize();window.addEventListener('resize',resize);
+  const scutes=[];
+  for(let i=0;i<14;i++)scutes.push({x:Math.random()*innerWidth,y:innerHeight+Math.random()*innerHeight,r:18+Math.random()*26,sp:.12+Math.random()*.18,rot:Math.random()*Math.PI,rs:(Math.random()-.5)*.002,a:.06+Math.random()*.08});
+  function hexPath(x,y,r,rot){
+    cx.beginPath();
+    for(let i=0;i<6;i++){const ang=rot+i*Math.PI/3;const px=x+r*Math.cos(ang),py=y+r*Math.sin(ang);i===0?cx.moveTo(px,py):cx.lineTo(px,py);}
+    cx.closePath();
+  }
+
+  /* ===== ground Asystasia flowers — the tortoises' forage ===== */
+  const FLOWER_N=16, flowers=[];
+  function spawnFlower(i){
+    flowers[i]={x:Math.random()*innerWidth,y:Math.random()*innerHeight,purple:Math.random()<0.55,growth:0,eaten:false,respawnAt:0};
+  }
+  for(let i=0;i<FLOWER_N;i++){spawnFlower(i);flowers[i].growth=1;}
+  function drawFlower(f){
+    if(f.growth<=0)return;
+    const g=f.growth, petalR=6*g, petalRy=8.6*g;
+    const petal=f.purple?'rgba(199,159,214,.5)':'rgba(248,241,222,.65)';
+    const stroke=f.purple?'rgba(138,95,163,.45)':'rgba(185,134,44,.4)';
+    for(let i=0;i<5;i++){
+      cx.save();cx.translate(f.x,f.y);cx.rotate(i*Math.PI*2/5);
+      cx.beginPath();cx.ellipse(0,-petalRy*.7,petalR*.7,petalRy*.7,0,0,Math.PI*2);
+      cx.fillStyle=petal;cx.fill();cx.lineWidth=.6;cx.strokeStyle=stroke;cx.stroke();
+      cx.restore();
+    }
+    cx.beginPath();cx.arc(f.x,f.y,2.4*g,0,Math.PI*2);cx.fillStyle='rgba(185,134,44,.55)';cx.fill();
+  }
+
+  /* ===== fading ground marks (poop / pee) — brief, abstract, no gore ===== */
+  const marks=[];
+  function drawMarks(){
+    for(let i=marks.length-1;i>=0;i--){
+      const m=marks[i];m.age++;
+      const life=m.kind==='poop'?520:420;
+      const a=Math.max(0,1-m.age/life);
+      if(a<=0){marks.splice(i,1);continue;}
+      if(m.kind==='poop'){
+        cx.fillStyle='rgba(61,44,24,'+(a*.5)+')';
+        cx.beginPath();cx.ellipse(m.x-3,m.y,3,2.2,0,0,Math.PI*2);cx.fill();
+        cx.beginPath();cx.ellipse(m.x+2,m.y+1,2.6,2,0,0,Math.PI*2);cx.fill();
+      }else{
+        cx.fillStyle='rgba(201,178,90,'+(a*.28)+')';
+        cx.beginPath();cx.ellipse(m.x,m.y,7,4,0,0,Math.PI*2);cx.fill();
+        cx.strokeStyle='rgba(201,178,90,'+(a*.35)+')';cx.lineWidth=1;
+        cx.beginPath();cx.moveTo(m.x-1,m.y-5);cx.lineTo(m.x-1,m.y-1);cx.stroke();
+      }
+    }
+  }
+
+  /* ===== AI tortoises — wander, seek nearest ripe flower, eat it, occasionally poop/pee =====
+     Full lifecycle across 3 growth stages (baby -> subadult -> adult), tied to age:
+     - Eating grows a tortoise's size a little on top of its stage baseline.
+     - Two ADULT tortoises that wander close together have a small chance to pair up
+       ("happy" mate state) and produce one egg between them.
+     - Eggs incubate, then hatch into a new baby tortoise (population capped).
+     - Every tortoise has a randomized lifespan; once reached, it fades out and is
+       removed — so the population keeps turning over (births vs deaths) instead of
+       just growing to the cap and sitting there. */
+  const TORT_N=4, TORT_CAP=9, torts=[], eggs=[];
+  const BABY_AGE=700, SUBADULT_AGE=1800;
+  function stageOf(age){return age<BABY_AGE?'baby':(age<SUBADULT_AGE?'subadult':'adult');}
+  function baseSizeFor(stage){return stage==='baby'?0.45:(stage==='subadult'?0.75:1.0);}
+  function makeTortoise(x,y,age){
+    const a=age!==undefined?age:0;
+    return {x,y,ang:Math.random()*Math.PI*2,speed:.28+Math.random()*.22,state:'walk',timer:0,
+      target:-1,age:a,stage:stageOf(a),eatBonus:0,size:baseSizeFor(stageOf(a)),
+      lifespan:5000+Math.random()*4000,mateCooldown:0,mateLeader:false};
+  }
+  for(let i=0;i<TORT_N;i++)torts.push(makeTortoise(Math.random()*innerWidth,Math.random()*innerHeight,SUBADULT_AGE+Math.random()*2000));
+  function nearestFlower(t){
+    let best=-1,bd=90;
+    flowers.forEach((f,i)=>{if(f.growth<0.6||f.eaten)return;const d=Math.hypot(f.x-t.x,f.y-t.y);if(d<bd){bd=d;best=i;}});
+    return best;
+  }
+  function checkMating(){
+    for(let i=0;i<torts.length;i++){
+      const a=torts[i];
+      if(a.stage!=='adult'||a.state!=='walk'||a.mateCooldown>0)continue;
+      if(torts.length+eggs.length>=TORT_CAP)continue;
+      for(let j=i+1;j<torts.length;j++){
+        const b=torts[j];
+        if(b.stage!=='adult'||b.state!=='walk'||b.mateCooldown>0)continue;
+        if(Math.hypot(a.x-b.x,a.y-b.y)<16 && Math.random()<0.02){
+          a.state='mate';a.timer=55;a.mateLeader=true;
+          b.state='mate';b.timer=55;b.mateLeader=false;
+          break;
+        }
+      }
+    }
+  }
+  function drawTortoise(t){
+    let alpha=1;
+    if(t.state==='die')alpha=Math.max(0,t.timer/70);
+    cx.save();cx.globalAlpha=alpha;cx.translate(t.x,t.y);cx.rotate(t.ang);cx.scale(t.size,t.size);
+    cx.fillStyle='rgba(58,42,26,.5)';
+    cx.beginPath();cx.ellipse(0,0,10,7.5,0,0,Math.PI*2);cx.fill();
+    cx.strokeStyle='rgba(36,26,16,.45)';cx.lineWidth=1;
+    cx.beginPath();cx.moveTo(-6,0);cx.lineTo(6,0);cx.moveTo(0,-5.5);cx.lineTo(0,5.5);cx.stroke();
+    cx.fillStyle='rgba(201,162,74,.45)';
+    cx.beginPath();cx.ellipse(0,0,3.4,2.6,0,0,Math.PI*2);cx.fill();
+    cx.fillStyle='rgba(58,42,26,.55)';
+    cx.beginPath();cx.ellipse(9.5,0,3,2.4,0,0,Math.PI*2);cx.fill();
+    [[-6,-6],[6,-6],[-6,6],[6,6]].forEach(([lx,ly])=>{cx.beginPath();cx.ellipse(lx,ly,2,1.6,0,0,Math.PI*2);cx.fill();});
+    if(t.state==='mate'){
+      cx.fillStyle='rgba(189,91,42,.6)';
+      cx.beginPath();cx.arc(0,-12,2.4,0,Math.PI*2);cx.fill();
+    }
+    cx.restore();
+    cx.globalAlpha=1;
+  }
+  function drawEgg(e){
+    const a=Math.min(1,e.age/40);
+    cx.fillStyle='rgba(238,230,200,'+(.7*a)+')';
+    cx.strokeStyle='rgba(107,122,74,'+(.4*a)+')';cx.lineWidth=1;
+    cx.beginPath();cx.ellipse(e.x,e.y,4.2,5.6,0,0,Math.PI*2);cx.fill();cx.stroke();
+  }
+  function updateTortoise(t){
+    t.age++;
+    if(t.mateCooldown>0)t.mateCooldown--;
+    if(t.state!=='die'){
+      t.stage=stageOf(t.age);
+      t.size=Math.min(1.3,baseSizeFor(t.stage)+t.eatBonus);
+      if(t.age>=t.lifespan){t.state='die';t.timer=70;return;}
+    }
+    if(t.state==='walk'){
+      t.ang+=(Math.random()-.5)*.05;
+      t.x+=Math.cos(t.ang)*t.speed;t.y+=Math.sin(t.ang)*t.speed;
+      if(t.x<10){t.x=10;t.ang=Math.PI-t.ang;} if(t.x>cv.width-10){t.x=cv.width-10;t.ang=Math.PI-t.ang;}
+      if(t.y<10){t.y=10;t.ang=-t.ang;} if(t.y>cv.height-10){t.y=cv.height-10;t.ang=-t.ang;}
+      const fi=nearestFlower(t);
+      if(fi>=0){
+        const f=flowers[fi];
+        if(Math.hypot(f.x-t.x,f.y-t.y)<14){t.state='eat';t.target=fi;t.timer=70;}
+        else{t.ang=Math.atan2(f.y-t.y,f.x-t.x)+((Math.random()-.5)*.15);}
+      }
+      if(Math.random()<0.0016){t.state='poop';t.timer=34;marks.push({kind:'poop',x:t.x,y:t.y,age:0});}
+      else if(Math.random()<0.0016){t.state='pee';t.timer=26;marks.push({kind:'pee',x:t.x,y:t.y,age:0});}
+    }else if(t.state==='eat'){
+      const f=flowers[t.target];
+      if(f){f.growth=Math.max(0,f.growth-1/70);}
+      t.timer--;
+      if(t.timer<=0||!f||f.growth<=0){
+        if(f){f.eaten=true;f.growth=0;f.respawnAt=240+Math.random()*300;}
+        t.eatBonus=Math.min(0.25,t.eatBonus+0.03);
+        t.state='walk';t.ang=Math.random()*Math.PI*2;
+      }
+    }else if(t.state==='mate'){
+      t.timer--;
+      if(t.timer<=0){
+        t.mateCooldown=280+Math.random()*160;
+        if(t.mateLeader && torts.length+eggs.length<TORT_CAP){
+          eggs.push({x:t.x,y:t.y+9,age:0,hatch:480+Math.random()*360});
+        }
+        t.state='walk';t.ang=Math.random()*Math.PI*2;
+      }
+    }else if(t.state==='die'){
+      t.timer--;
+    }else{ /* poop / pee — brief pause */
+      t.timer--;
+      if(t.timer<=0)t.state='walk';
+    }
+  }
+  function updateFlowers(){
+    flowers.forEach(f=>{
+      if(f.eaten){
+        f.respawnAt--;
+        if(f.respawnAt<=0){f.x=Math.random()*cv.width;f.y=Math.random()*cv.height;f.purple=Math.random()<0.55;f.eaten=false;f.growth=0.02;}
+      }else if(f.growth<1 && f.growth>0){f.growth=Math.min(1,f.growth+0.004);}
+    });
+  }
+  function updateEggs(){
+    for(let i=eggs.length-1;i>=0;i--){
+      const e=eggs[i];e.age++;e.hatch--;
+      if(e.hatch<=0){
+        if(torts.length<TORT_CAP)torts.push(makeTortoise(e.x,e.y,0));
+        eggs.splice(i,1);
+      }
+    }
+  }
+
+  let t=0;
+  function tick(){
+    t+=.01;
+    cx.clearRect(0,0,cv.width,cv.height);
+    const gx=cv.width*.82,gy=cv.height*.08;
+    const grad=cx.createRadialGradient(gx,gy,0,gx,gy,cv.width*.6);
+    grad.addColorStop(0,'rgba(185,134,44,'+(0.10+Math.sin(t*.3)*.03)+')');
+    grad.addColorStop(1,'rgba(185,134,44,0)');
+    cx.fillStyle=grad;cx.fillRect(0,0,cv.width,cv.height);
+    scutes.forEach(s=>{
+      s.y-=s.sp;s.rot+=s.rs;
+      if(s.y<-60){s.y=cv.height+60;s.x=Math.random()*cv.width;}
+      cx.strokeStyle='rgba(80,92,55,'+s.a+')';cx.lineWidth=1.4;
+      hexPath(s.x,s.y,s.r,s.rot);cx.stroke();
+    });
+    updateFlowers();
+    flowers.forEach(drawFlower);
+    drawMarks();
+    updateEggs();
+    eggs.forEach(drawEgg);
+    checkMating();
+    torts.forEach(tt=>{updateTortoise(tt);drawTortoise(tt);});
+    for(let i=torts.length-1;i>=0;i--){if(torts[i].state==='die'&&torts[i].timer<=0)torts.splice(i,1);}
+    if(torts.length===0)torts.push(makeTortoise(Math.random()*cv.width,Math.random()*cv.height,SUBADULT_AGE));
+    if(window.pageVisible)requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ===== PLAY — TORTOISE GARDEN (interactive game, Play tab only) =====
+   A separate, clickable instance of the same lifecycle sim: click empty
+   ground to plant an Asystasia flower, click a tortoise to treat it (instant
+   small growth + happy flash). Fully offline, own population cap, own
+   generations-hatched counter shown in the HUD. Independent from the
+   sitewide ambient background sim above — different canvas, own closures,
+   no shared state or naming collisions (separate IIFE scope). */
+(function(){
+  const cv=document.getElementById('garden-canvas');if(!cv)return;
+  const cx=cv.getContext('2d');
+  const pageEl=document.getElementById('page-play');
+  function isPageActive(){return pageEl&&pageEl.classList.contains('active');}
+  function resize(){
+    const w=cv.clientWidth||600,h=cv.clientHeight||420;
+    if(cv.width!==w)cv.width=w;
+    if(cv.height!==h)cv.height=h;
+  }
+  window.addEventListener('resize',resize);
+
+  const G_CAP=10, G_BABY_AGE=500, G_SUBADULT_AGE=1300;
+  let generationsHatched=0;
+  function gStageOf(age){return age<G_BABY_AGE?'baby':(age<G_SUBADULT_AGE?'subadult':'adult');}
+  function gBaseSize(stage){return stage==='baby'?0.5:(stage==='subadult'?0.8:1.05);}
+  function makeGTort(x,y,age){
+    const a=age!==undefined?age:0;
+    return {x,y,ang:Math.random()*Math.PI*2,speed:.3+Math.random()*.2,state:'walk',timer:0,
+      target:-1,age:a,stage:gStageOf(a),eatBonus:0,size:gBaseSize(gStageOf(a)),
+      lifespan:6000+Math.random()*4500,mateCooldown:0,mateLeader:false,happy:0};
+  }
+  const gTorts=[],gFlowers=[],gEggs=[],gMarks=[];
+  for(let i=0;i<3;i++)gTorts.push(makeGTort(80+Math.random()*440,60+Math.random()*300,G_SUBADULT_AGE+Math.random()*1500));
+  for(let i=0;i<8;i++)gFlowers.push({x:40+Math.random()*520,y:40+Math.random()*340,purple:Math.random()<0.55,growth:1,eaten:false,respawnAt:0});
+
+  function gNearestFlower(t){
+    let best=-1,bd=90;
+    gFlowers.forEach((f,i)=>{if(f.growth<0.6||f.eaten)return;const d=Math.hypot(f.x-t.x,f.y-t.y);if(d<bd){bd=d;best=i;}});
+    return best;
+  }
+  function gCheckMating(){
+    for(let i=0;i<gTorts.length;i++){
+      const a=gTorts[i];
+      if(a.stage!=='adult'||a.state!=='walk'||a.mateCooldown>0)continue;
+      if(gTorts.length+gEggs.length>=G_CAP)continue;
+      for(let j=i+1;j<gTorts.length;j++){
+        const b=gTorts[j];
+        if(b.stage!=='adult'||b.state!=='walk'||b.mateCooldown>0)continue;
+        if(Math.hypot(a.x-b.x,a.y-b.y)<18 && Math.random()<0.03){
+          a.state='mate';a.timer=55;a.mateLeader=true;
+          b.state='mate';b.timer=55;b.mateLeader=false;
+          break;
+        }
+      }
+    }
+  }
+  function gDrawFlower(f){
+    if(f.growth<=0)return;
+    const g=f.growth, petalRy=8.6*g;
+    const petal=f.purple?'rgba(199,159,214,.6)':'rgba(248,241,222,.75)';
+    const stroke=f.purple?'rgba(138,95,163,.5)':'rgba(185,134,44,.45)';
+    for(let i=0;i<5;i++){
+      cx.save();cx.translate(f.x,f.y);cx.rotate(i*Math.PI*2/5);
+      cx.beginPath();cx.ellipse(0,-petalRy*.7,petalRy*.5,petalRy*.7,0,0,Math.PI*2);
+      cx.fillStyle=petal;cx.fill();cx.lineWidth=.7;cx.strokeStyle=stroke;cx.stroke();
+      cx.restore();
+    }
+    cx.beginPath();cx.arc(f.x,f.y,2.6*g,0,Math.PI*2);cx.fillStyle='rgba(185,134,44,.7)';cx.fill();
+  }
+  function gDrawEgg(e){
+    const a=Math.min(1,e.age/40);
+    cx.fillStyle='rgba(238,230,200,'+(.85*a)+')';
+    cx.strokeStyle='rgba(107,122,74,'+(.5*a)+')';cx.lineWidth=1;
+    cx.beginPath();cx.ellipse(e.x,e.y,5,6.6,0,0,Math.PI*2);cx.fill();cx.stroke();
+  }
+  function gDrawMarks(){
+    for(let i=gMarks.length-1;i>=0;i--){
+      const m=gMarks[i];m.age++;
+      const life=m.kind==='poop'?520:420;
+      const a=Math.max(0,1-m.age/life);
+      if(a<=0){gMarks.splice(i,1);continue;}
+      if(m.kind==='poop'){
+        cx.fillStyle='rgba(61,44,24,'+(a*.55)+')';
+        cx.beginPath();cx.ellipse(m.x-3,m.y,3,2.2,0,0,Math.PI*2);cx.fill();
+        cx.beginPath();cx.ellipse(m.x+2,m.y+1,2.6,2,0,0,Math.PI*2);cx.fill();
+      }else{
+        cx.fillStyle='rgba(201,178,90,'+(a*.32)+')';
+        cx.beginPath();cx.ellipse(m.x,m.y,7,4,0,0,Math.PI*2);cx.fill();
+      }
+    }
+  }
+  function gDrawTortoise(t){
+    let alpha=1;
+    if(t.state==='die')alpha=Math.max(0,t.timer/70);
+    cx.save();cx.globalAlpha=alpha;cx.translate(t.x,t.y);cx.rotate(t.ang);cx.scale(t.size,t.size);
+    cx.fillStyle='rgba(58,42,26,.75)';
+    cx.beginPath();cx.ellipse(0,0,11,8.2,0,0,Math.PI*2);cx.fill();
+    cx.strokeStyle='rgba(36,26,16,.5)';cx.lineWidth=1;
+    cx.beginPath();cx.moveTo(-6.5,0);cx.lineTo(6.5,0);cx.moveTo(0,-6);cx.lineTo(0,6);cx.stroke();
+    cx.fillStyle='rgba(201,162,74,.6)';
+    cx.beginPath();cx.ellipse(0,0,3.7,2.8,0,0,Math.PI*2);cx.fill();
+    cx.fillStyle='rgba(58,42,26,.8)';
+    cx.beginPath();cx.ellipse(10.2,0,3.2,2.6,0,0,Math.PI*2);cx.fill();
+    [[-6.5,-6.5],[6.5,-6.5],[-6.5,6.5],[6.5,6.5]].forEach(([lx,ly])=>{cx.beginPath();cx.ellipse(lx,ly,2.1,1.7,0,0,Math.PI*2);cx.fill();});
+    if(t.state==='mate'){cx.fillStyle='rgba(189,91,42,.75)';cx.beginPath();cx.arc(0,-13,2.6,0,Math.PI*2);cx.fill();}
+    cx.restore();
+    if(t.happy>0){
+      cx.fillStyle='rgba(189,91,42,'+(t.happy/24)+')';
+      cx.beginPath();cx.arc(t.x,t.y-16-((24-t.happy)*.6),3.2,0,Math.PI*2);cx.fill();
+      t.happy--;
+    }
+    cx.globalAlpha=1;
+  }
+  function gUpdateTortoise(t){
+    t.age++;
+    if(t.mateCooldown>0)t.mateCooldown--;
+    if(t.state!=='die'){
+      t.stage=gStageOf(t.age);
+      t.size=Math.min(1.35,gBaseSize(t.stage)+t.eatBonus);
+      if(t.age>=t.lifespan){t.state='die';t.timer=70;return;}
+    }
+    if(t.state==='walk'){
+      t.ang+=(Math.random()-.5)*.06;
+      t.x+=Math.cos(t.ang)*t.speed;t.y+=Math.sin(t.ang)*t.speed;
+      if(t.x<12){t.x=12;t.ang=Math.PI-t.ang;} if(t.x>cv.width-12){t.x=cv.width-12;t.ang=Math.PI-t.ang;}
+      if(t.y<12){t.y=12;t.ang=-t.ang;} if(t.y>cv.height-12){t.y=cv.height-12;t.ang=-t.ang;}
+      const fi=gNearestFlower(t);
+      if(fi>=0){
+        const f=gFlowers[fi];
+        if(Math.hypot(f.x-t.x,f.y-t.y)<15){t.state='eat';t.target=fi;t.timer=65;}
+        else{t.ang=Math.atan2(f.y-t.y,f.x-t.x)+((Math.random()-.5)*.15);}
+      }
+      if(Math.random()<0.0018){t.state='poop';t.timer=32;gMarks.push({kind:'poop',x:t.x,y:t.y,age:0});}
+      else if(Math.random()<0.0018){t.state='pee';t.timer=24;gMarks.push({kind:'pee',x:t.x,y:t.y,age:0});}
+    }else if(t.state==='eat'){
+      const f=gFlowers[t.target];
+      if(f){f.growth=Math.max(0,f.growth-1/65);}
+      t.timer--;
+      if(t.timer<=0||!f||f.growth<=0){
+        if(f){f.eaten=true;f.growth=0;f.respawnAt=260+Math.random()*280;}
+        t.eatBonus=Math.min(0.28,t.eatBonus+0.035);
+        t.state='walk';t.ang=Math.random()*Math.PI*2;
+      }
+    }else if(t.state==='mate'){
+      t.timer--;
+      if(t.timer<=0){
+        t.mateCooldown=260+Math.random()*160;
+        if(t.mateLeader && gTorts.length+gEggs.length<G_CAP){
+          gEggs.push({x:t.x,y:t.y+10,age:0,hatch:420+Math.random()*300});
+        }
+        t.state='walk';t.ang=Math.random()*Math.PI*2;
+      }
+    }else if(t.state==='die'){
+      t.timer--;
+    }else{
+      t.timer--;
+      if(t.timer<=0)t.state='walk';
+    }
+  }
+  function gUpdateFlowers(){
+    gFlowers.forEach(f=>{
+      if(f.eaten){
+        f.respawnAt--;
+        if(f.respawnAt<=0){f.x=20+Math.random()*(cv.width-40);f.y=20+Math.random()*(cv.height-40);f.purple=Math.random()<0.55;f.eaten=false;f.growth=0.02;}
+      }else if(f.growth<1 && f.growth>0){f.growth=Math.min(1,f.growth+0.005);}
+    });
+  }
+  function gUpdateEggs(){
+    for(let i=gEggs.length-1;i>=0;i--){
+      const e=gEggs[i];e.age++;e.hatch--;
+      if(e.hatch<=0){
+        if(gTorts.length<G_CAP){gTorts.push(makeGTort(e.x,e.y,0));generationsHatched++;}
+        gEggs.splice(i,1);
+      }
+    }
+  }
+  function updateGardenHUD(){
+    const hud=document.getElementById('garden-hud');if(!hud)return;
+    const pa=typeof currentLang!=='undefined'&&currentLang==='pa';
+    let babies=0,subs=0,adults=0;
+    gTorts.forEach(t=>{if(t.state==='die')return;if(t.stage==='baby')babies++;else if(t.stage==='subadult')subs++;else adults++;});
+    const labels=pa
+      ?{pop:'Poblashon',baby:'Baby',sub:'Subadulto',ad:'Adulto',egg:'Webu',gen:'Generashon'}
+      :{pop:'Population',baby:'Babies',sub:'Subadults',ad:'Adults',egg:'Eggs',gen:'Generations'};
+    hud.innerHTML=
+      '<span class="pill">'+labels.pop+': '+gTorts.length+'</span>'+
+      '<span class="pill">'+labels.baby+': '+babies+'</span>'+
+      '<span class="pill">'+labels.sub+': '+subs+'</span>'+
+      '<span class="pill">'+labels.ad+': '+adults+'</span>'+
+      '<span class="pill">'+labels.egg+': '+gEggs.length+'</span>'+
+      '<span class="pill">'+labels.gen+': '+generationsHatched+'</span>';
+  }
+  cv.addEventListener('click',function(ev){
+    const rect=cv.getBoundingClientRect();
+    const mx=(ev.clientX-rect.left)*(cv.width/rect.width);
+    const my=(ev.clientY-rect.top)*(cv.height/rect.height);
+    let hitTort=null,hd=22;
+    gTorts.forEach(t=>{if(t.state==='die')return;const d=Math.hypot(t.x-mx,t.y-my);if(d<hd){hd=d;hitTort=t;}});
+    if(hitTort){
+      hitTort.eatBonus=Math.min(0.28,hitTort.eatBonus+0.02);
+      hitTort.happy=24;
+      hitTort.mateCooldown=Math.max(0,hitTort.mateCooldown-100);
+    }else if(gFlowers.length<16){
+      gFlowers.push({x:mx,y:my,purple:Math.random()<0.55,growth:1,eaten:false,respawnAt:0});
+    }else{
+      let oldest=gFlowers.reduce((a,f,i)=>(f.eaten?a:i),0);
+      gFlowers[oldest].x=mx;gFlowers[oldest].y=my;gFlowers[oldest].growth=1;gFlowers[oldest].eaten=false;
+    }
+  });
+  let gt=0,hudTimer=0;
+  function gTick(){
+    if(isPageActive()){
+      resize();
+      gt+=.01;
+      cx.clearRect(0,0,cv.width,cv.height);
+      gUpdateFlowers();
+      gFlowers.forEach(gDrawFlower);
+      gDrawMarks();
+      gUpdateEggs();
+      gEggs.forEach(gDrawEgg);
+      gCheckMating();
+      gTorts.forEach(tt=>{gUpdateTortoise(tt);gDrawTortoise(tt);});
+      for(let i=gTorts.length-1;i>=0;i--){if(gTorts[i].state==='die'&&gTorts[i].timer<=0)gTorts.splice(i,1);}
+      if(gTorts.length===0)gTorts.push(makeGTort(cv.width/2,cv.height/2,G_SUBADULT_AGE));
+      hudTimer++;
+      if(hudTimer>=15){hudTimer=0;updateGardenHUD();}
+    }
+    if(window.pageVisible)requestAnimationFrame(gTick);
+  }
+  gTick();
+})();
+const KB=[
+  {k:['what is a tortoise','definition of tortoise','land tortoise definition','testudinidae'],r:['A tortoise is a land-dwelling, herbivorous member of Testudines with a high-domed shell and elephantine legs built for walking, not swimming.','Tortoises are the fully terrestrial branch of the turtle order — slow, long-lived, and armored by modified ribs.','There are 50+ living tortoise species today, found on every continent except Antarctica and Australia.']},
+  {k:['jonathan','oldest tortoise','oldest animal','how old is jonathan'],r:['Jonathan, a Seychelles giant tortoise on St Helena, turned 193 on 4 December 2025 — the oldest living land animal ever documented.','Jonathan was believed born around 1832 and arrived at St Helena already fully grown in 1882. He holds the record for oldest chelonian ever recorded.','His vet describes him basking with neck and legs stretched fully out on mild days, and burying into leaf litter on cold ones.'],link:null},
+  {k:["tu'i malila","tui malila","tonga tortoise","previous record"],r:["Tu'i Malila was a radiated tortoise gifted to Tonga's royal family by Captain Cook around 1777. She died in 1965 at an estimated 188 years old — the record Jonathan later broke.","Her record stood for over half a century, from 1965 until Jonathan surpassed it in 2022."]},
+  {k:['origin','evolution','how old is tortoise species','proganochelys','shell evolve'],r:['Fully-shelled turtles date back roughly 220 million years to the Triassic (Proganochelys). True land tortoises (Testudinidae) emerged around 50–60 million years ago and spread from Asia across the world.','The shell evolved from broadened, fused ribs — a Permian-era anatomical shift that traded rib flexibility for permanent armor.','Turtles and tortoises survived the asteroid impact that wiped out the dinosaurs 66 million years ago.']},
+  {k:['species','types of tortoise','galapagos','sulcata','aldabra','leopard tortoise','radiated tortoise','red footed','russian tortoise','hermann'],r:['This page profiles nine major species — Galápagos and Aldabra giants, sulcata, leopard, radiated, Russian, Hermann\u2019s, desert, and red-footed tortoises. Open the Species tab for full details.','Sizes range enormously — from the 250kg Galápagos giant down to the 1-2.5kg Russian tortoise.'],link:null},
+  {k:['why important','ecosystem','matter','purpose','seed dispersal','burrow'],r:['Tortoises are ecosystem engineers and seed dispersers — desert tortoise burrows shelter hundreds of other species, and giant tortoises disperse large seeds few other animals can carry.','Beyond ecology, tortoises are deep cultural symbols of patience and endurance, from Aesop\u2019s fable to the Hindu Kurma avatar.','The Galápagos Islands are literally named after their tortoises — galápago is an old Spanish word for a type of saddle.']},
+  {k:['egg','hatchling','breeding','incubation','nest','baby tortoise','sex determination'],r:['Females dig a nest chamber and lay eggs that incubate 60–120+ days; in most species, nest temperature determines the hatchlings\u2019 sex.','Hatchlings pip the shell with an egg tooth, live off their yolk sac for the first few days, then need daily feeding, UVB, and frequent shallow soaks.','Clutch size ranges from a handful of eggs in small species to 15-30+ in large ones, depending on species and body size.']},
+  {k:['habitat','enclosure','substrate','temperature','brumation','hibernation'],r:['Habitat needs a real temperature gradient — a basking zone near 95°F/35°C and a cooler shaded retreat — plus substrate that won\u2019t cause impaction if ingested.','Mediterranean species like Hermann\u2019s and Russian tortoises may brumate through winter; desert and tropical species generally should not.','Enclosures need to scale with the animal — a sulcata that starts coin-sized will eventually need yards of outdoor space, not a tank.']},
+  {k:['sun','uvb','basking','vitamin d'],r:['UVB exposure lets a tortoise synthesize vitamin D3, which is required to actually use dietary calcium — without it, metabolic bone disease follows even on a calcium-rich diet.','Window glass blocks most UVB, so indoor tortoises need a dedicated reptile UVB bulb, not just a sunny window.','UVB output fades well before a bulb stops producing visible light, so a bulb can look fine and still be nutritionally useless.']},
+  {k:['water','swim','drink','soak','drown'],r:['Tortoises are not good swimmers — their heavy domed shells and stumpy legs are built for walking, and they can drown in water too deep to stand in.','They still need regular shallow soaks for hydration and a shallow water dish they can easily climb in and out of.','In the wild they often drink opportunistically from puddles after rain, sometimes seeming to anticipate it.']},
+  {k:['diet','feed','feeding','nutrition','calcium','protein','fiber','how often','daily','eat','eats','food'],r:['Target diet is high-fiber, low-protein, calcium-rich — roughly 15-20% max protein, 15-30% fiber, and a 2:1 or higher calcium-to-phosphorus ratio.','Feed about 1-4% of body weight per day; juveniles usually daily, many adults just 3-4 times a week. Try the Feeding Estimator on the Diet tab.','Fruit should generally stay under 10-20% of the diet — less for desert grazers, a bit more tolerated by tropical species.'],link:null},
+  {k:['avidaa','what is avidaa','about avidaa'],r:['AVIDAA is a global knowledge and culture platform — books, science, AI, and archives like this one. Est. 2025. Knowledge made clear, for humans and AI.','It runs without ads, tracking, or paywalls, on every page in the ecosystem.'],link:'https://avidaa1.github.io'},
+  {k:['io','creator','builder','who made this'],r:['IO is the creator and sole developer of AVIDAA — the signal beneath the noise.','Every AVIDAA page is a single self-contained HTML file — no server, no database, no build step.'],link:'https://avidaa1.github.io/io'},
+  {k:['rabbit','hole','down the rabbit','signal down','secret','quest'],r:['__QUEST_1__']},
+  {k:['hello','hi','hey','sup','yo','greet','begin'],r:['Signal received. Ask me anything about tortoises — origins, species, Jonathan, diet, or care.','AVIDAA online. What do you want to know about tortoises?']},
+  {k:['thanks','thank','good','nice','cool','awesome','wow'],r:['Glad it helped. Ask anything else about tortoises.']},
+  {k:['who are you','what are you','are you ai','are you real','chatbot','what can you do'],r:['I\u2019m AVIDAA — offline, running entirely in your browser from the facts on this page. Ask about tortoise origins, species, longevity, care, or diet.']}
+];
+
+/* ===== TIER 1 — RABBIT QUEST ===== */
+let t1Active=false, t1Answered={};
+const T1_BLOB='mo+y9kT7yvUzdvJfRGq3L4es7g==.cyDBGT0ieWN0pNBew/O3xw==.u593qaVgoL26XKk3.OYFx/BgQJgWz1lFHTncG5LdbYzGXkrOUx5a87jme0xDZP2tzDRY1Bm5BgTzXcwvj.sLyHBeNKDrs1rxHblG+JHx5lkkM3y4U=';
+const T1_RIDDLES=[
+  {q:"AVIDAA is the signal beneath the ____",ans:"noise",hint:"It's the page's footer line — signal beneath the ____"},
+  {q:"AVIDAA was founded in the year ____",ans:"2025",hint:"The founding year is printed in the footer"},
+  {q:"The oldest tortoise ever documented is named ____",ans:"jonathan",hint:"He's the star of the Elders tab"},
+];
+function setQuestBar(stage,override){
+  const bar=document.getElementById('quest-bar'),fill=document.getElementById('quest-fill'),lbl=document.getElementById('quest-label');
+  if(!bar||!fill||!lbl)return;
+  if(stage===0){bar.classList.remove('active');lbl.classList.remove('active');return;}
+  const q=override||{pct:25,color:'#b9862c',label:'SIGNAL'};
+  bar.classList.add('active');lbl.classList.add('active');
+  fill.style.width=q.pct+'%';fill.style.background=q.color;fill.style.boxShadow='0 0 8px '+q.color;
+  lbl.textContent=q.label;lbl.style.color=q.color;
+}
+
+/* ===== TIER 2 — THE FLAME ===== */
+const T2_BLOB='V9dFikRt8D4C4iKAp2lEuct8wsQ=.516IOB2ZHLesUzHC5jw4qw==.kk9MQpaRWhB5uuc0.VLJKsWe4AmWqHQACcdCJmfOE1Hsx0Gq7AqD6W5qLQlBVD4gaeZEAjIGxjfxM4g27odkF5b7prrRTKg==.VTUUOv/2Ts/v/koDb7hiq4TAPiWUFGUp';
+const T2_RIDDLES=[
+  {q:"AVIDAA signal first lit in the year ____",ans:"2025",hint:"The founding year is printed in the footer"},
+  {q:"AVIDAA is built for two kinds of mind: humans and ____",ans:"ai",hint:"Read the footer tagline"},
+  {q:"IO vision: knowledge made ____",ans:"clear",hint:"Signal over noise — knowledge made ____"},
+];
+let t2Answered={},t2Active=false;
+function t2Norm(s){return s.toLowerCase().trim().replace(/\s+/g,' ');}
+function t2CheckAnswer(input,idx){const a=t2Norm(input),c=t2Norm(T2_RIDDLES[idx].ans);return a===c||a.includes(c);}
+
+function decryptBlob(blob,passphrase,onURL){
+  const parts=blob.split('.');
+  const salt=Uint8Array.from(atob(parts[1]),c=>c.charCodeAt(0));
+  const iv=Uint8Array.from(atob(parts[2]),c=>c.charCodeAt(0));
+  const ctRaw=Uint8Array.from(atob(parts[3]),c=>c.charCodeAt(0));
+  const data=ctRaw.slice(0,ctRaw.length-16),tag=ctRaw.slice(ctRaw.length-16);
+  const combined=new Uint8Array(data.length+tag.length);combined.set(data);combined.set(tag,data.length);
+  const enc=new TextEncoder();
+  return crypto.subtle.importKey('raw',enc.encode(passphrase),{name:'PBKDF2'},false,['deriveKey'])
+    .then(k=>crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:100000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['decrypt']))
+    .then(key=>crypto.subtle.decrypt({name:'AES-GCM',iv,tagLength:128},key,combined))
+    .then(buf=>onURL(new TextDecoder().decode(buf)));
+}
+
+function rabbitReveal(url,title,sub,linkLabel){
+  const msgs=document.getElementById('chat-msgs');
+  const div=document.createElement('div');div.className='cmsg ai';
+  const rainbow='background:linear-gradient(90deg,#ff0080,#ff8c00,#ffe000,#00ff80,#00bfff,#a855f7,#ff0080);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:cb-rainbow 3s linear infinite;';
+  const t=document.createElement('span');t.style.cssText='font-family:var(--cb-fd);font-size:7px;letter-spacing:3px;display:block;margin-bottom:8px;'+rainbow;t.textContent=title;
+  const s=document.createElement('span');s.style.cssText='color:rgba(245,237,224,.85);font-size:13px;';s.textContent=sub;
+  const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';
+  a.style.cssText='display:block;margin-top:10px;font-family:var(--cb-fd);font-size:11px;letter-spacing:3px;text-decoration:none;padding-top:8px;border-top:1px solid rgba(255,255,255,.15);'+rainbow;a.textContent=linkLabel;
+  div.appendChild(t);div.appendChild(s);div.appendChild(a);
+  msgs.appendChild(div);msgs.scrollTop=9999;
+}
+
+const QUEST_EXIT=['stop','quit','exit','cancel','nevermind','never mind','i resign','resign','give up','forget it','leave'];
+const T1_NUDGES=['Not quite — the answer is written on this page. Question: ','Close. Read the footer and try again: ','The page holds the answer. Try: '];
+function t1Check(low){
+  if(!t1Active)return null;
+  if(QUEST_EXIT.some(k=>low===k||low.startsWith(k))){t1Active=false;t1Answered={};setQuestBar(0);return {text:'Quest closed. Ask me anything about tortoises.',link:null};}
+  for(let i=0;i<T1_RIDDLES.length;i++){
+    if(t1Answered[i])continue;
+    const a=t2Norm(low),c=t2Norm(T1_RIDDLES[i].ans);
+    if(a===c||a.includes(c)){
+      t1Answered[i]=true;
+      const done=Object.keys(t1Answered).length;
+      if(done===T1_RIDDLES.length){
+        setQuestBar(2,{pct:100,color:'#b9862c',label:'ACCESS GRANTED'});
+        decryptBlob(T1_BLOB,'noise 2025',url=>rabbitReveal(url,'THE SIGNAL IS OPEN','You followed the page. The hole opens.','ENTER THE RABBIT HOLE ↓'))
+          .catch(()=>addMsg('The signal failed. Check your answers.','ai'));
+        return {handled:true};
+      }
+      const next=T1_RIDDLES.filter((_,j)=>!t1Answered[j])[0];
+      return {text:'Correct. '+done+'/'+T1_RIDDLES.length+' answered. Next: '+next.q+'\nHint: '+next.hint,link:null};
+    }
+  }
+  const un=T1_RIDDLES.filter((_,i)=>!t1Answered[i]);
+  if(un.length){const nu=T1_NUDGES[Math.floor(Math.random()*T1_NUDGES.length)];return {text:nu+un[0].q+'\nHint: '+un[0].hint+'\n(say "stop" to leave)',link:null};}
+  return null;
+}
+function t2Check(low){
+  if(!t2Active)return null;
+  if(QUEST_EXIT.some(k=>low===k||low.startsWith(k))){t2Active=false;t2Answered={};setQuestBar(0);return {text:'Closed. Ask me anything about tortoises.',link:null};}
+  for(let i=0;i<T2_RIDDLES.length;i++){
+    if(t2Answered[i])continue;
+    if(t2CheckAnswer(low,i)){
+      t2Answered[i]=true;
+      const done=Object.keys(t2Answered).length;
+      if(done===T2_RIDDLES.length){
+        setQuestBar(4,{pct:100,color:'#bd5b2a',label:'THE FLAME'});
+        decryptBlob(T2_BLOB,'2025 ai clear',url=>rabbitReveal(url,'THE FLAME BURNS DEEPER','You found the second layer. Not everyone looks this deep.','ENTER THE FLAME ↓'))
+          .catch(()=>addMsg('The frequency is wrong. Check your answers.','ai'));
+        return null;
+      }
+      const next=T2_RIDDLES.filter((_,j)=>!t2Answered[j])[0];
+      return {text:'Correct. '+done+'/3 answered. Next: '+next.q+'\nHint: '+next.hint,link:null};
+    }
+  }
+  const un=T2_RIDDLES.filter((_,i)=>!t2Answered[i]);
+  if(un.length){const nu=T1_NUDGES[Math.floor(Math.random()*T1_NUDGES.length)];return {text:nu+un[0].q+'\nHint: '+un[0].hint+'\n(say "stop" to leave)',link:null};}
+  return null;
+}
+function questCheck(low){
+  if(t2Active){const r=t2Check(low);if(r!==null)return r;return null;}
+  if(low.includes('the flame')||low.includes('theflame')||low.includes('go deeper')||low.includes('second layer')){
+    t2Active=true;setQuestBar(1,{pct:15,color:'#bd5b2a',label:'THE FLAME — TIER 2'});
+    const f=T2_RIDDLES[0];
+    return {text:'A deeper signal. Three riddles, any order — the answers live on this page.\n\nRiddle 1: '+f.q+'\nHint: '+f.hint,link:null};
+  }
+  if(t1Active){const r=t1Check(low);if(r!==null)return r;return null;}
+  if(['rabbit','hole','down the rabbit','signal down','secret','quest'].some(k=>low.includes(k))){
+    t1Active=true;setQuestBar(1);
+    const f=T1_RIDDLES[0];
+    return {text:'The hole is real — and the way in is on this page. Answer three and it opens.\n\nQuestion 1: '+f.q+'\nHint: '+f.hint,link:null};
+  }
+  return null;
+}
+
+/* ===== GENERATIVE LAYER ===== */
+const chatSession={asked:[],topics:[],lastTone:'neutral',turns:0};
+function lev(a,b){
+  if(Math.abs(a.length-b.length)>2)return 9;
+  const m=a.length,n=b.length,d=Array.from({length:m+1},(_,i)=>[i,...Array(n).fill(0)]);
+  for(let j=0;j<=n;j++)d[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)
+    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return d[m][n];
+}
+function detectTone(msg){
+  const m=msg.toLowerCase();
+  if(/[!]{1,}|wow|amazing|cool|awesome|love|insane|epic/.test(m))return'excited';
+  if(/\?$|how|why|what|explain|works|technical|spec/.test(m))return'curious';
+  if(/really|prove|sure|doubt|fake|scam|nonsense|why should/.test(m))return'skeptical';
+  if(/\b(hey|sup|yo|lol|wassup|gimme|u |ur )\b/.test(m))return'casual';
+  return'neutral';
+}
+const TONE={
+  excited:{open:['Right? ','Now we\u2019re talking \u2014 ','Great pick \u2014 '],close:[' \u2014 tortoises are full of surprises.','',' 193 years and counting, for context.']},
+  curious:{open:['Good question. ','So \u2014 ','Here\u2019s the short version: '],close:[' Want the full breakdown? Open the relevant tab.','',' Ask me to point you deeper.']},
+  skeptical:{open:['Fair. ','Straight answer: ','No spin \u2014 '],close:[' The sourcing is on the page if you want to check.','',' Decide for yourself.']},
+  casual:{open:['','Sure \u2014 ','Alright, '],close:['','','']},
+  neutral:{open:['',''],close:['','']},
+};
+function flavor(text,tone){
+  const t=TONE[tone]||TONE.neutral;
+  const o=t.open[Math.floor(Math.random()*t.open.length)]||'';
+  const c=t.close[Math.floor(Math.random()*t.close.length)]||'';
+  return o+text+c;
+}
+function scoreEntry(e,low,words){
+  let sc=0;
+  e.k.forEach(k=>{
+    if(low===k||words.includes(k))sc+=10;
+    else if(low.includes(k)&&k.length>=4)sc+=k.split(' ').length*k.length*2;
+    else if(k.startsWith(low)||low.startsWith(k))sc+=Math.min(k.length,low.length)*1.2;
+    else words.forEach(w=>{
+      if(w.length>=5&&k.startsWith(w))sc+=w.length*0.9;
+      else if(w.length>=4&&k.includes(w))sc+=w.length*0.15;
+      else if(w.length>=6&&k.length>=6&&lev(w,k)<=1)sc+=w.length*0.6;
+    });
+  });
+  return sc;
+}
+function compose(hits,tone){
+  const top=hits[0].e, v=top.r;
+  let i=Math.floor(Math.random()*v.length);
+  if(v.length>1&&chatLastResponse===v[i])i=(i+1)%v.length;
+  let body=v[i];
+  if(chatSession.turns>2 && chatSession.topics.length>1 && Math.random()<0.28){
+    const prev=chatSession.topics[chatSession.topics.length-1];
+    if(prev && prev!==top._id){
+      const bridges=[' This connects to '+prev+', which you asked about.',' Like '+prev+', it ties back to the same page.',''];
+      body+=bridges[Math.floor(Math.random()*bridges.length)];
+    }
+  }
+  if(hits[1] && hits[1].sc>=hits[0].sc*0.6 && hits[1].e!==top){
+    const v2=hits[1].e.r; const seg=v2[Math.floor(Math.random()*v2.length)];
+    body+=' '+seg;
+  }
+  chatLastResponse=v[i];
+  top._id=top._id||top.k[0];
+  chatSession.topics.push(top._id);
+  chatSession.shown=chatSession.shown||{};
+  chatSession.shown[top._id]=chatSession.shown[top._id]||new Set();
+  chatSession.shown[top._id].add(i);
+  return {text:flavor(body,tone),link:top.link||null};
+}
+/* ===== CONTINUATION LAYER — "more"/"continue" keeps going on the last topic
+   instead of falling through to a generic non-match redirect. Offline, KB-driven:
+   pulls the next not-yet-shown fact variant for whatever was last discussed. ===== */
+const MORE_WORDS=['more','continue','go on','tell me more','keep going','elaborate','what else','and?','more info','more details','more on that','say more'];
+function isMoreRequest(low){return MORE_WORDS.some(k=>low===k||low.startsWith(k+' ')||low===k+'?');}
+function moreOnTopic(tone){
+  if(!chatSession.topics.length)return {text:'Ask me about a topic first — origins, species, Jonathan, diet, care — then "more" can go deeper on it.',link:null};
+  const topicId=chatSession.topics[chatSession.topics.length-1];
+  const entry=KB.find(e=>(e._id||e.k[0])===topicId);
+  if(!entry||!entry.r||entry.r[0].startsWith('__QUEST'))return {text:REDIRECTS[Math.floor(Math.random()*REDIRECTS.length)],link:null};
+  chatSession.shown=chatSession.shown||{};
+  const shown=chatSession.shown[topicId]||new Set();
+  const remaining=entry.r.map((_,idx)=>idx).filter(idx=>!shown.has(idx));
+  if(remaining.length){
+    const idx=remaining[0];
+    shown.add(idx);chatSession.shown[topicId]=shown;
+    chatLastResponse=entry.r[idx];
+    return {text:flavor(entry.r[idx],tone),link:entry.link||null};
+  }
+  return {text:'That\u2019s the core of what I have on that one — ask about a different topic and I can go deep there too.',link:entry.link||null};
+}
+const SMALLTALK=[
+  {k:['who are you','what are you','are you ai','are you real','are you human','chatbot','what can you do','what do you do'],r:['I run entirely in your browser, from the facts baked into this page. Ask me about tortoise origins, species, Jonathan, care, or diet.']},
+  {k:['thanks','thank you','thx','ty','appreciate'],r:['Anytime. Ask me anything else about tortoises.']},
+  {k:['bye','goodbye','see ya','later','cya'],r:['The signal stays open. Come back anytime.']},
+  {k:['help','what should i ask','options','menu','commands'],r:['Ask about tortoise origins, species, Jonathan and longevity, why they matter, eggs and hatchlings, habitat, sun, water, or diet. Or whisper "rabbit".']},
+];
+const REDIRECTS=[
+  'I can help with tortoise origins, species, care, or diet. What would you like to know?',
+  'That one\u2019s outside my signal — try origins, species, Jonathan, diet, or whisper "rabbit".',
+  'I only know tortoises here, but I know them well. Ask away.',
+];
+const FRUSTRATION=['stop','shut up','stop talking','no','i said no','enough','quiet','leave me','annoying','not listening','useless','dumb'];
+const BACKOFF=['Fair enough \u2014 I\u2019ll stop pitching. Ask if a tortoise question comes up.','Understood. I\u2019ll wait.','Message received. Quietly standing by.'];
+function isFrustrated(low){return FRUSTRATION.some(k=>low===k||low.startsWith(k));}
+function smalltalkMatch(low,words){
+  let best=null,bs=0;
+  SMALLTALK.forEach(e=>{const s=scoreEntry(e,low,words);if(s>bs){bs=s;best=e;}});
+  if(best&&bs>=6)return best.r[0];
+  return null;
+}
+function chatMatch(msg){
+  const low=msg.toLowerCase().trim();
+  chatSession.turns++; chatSession.asked.push(low);
+  const tone=detectTone(msg); chatSession.lastTone=tone;
+  const quest=questCheck(low);
+  if(quest)return quest;
+  if(isFrustrated(low))return {text:BACKOFF[Math.floor(Math.random()*BACKOFF.length)],link:null};
+  const words=low.split(/\s+/).filter(w=>w.length>=2);
+  const st=smalltalkMatch(low,words);
+  if(st)return {text:st,link:null};
+  const ranked=KB.filter(e=>!(e.r[0]&&e.r[0].startsWith('__QUEST')))
+    .map(e=>({e,sc:scoreEntry(e,low,words)}))
+    .filter(x=>x.sc>0)
+    .sort((a,b)=>b.sc-a.sc);
+  const bestScore=ranked.length?ranked[0].sc:0;
+  if(ranked.length && bestScore>=6)return compose(ranked,tone);
+  if(isMoreRequest(low))return moreOnTopic(tone);
+  return {text:REDIRECTS[Math.floor(Math.random()*REDIRECTS.length)],link:null};
+}
+function addMsg(text,cls,link){
+  const div=document.createElement('div');div.className='cmsg '+cls;div.textContent=text;
+  if(link){
+    const a=document.createElement('a');a.href=link;a.target='_blank';a.rel='noopener';
+    a.style.cssText='display:block;margin-top:7px;font-size:10px;letter-spacing:2px;color:rgba(185,134,44,.7);text-decoration:none;border-top:1px solid rgba(185,134,44,.15);padding-top:6px;';
+    a.textContent='OPEN ↗';div.appendChild(a);
+  }
+  const m=document.getElementById('chat-msgs');m.appendChild(div);m.scrollTop=9999;
+}
+function showTyping(){
+  const t=document.createElement('div');t.className='typing-indicator';t.id='typing';
+  t.innerHTML='<span></span><span></span><span></span>';
+  const m=document.getElementById('chat-msgs');m.appendChild(t);m.scrollTop=9999;return t;
+}
+let chatOpen=false;
+function toggleChat(){
+  chatOpen=!chatOpen;
+  document.getElementById('chat-box').classList.toggle('open',chatOpen);
+  if(chatOpen&&document.getElementById('chat-msgs').children.length===0){
+    setTimeout(()=>addMsg('AVIDAA online — built from this page, runs in your browser. Ask about tortoises.','ai'),350);
+  }
+  if(chatOpen)document.getElementById('chat-input').focus();
+}
+function chatSend(){
+  const inp=document.getElementById('chat-input');const msg=inp.value.trim();if(!msg)return;
+  addMsg(msg,'user');inp.value='';
+  if(window.rabbitThink)window.rabbitThink();
+  const typing=showTyping();
+  setTimeout(()=>{
+    typing.remove();
+    const res=chatMatch(msg);
+    addMsg(res.text,'ai',res.link);
+    if(window.rabbitRespond)window.rabbitRespond();
+    setTimeout(()=>{if(window.rabbitIdle)window.rabbitIdle();},3000);
+  },380+Math.random()*340);
+}
+function quickAsk(q){document.getElementById('chat-input').value=q;chatSend();}
+document.getElementById('chat-input').addEventListener('keydown',e=>{if(e.key==='Enter')chatSend();});
+
+/* ===== RABBIT AVATAR ===== */
+(function(){
+  const svg=document.getElementById('rabbit-svg');if(!svg)return;
+  const earL=document.getElementById('ear-l'),earR=document.getElementById('ear-r');
+  const eyeL=document.getElementById('eye-l'),eyeR=document.getElementById('eye-r');
+  const nose=document.getElementById('nose'),ring=document.getElementById('glow-ring');
+  let t=0,blinkT=0,nextBlink=3,twitchT=0,nextTwitch=4,thinking=false,happy=false,happyT=0;
+  function tick(){
+    t+=.035;blinkT+=.035;twitchT+=.035;
+    svg.style.transform=`translateY(${Math.sin(t)*1.2}px)`;
+    ring.setAttribute('opacity',((Math.sin(t*1.4)*.5+.5)*.25).toFixed(3));
+    ring.setAttribute('stroke',thinking?'#bd5b2a':happy?'#b9862c':'#4f6b34');
+    if(blinkT>nextBlink){eyeL.setAttribute('ry','0.3');eyeR.setAttribute('ry','0.3');setTimeout(()=>{eyeL.setAttribute('ry','2');eyeR.setAttribute('ry','2');},120);blinkT=0;nextBlink=2.5+Math.random()*4;}
+    if(twitchT>nextTwitch){const s=Math.random()<.5?earL:earR;s.setAttribute('transform','rotate(-8,'+s.getAttribute('cx')+','+s.getAttribute('cy')+')');setTimeout(()=>s.removeAttribute('transform'),200);twitchT=0;nextTwitch=2+Math.random()*5;}
+    if(happy){happyT+=.12;svg.style.transform=`translateY(${Math.sin(happyT)*4}px) scale(${1+Math.sin(happyT*.5)*.05})`;if(happyT>Math.PI*3){happy=false;happyT=0;}}
+    if(thinking){const sh=Math.sin(t*3)*.8;eyeL.setAttribute('cx',(15+sh).toFixed(2));eyeR.setAttribute('cx',(23+sh).toFixed(2));nose.setAttribute('fill','#bd5b2a');}
+    else{eyeL.setAttribute('cx','15');eyeR.setAttribute('cx','23');nose.setAttribute('fill',happy?'#b9862c':'#bd5b2a');}
+    if(window.pageVisible)requestAnimationFrame(tick);
+  }
+  tick();
+  window.rabbitThink=()=>{thinking=true;};
+  window.rabbitRespond=()=>{thinking=false;happy=true;happyT=0;};
+  window.rabbitIdle=()=>{thinking=false;happy=false;};
+})();
+
+/* ===== AI PULSE RING ===== */
+(function(){
+  const pc=document.getElementById('pulse-ring');if(!pc)return;
+  const px=pc.getContext('2d');let pt=0;
+  function draw(){
+    px.clearRect(0,0,58,58);const cx0=29,cy0=29,beat=(pt%1);let scale;
+    if(beat<.08)scale=1+beat*8;else if(beat<.16)scale=1.64-(beat-.08)*8;else if(beat<.22)scale=1+(beat-.16)*5;else if(beat<.28)scale=1.3-(beat-.22)*5;else scale=1;
+    const r=24*scale,g=px.createRadialGradient(cx0,cy0,r*.5,cx0,cy0,r);
+    g.addColorStop(0,'rgba(189,91,42,0)');g.addColorStop(.7,`rgba(185,134,44,${(.15+(scale-1)*.4).toFixed(3)})`);g.addColorStop(1,'rgba(185,134,44,0)');
+    px.fillStyle=g;px.beginPath();px.arc(cx0,cy0,r,0,Math.PI*2);px.fill();
+    px.strokeStyle=`rgba(185,134,44,${(.2+(scale-1)*.6).toFixed(3)})`;px.lineWidth=1;px.beginPath();px.arc(cx0,cy0,20,0,Math.PI*2);px.stroke();
+    pt+=.008;if(window.pageVisible)requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
