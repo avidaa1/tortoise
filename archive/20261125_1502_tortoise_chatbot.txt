@@ -1,0 +1,394 @@
+Archived (removed from the live page) by the chatbot audit 20261125_1502.
+Original file: index.html
+
+/* ===== chat widget HTML (+css if inline) ===== */
+<div id="chatbot">
+  <div id="chat-box">
+    <div id="chat-head">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div id="rabbit-avatar">
+          <svg id="rabbit-svg" width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+            <ellipse id="ear-l" cx="13" cy="10" rx="3.5" ry="7" fill="#3d2c18" stroke="#b9862c" stroke-width="1"/>
+            <ellipse id="ear-r" cx="25" cy="10" rx="3.5" ry="7" fill="#3d2c18" stroke="#b9862c" stroke-width="1"/>
+            <ellipse cx="13" cy="10" rx="1.8" ry="5" fill="#bd5b2a" opacity="0.5"/>
+            <ellipse cx="25" cy="10" rx="1.8" ry="5" fill="#bd5b2a" opacity="0.5"/>
+            <ellipse id="rabbit-head" cx="19" cy="22" rx="10" ry="9" fill="#3d2c18" stroke="#b9862c" stroke-width="1"/>
+            <circle id="eye-l" cx="15" cy="21" r="2" fill="#b9862c" opacity="0.9"/>
+            <circle id="eye-r" cx="23" cy="21" r="2" fill="#b9862c" opacity="0.9"/>
+            <circle cx="15" cy="21" r="1" fill="#1a1208"/>
+            <circle cx="23" cy="21" r="1" fill="#1a1208"/>
+            <circle cx="15.6" cy="20.4" r="0.4" fill="#fff" opacity="0.8"/>
+            <circle cx="23.6" cy="20.4" r="0.4" fill="#fff" opacity="0.8"/>
+            <ellipse id="nose" cx="19" cy="25" rx="1.2" ry="0.8" fill="#bd5b2a" opacity="0.8"/>
+            <path d="M17.2 26.2 Q19 27.4 20.8 26.2" fill="none" stroke="#b9862c" stroke-width="0.7" opacity="0.6"/>
+            <circle id="glow-ring" cx="19" cy="22" r="12" fill="none" stroke="#b9862c" stroke-width="0.4" opacity="0.2"/>
+          </svg>
+        </div>
+        <div class="ch-title">AVIDAA</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="ch-status"><div class="ch-dot"></div><span id="ch-status-txt">ONLINE</span></div>
+        <div class="ch-close" onclick="toggleChat()">&#x2715;</div>
+      </div>
+    </div>
+    <div id="quest-bar"><div id="quest-fill"></div></div>
+    <div id="quest-label"></div>
+    <div id="chat-msgs"></div>
+    <div id="chat-suggestions">
+      <div class="chat-sugg" id="sugg1" onclick="quickAsk('How old is Jonathan?')">Jonathan?</div>
+      <div class="chat-sugg" id="sugg2" onclick="quickAsk('What should a tortoise eat?')">Diet?</div>
+      <div class="chat-sugg" id="sugg3" onclick="quickAsk('Can tortoises swim?')">Swim?</div>
+    </div>
+    <div id="chat-input-row">
+      <input id="chat-input" placeholder="Ask about tortoises..." maxlength="200">
+      <button id="chat-send" onclick="chatSend()">&#x27A4;</button>
+    </div>
+  </div>
+  <button id="chat-toggle" onclick="toggleChat()" style="position:relative;">
+    <canvas id="pulse-ring" width="58" height="58"></canvas>
+    &#x1F422;
+  </button>
+</div>
+
+/* ===== chat JS: KB, quests, matcher, UI (bytes 23198) ===== */
+const KB=[
+  {k:['what is a tortoise','definition of tortoise','land tortoise definition','testudinidae'],r:['A tortoise is a land-dwelling, herbivorous member of Testudines with a high-domed shell and elephantine legs built for walking, not swimming.','Tortoises are the fully terrestrial branch of the turtle order — slow, long-lived, and armored by modified ribs.','There are 50+ living tortoise species today, found on every continent except Antarctica and Australia.']},
+  {k:['jonathan','oldest tortoise','oldest animal','how old is jonathan'],r:['Jonathan, a Seychelles giant tortoise on St Helena, turned 193 on 4 December 2025 — the oldest living land animal ever documented.','Jonathan was believed born around 1832 and arrived at St Helena already fully grown in 1882. He holds the record for oldest chelonian ever recorded.','His vet describes him basking with neck and legs stretched fully out on mild days, and burying into leaf litter on cold ones.'],link:null},
+  {k:["tu'i malila","tui malila","tonga tortoise","previous record"],r:["Tu'i Malila was a radiated tortoise gifted to Tonga's royal family by Captain Cook around 1777. She died in 1965 at an estimated 188 years old — the record Jonathan later broke.","Her record stood for over half a century, from 1965 until Jonathan surpassed it in 2022."]},
+  {k:['origin','evolution','how old is tortoise species','proganochelys','shell evolve'],r:['Fully-shelled turtles date back roughly 220 million years to the Triassic (Proganochelys). True land tortoises (Testudinidae) emerged around 50–60 million years ago and spread from Asia across the world.','The shell evolved from broadened, fused ribs — a Permian-era anatomical shift that traded rib flexibility for permanent armor.','Turtles and tortoises survived the asteroid impact that wiped out the dinosaurs 66 million years ago.']},
+  {k:['species','types of tortoise','galapagos','sulcata','aldabra','leopard tortoise','radiated tortoise','red footed','russian tortoise','hermann'],r:['This page profiles nine major species — Galápagos and Aldabra giants, sulcata, leopard, radiated, Russian, Hermann\u2019s, desert, and red-footed tortoises. Open the Species tab for full details.','Sizes range enormously — from the 250kg Galápagos giant down to the 1-2.5kg Russian tortoise.'],link:null},
+  {k:['why important','ecosystem','matter','purpose','seed dispersal','burrow'],r:['Tortoises are ecosystem engineers and seed dispersers — desert tortoise burrows shelter hundreds of other species, and giant tortoises disperse large seeds few other animals can carry.','Beyond ecology, tortoises are deep cultural symbols of patience and endurance, from Aesop\u2019s fable to the Hindu Kurma avatar.','The Galápagos Islands are literally named after their tortoises — galápago is an old Spanish word for a type of saddle.']},
+  {k:['egg','hatchling','breeding','incubation','nest','baby tortoise','sex determination'],r:['Females dig a nest chamber and lay eggs that incubate 60–120+ days; in most species, nest temperature determines the hatchlings\u2019 sex.','Hatchlings pip the shell with an egg tooth, live off their yolk sac for the first few days, then need daily feeding, UVB, and frequent shallow soaks.','Clutch size ranges from a handful of eggs in small species to 15-30+ in large ones, depending on species and body size.']},
+  {k:['habitat','enclosure','substrate','temperature','brumation','hibernation'],r:['Habitat needs a real temperature gradient — a basking zone near 95°F/35°C and a cooler shaded retreat — plus substrate that won\u2019t cause impaction if ingested.','Mediterranean species like Hermann\u2019s and Russian tortoises may brumate through winter; desert and tropical species generally should not.','Enclosures need to scale with the animal — a sulcata that starts coin-sized will eventually need yards of outdoor space, not a tank.']},
+  {k:['sun','uvb','basking','vitamin d'],r:['UVB exposure lets a tortoise synthesize vitamin D3, which is required to actually use dietary calcium — without it, metabolic bone disease follows even on a calcium-rich diet.','Window glass blocks most UVB, so indoor tortoises need a dedicated reptile UVB bulb, not just a sunny window.','UVB output fades well before a bulb stops producing visible light, so a bulb can look fine and still be nutritionally useless.']},
+  {k:['water','swim','drink','soak','drown'],r:['Tortoises are not good swimmers — their heavy domed shells and stumpy legs are built for walking, and they can drown in water too deep to stand in.','They still need regular shallow soaks for hydration and a shallow water dish they can easily climb in and out of.','In the wild they often drink opportunistically from puddles after rain, sometimes seeming to anticipate it.']},
+  {k:['diet','feed','feeding','nutrition','calcium','protein','fiber','how often','daily','eat','eats','food'],r:['Target diet is high-fiber, low-protein, calcium-rich — roughly 15-20% max protein, 15-30% fiber, and a 2:1 or higher calcium-to-phosphorus ratio.','Feed about 1-4% of body weight per day; juveniles usually daily, many adults just 3-4 times a week. Try the Feeding Estimator on the Diet tab.','Fruit should generally stay under 10-20% of the diet — less for desert grazers, a bit more tolerated by tropical species.'],link:null},
+  {k:['avidaa','what is avidaa','about avidaa'],r:['AVIDAA is a global knowledge and culture platform — books, science, AI, and archives like this one. Est. 2025. Knowledge made clear, for humans and AI.','It runs without ads, tracking, or paywalls, on every page in the ecosystem.'],link:'https://avidaa1.github.io'},
+  {k:['io','creator','builder','who made this'],r:['IO is the creator and sole developer of AVIDAA — the signal beneath the noise.','Every AVIDAA page is a single self-contained HTML file — no server, no database, no build step.'],link:'https://avidaa1.github.io/io'},
+  {k:['rabbit','hole','down the rabbit','signal down','secret','quest'],r:['__QUEST_1__']},
+  {k:['hello','hi','hey','sup','yo','greet','begin'],r:['Signal received. Ask me anything about tortoises — origins, species, Jonathan, diet, or care.','AVIDAA online. What do you want to know about tortoises?']},
+  {k:['thanks','thank','good','nice','cool','awesome','wow'],r:['Glad it helped. Ask anything else about tortoises.']},
+  {k:['who are you','what are you','are you ai','are you real','chatbot','what can you do'],r:['I\u2019m AVIDAA — offline, running entirely in your browser from the facts on this page. Ask about tortoise origins, species, longevity, care, or diet.']}
+];
+
+/* ===== TIER 1 — RABBIT QUEST ===== */
+let t1Active=false, t1Answered={};
+const T1_BLOB='mo+y9kT7yvUzdvJfRGq3L4es7g==.cyDBGT0ieWN0pNBew/O3xw==.u593qaVgoL26XKk3.OYFx/BgQJgWz1lFHTncG5LdbYzGXkrOUx5a87jme0xDZP2tzDRY1Bm5BgTzXcwvj.sLyHBeNKDrs1rxHblG+JHx5lkkM3y4U=';
+const T1_RIDDLES=[
+  {q:"AVIDAA is the signal beneath the ____",ans:"noise",hint:"It's the page's footer line — signal beneath the ____"},
+  {q:"AVIDAA was founded in the year ____",ans:"2025",hint:"The founding year is printed in the footer"},
+  {q:"The oldest tortoise ever documented is named ____",ans:"jonathan",hint:"He's the star of the Elders tab"},
+];
+function setQuestBar(stage,override){
+  const bar=document.getElementById('quest-bar'),fill=document.getElementById('quest-fill'),lbl=document.getElementById('quest-label');
+  if(!bar||!fill||!lbl)return;
+  if(stage===0){bar.classList.remove('active');lbl.classList.remove('active');return;}
+  const q=override||{pct:25,color:'#b9862c',label:'SIGNAL'};
+  bar.classList.add('active');lbl.classList.add('active');
+  fill.style.width=q.pct+'%';fill.style.background=q.color;fill.style.boxShadow='0 0 8px '+q.color;
+  lbl.textContent=q.label;lbl.style.color=q.color;
+}
+
+/* ===== TIER 2 — THE FLAME ===== */
+const T2_BLOB='V9dFikRt8D4C4iKAp2lEuct8wsQ=.516IOB2ZHLesUzHC5jw4qw==.kk9MQpaRWhB5uuc0.VLJKsWe4AmWqHQACcdCJmfOE1Hsx0Gq7AqD6W5qLQlBVD4gaeZEAjIGxjfxM4g27odkF5b7prrRTKg==.VTUUOv/2Ts/v/koDb7hiq4TAPiWUFGUp';
+const T2_RIDDLES=[
+  {q:"AVIDAA signal first lit in the year ____",ans:"2025",hint:"The founding year is printed in the footer"},
+  {q:"AVIDAA is built for two kinds of mind: humans and ____",ans:"ai",hint:"Read the footer tagline"},
+  {q:"IO vision: knowledge made ____",ans:"clear",hint:"Signal over noise — knowledge made ____"},
+];
+let t2Answered={},t2Active=false;
+function t2Norm(s){return s.toLowerCase().trim().replace(/\s+/g,' ');}
+function t2CheckAnswer(input,idx){const a=t2Norm(input),c=t2Norm(T2_RIDDLES[idx].ans);return a===c||a.includes(c);}
+
+function decryptBlob(blob,passphrase,onURL){
+  const parts=blob.split('.');
+  const salt=Uint8Array.from(atob(parts[1]),c=>c.charCodeAt(0));
+  const iv=Uint8Array.from(atob(parts[2]),c=>c.charCodeAt(0));
+  const ctRaw=Uint8Array.from(atob(parts[3]),c=>c.charCodeAt(0));
+  const data=ctRaw.slice(0,ctRaw.length-16),tag=ctRaw.slice(ctRaw.length-16);
+  const combined=new Uint8Array(data.length+tag.length);combined.set(data);combined.set(tag,data.length);
+  const enc=new TextEncoder();
+  return crypto.subtle.importKey('raw',enc.encode(passphrase),{name:'PBKDF2'},false,['deriveKey'])
+    .then(k=>crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:100000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['decrypt']))
+    .then(key=>crypto.subtle.decrypt({name:'AES-GCM',iv,tagLength:128},key,combined))
+    .then(buf=>onURL(new TextDecoder().decode(buf)));
+}
+
+function rabbitReveal(url,title,sub,linkLabel){
+  const msgs=document.getElementById('chat-msgs');
+  const div=document.createElement('div');div.className='cmsg ai';
+  const rainbow='background:linear-gradient(90deg,#ff0080,#ff8c00,#ffe000,#00ff80,#00bfff,#a855f7,#ff0080);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:cb-rainbow 3s linear infinite;';
+  const t=document.createElement('span');t.style.cssText='font-family:var(--cb-fd);font-size:7px;letter-spacing:3px;display:block;margin-bottom:8px;'+rainbow;t.textContent=title;
+  const s=document.createElement('span');s.style.cssText='color:rgba(245,237,224,.85);font-size:13px;';s.textContent=sub;
+  const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';
+  a.style.cssText='display:block;margin-top:10px;font-family:var(--cb-fd);font-size:11px;letter-spacing:3px;text-decoration:none;padding-top:8px;border-top:1px solid rgba(255,255,255,.15);'+rainbow;a.textContent=linkLabel;
+  div.appendChild(t);div.appendChild(s);div.appendChild(a);
+  msgs.appendChild(div);msgs.scrollTop=9999;
+}
+
+const QUEST_EXIT=['stop','quit','exit','cancel','nevermind','never mind','i resign','resign','give up','forget it','leave'];
+const T1_NUDGES=['Not quite — the answer is written on this page. Question: ','Close. Read the footer and try again: ','The page holds the answer. Try: '];
+function t1Check(low){
+  if(!t1Active)return null;
+  if(QUEST_EXIT.some(k=>low===k||low.startsWith(k))){t1Active=false;t1Answered={};setQuestBar(0);return {text:'Quest closed. Ask me anything about tortoises.',link:null};}
+  for(let i=0;i<T1_RIDDLES.length;i++){
+    if(t1Answered[i])continue;
+    const a=t2Norm(low),c=t2Norm(T1_RIDDLES[i].ans);
+    if(a===c||a.includes(c)){
+      t1Answered[i]=true;
+      const done=Object.keys(t1Answered).length;
+      if(done===T1_RIDDLES.length){
+        setQuestBar(2,{pct:100,color:'#b9862c',label:'ACCESS GRANTED'});
+        decryptBlob(T1_BLOB,'noise 2025',url=>rabbitReveal(url,'THE SIGNAL IS OPEN','You followed the page. The hole opens.','ENTER THE RABBIT HOLE ↓'))
+          .catch(()=>addMsg('The signal failed. Check your answers.','ai'));
+        return {handled:true};
+      }
+      const next=T1_RIDDLES.filter((_,j)=>!t1Answered[j])[0];
+      return {text:'Correct. '+done+'/'+T1_RIDDLES.length+' answered. Next: '+next.q+'\nHint: '+next.hint,link:null};
+    }
+  }
+  const un=T1_RIDDLES.filter((_,i)=>!t1Answered[i]);
+  if(un.length){const nu=T1_NUDGES[Math.floor(Math.random()*T1_NUDGES.length)];return {text:nu+un[0].q+'\nHint: '+un[0].hint+'\n(say "stop" to leave)',link:null};}
+  return null;
+}
+function t2Check(low){
+  if(!t2Active)return null;
+  if(QUEST_EXIT.some(k=>low===k||low.startsWith(k))){t2Active=false;t2Answered={};setQuestBar(0);return {text:'Closed. Ask me anything about tortoises.',link:null};}
+  for(let i=0;i<T2_RIDDLES.length;i++){
+    if(t2Answered[i])continue;
+    if(t2CheckAnswer(low,i)){
+      t2Answered[i]=true;
+      const done=Object.keys(t2Answered).length;
+      if(done===T2_RIDDLES.length){
+        setQuestBar(4,{pct:100,color:'#bd5b2a',label:'THE FLAME'});
+        decryptBlob(T2_BLOB,'2025 ai clear',url=>rabbitReveal(url,'THE FLAME BURNS DEEPER','You found the second layer. Not everyone looks this deep.','ENTER THE FLAME ↓'))
+          .catch(()=>addMsg('The frequency is wrong. Check your answers.','ai'));
+        return null;
+      }
+      const next=T2_RIDDLES.filter((_,j)=>!t2Answered[j])[0];
+      return {text:'Correct. '+done+'/3 answered. Next: '+next.q+'\nHint: '+next.hint,link:null};
+    }
+  }
+  const un=T2_RIDDLES.filter((_,i)=>!t2Answered[i]);
+  if(un.length){const nu=T1_NUDGES[Math.floor(Math.random()*T1_NUDGES.length)];return {text:nu+un[0].q+'\nHint: '+un[0].hint+'\n(say "stop" to leave)',link:null};}
+  return null;
+}
+function questCheck(low){
+  if(t2Active){const r=t2Check(low);if(r!==null)return r;return null;}
+  if(low.includes('the flame')||low.includes('theflame')||low.includes('go deeper')||low.includes('second layer')){
+    t2Active=true;setQuestBar(1,{pct:15,color:'#bd5b2a',label:'THE FLAME — TIER 2'});
+    const f=T2_RIDDLES[0];
+    return {text:'A deeper signal. Three riddles, any order — the answers live on this page.\n\nRiddle 1: '+f.q+'\nHint: '+f.hint,link:null};
+  }
+  if(t1Active){const r=t1Check(low);if(r!==null)return r;return null;}
+  if(['rabbit','hole','down the rabbit','signal down','secret','quest'].some(k=>low.includes(k))){
+    t1Active=true;setQuestBar(1);
+    const f=T1_RIDDLES[0];
+    return {text:'The hole is real — and the way in is on this page. Answer three and it opens.\n\nQuestion 1: '+f.q+'\nHint: '+f.hint,link:null};
+  }
+  return null;
+}
+
+/* ===== GENERATIVE LAYER ===== */
+const chatSession={asked:[],topics:[],lastTone:'neutral',turns:0};
+function lev(a,b){
+  if(Math.abs(a.length-b.length)>2)return 9;
+  const m=a.length,n=b.length,d=Array.from({length:m+1},(_,i)=>[i,...Array(n).fill(0)]);
+  for(let j=0;j<=n;j++)d[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)
+    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return d[m][n];
+}
+function detectTone(msg){
+  const m=msg.toLowerCase();
+  if(/[!]{1,}|wow|amazing|cool|awesome|love|insane|epic/.test(m))return'excited';
+  if(/\?$|how|why|what|explain|works|technical|spec/.test(m))return'curious';
+  if(/really|prove|sure|doubt|fake|scam|nonsense|why should/.test(m))return'skeptical';
+  if(/\b(hey|sup|yo|lol|wassup|gimme|u |ur )\b/.test(m))return'casual';
+  return'neutral';
+}
+const TONE={
+  excited:{open:['Right? ','Now we\u2019re talking \u2014 ','Great pick \u2014 '],close:[' \u2014 tortoises are full of surprises.','',' 193 years and counting, for context.']},
+  curious:{open:['Good question. ','So \u2014 ','Here\u2019s the short version: '],close:[' Want the full breakdown? Open the relevant tab.','',' Ask me to point you deeper.']},
+  skeptical:{open:['Fair. ','Straight answer: ','No spin \u2014 '],close:[' The sourcing is on the page if you want to check.','',' Decide for yourself.']},
+  casual:{open:['','Sure \u2014 ','Alright, '],close:['','','']},
+  neutral:{open:['',''],close:['','']},
+};
+function flavor(text,tone){
+  const t=TONE[tone]||TONE.neutral;
+  const o=t.open[Math.floor(Math.random()*t.open.length)]||'';
+  const c=t.close[Math.floor(Math.random()*t.close.length)]||'';
+  return o+text+c;
+}
+function scoreEntry(e,low,words){
+  let sc=0;
+  e.k.forEach(k=>{
+    if(low===k||words.includes(k))sc+=10;
+    else if(low.includes(k)&&k.length>=4)sc+=k.split(' ').length*k.length*2;
+    else if(k.startsWith(low)||low.startsWith(k))sc+=Math.min(k.length,low.length)*1.2;
+    else words.forEach(w=>{
+      if(w.length>=5&&k.startsWith(w))sc+=w.length*0.9;
+      else if(w.length>=4&&k.includes(w))sc+=w.length*0.15;
+      else if(w.length>=6&&k.length>=6&&lev(w,k)<=1)sc+=w.length*0.6;
+    });
+  });
+  return sc;
+}
+function compose(hits,tone){
+  const top=hits[0].e, v=top.r;
+  let i=Math.floor(Math.random()*v.length);
+  if(v.length>1&&chatLastResponse===v[i])i=(i+1)%v.length;
+  let body=v[i];
+  if(chatSession.turns>2 && chatSession.topics.length>1 && Math.random()<0.28){
+    const prev=chatSession.topics[chatSession.topics.length-1];
+    if(prev && prev!==top._id){
+      const bridges=[' This connects to '+prev+', which you asked about.',' Like '+prev+', it ties back to the same page.',''];
+      body+=bridges[Math.floor(Math.random()*bridges.length)];
+    }
+  }
+  if(hits[1] && hits[1].sc>=hits[0].sc*0.6 && hits[1].e!==top){
+    const v2=hits[1].e.r; const seg=v2[Math.floor(Math.random()*v2.length)];
+    body+=' '+seg;
+  }
+  chatLastResponse=v[i];
+  top._id=top._id||top.k[0];
+  chatSession.topics.push(top._id);
+  chatSession.shown=chatSession.shown||{};
+  chatSession.shown[top._id]=chatSession.shown[top._id]||new Set();
+  chatSession.shown[top._id].add(i);
+  return {text:flavor(body,tone),link:top.link||null};
+}
+/* ===== CONTINUATION LAYER — "more"/"continue" keeps going on the last topic
+   instead of falling through to a generic non-match redirect. Offline, KB-driven:
+   pulls the next not-yet-shown fact variant for whatever was last discussed. ===== */
+const MORE_WORDS=['more','continue','go on','tell me more','keep going','elaborate','what else','and?','more info','more details','more on that','say more'];
+function isMoreRequest(low){return MORE_WORDS.some(k=>low===k||low.startsWith(k+' ')||low===k+'?');}
+function moreOnTopic(tone){
+  if(!chatSession.topics.length)return {text:'Ask me about a topic first — origins, species, Jonathan, diet, care — then "more" can go deeper on it.',link:null};
+  const topicId=chatSession.topics[chatSession.topics.length-1];
+  const entry=KB.find(e=>(e._id||e.k[0])===topicId);
+  if(!entry||!entry.r||entry.r[0].startsWith('__QUEST'))return {text:REDIRECTS[Math.floor(Math.random()*REDIRECTS.length)],link:null};
+  chatSession.shown=chatSession.shown||{};
+  const shown=chatSession.shown[topicId]||new Set();
+  const remaining=entry.r.map((_,idx)=>idx).filter(idx=>!shown.has(idx));
+  if(remaining.length){
+    const idx=remaining[0];
+    shown.add(idx);chatSession.shown[topicId]=shown;
+    chatLastResponse=entry.r[idx];
+    return {text:flavor(entry.r[idx],tone),link:entry.link||null};
+  }
+  return {text:'That\u2019s the core of what I have on that one — ask about a different topic and I can go deep there too.',link:entry.link||null};
+}
+const SMALLTALK=[
+  {k:['who are you','what are you','are you ai','are you real','are you human','chatbot','what can you do','what do you do'],r:['I run entirely in your browser, from the facts baked into this page. Ask me about tortoise origins, species, Jonathan, care, or diet.']},
+  {k:['thanks','thank you','thx','ty','appreciate'],r:['Anytime. Ask me anything else about tortoises.']},
+  {k:['bye','goodbye','see ya','later','cya'],r:['The signal stays open. Come back anytime.']},
+  {k:['help','what should i ask','options','menu','commands'],r:['Ask about tortoise origins, species, Jonathan and longevity, why they matter, eggs and hatchlings, habitat, sun, water, or diet. Or whisper "rabbit".']},
+];
+const REDIRECTS=[
+  'I can help with tortoise origins, species, care, or diet. What would you like to know?',
+  'That one\u2019s outside my signal — try origins, species, Jonathan, diet, or whisper "rabbit".',
+  'I only know tortoises here, but I know them well. Ask away.',
+];
+const FRUSTRATION=['stop','shut up','stop talking','no','i said no','enough','quiet','leave me','annoying','not listening','useless','dumb'];
+const BACKOFF=['Fair enough \u2014 I\u2019ll stop pitching. Ask if a tortoise question comes up.','Understood. I\u2019ll wait.','Message received. Quietly standing by.'];
+function isFrustrated(low){return FRUSTRATION.some(k=>low===k||low.startsWith(k));}
+function smalltalkMatch(low,words){
+  let best=null,bs=0;
+  SMALLTALK.forEach(e=>{const s=scoreEntry(e,low,words);if(s>bs){bs=s;best=e;}});
+  if(best&&bs>=6)return best.r[0];
+  return null;
+}
+function chatMatch(msg){
+  const low=msg.toLowerCase().trim();
+  chatSession.turns++; chatSession.asked.push(low);
+  const tone=detectTone(msg); chatSession.lastTone=tone;
+  const quest=questCheck(low);
+  if(quest)return quest;
+  if(isFrustrated(low))return {text:BACKOFF[Math.floor(Math.random()*BACKOFF.length)],link:null};
+  const words=low.split(/\s+/).filter(w=>w.length>=2);
+  const st=smalltalkMatch(low,words);
+  if(st)return {text:st,link:null};
+  const ranked=KB.filter(e=>!(e.r[0]&&e.r[0].startsWith('__QUEST')))
+    .map(e=>({e,sc:scoreEntry(e,low,words)}))
+    .filter(x=>x.sc>0)
+    .sort((a,b)=>b.sc-a.sc);
+  const bestScore=ranked.length?ranked[0].sc:0;
+  if(ranked.length && bestScore>=6)return compose(ranked,tone);
+  if(isMoreRequest(low))return moreOnTopic(tone);
+  return {text:REDIRECTS[Math.floor(Math.random()*REDIRECTS.length)],link:null};
+}
+function addMsg(text,cls,link){
+  const div=document.createElement('div');div.className='cmsg '+cls;div.textContent=text;
+  if(link){
+    const a=document.createElement('a');a.href=link;a.target='_blank';a.rel='noopener';
+    a.style.cssText='display:block;margin-top:7px;font-size:10px;letter-spacing:2px;color:rgba(185,134,44,.7);text-decoration:none;border-top:1px solid rgba(185,134,44,.15);padding-top:6px;';
+    a.textContent='OPEN ↗';div.appendChild(a);
+  }
+  const m=document.getElementById('chat-msgs');m.appendChild(div);m.scrollTop=9999;
+}
+function showTyping(){
+  const t=document.createElement('div');t.className='typing-indicator';t.id='typing';
+  t.innerHTML='<span></span><span></span><span></span>';
+  const m=document.getElementById('chat-msgs');m.appendChild(t);m.scrollTop=9999;return t;
+}
+let chatOpen=false;
+function toggleChat(){
+  chatOpen=!chatOpen;
+  document.getElementById('chat-box').classList.toggle('open',chatOpen);
+  if(chatOpen&&document.getElementById('chat-msgs').children.length===0){
+    setTimeout(()=>addMsg('AVIDAA online — built from this page, runs in your browser. Ask about tortoises.','ai'),350);
+  }
+  if(chatOpen)document.getElementById('chat-input').focus();
+}
+function chatSend(){
+  const inp=document.getElementById('chat-input');const msg=inp.value.trim();if(!msg)return;
+  addMsg(msg,'user');inp.value='';
+  if(window.rabbitThink)window.rabbitThink();
+  const typing=showTyping();
+  setTimeout(()=>{
+    typing.remove();
+    const res=chatMatch(msg);
+    addMsg(res.text,'ai',res.link);
+    if(window.rabbitRespond)window.rabbitRespond();
+    setTimeout(()=>{if(window.rabbitIdle)window.rabbitIdle();},3000);
+  },380+Math.random()*340);
+}
+function quickAsk(q){document.getElementById('chat-input').value=q;chatSend();}
+document.getElementById('chat-input').addEventListener('keydown',e=>{if(e.key==='Enter')chatSend();});
+Archived (removed from the live page) by the chatbot audit 20261125_1502.
+Original file: index.html
+
+/* ===== chat CSS lines removed ===== */
+/* ===== CHATBOT MODULE (self-scoped) ===== */
+#chatbot{--cb-cyan:#b9862c;--cb-purple:#bd5b2a;--cb-green:#4f6b34;--cb-fb:'IBM Plex Mono',monospace;--cb-fd:'IBM Plex Mono',monospace;}
+#chatbot{position:fixed;bottom:48px;right:18px;z-index:9000;width:min(420px,calc(100vw - 24px));font-family:var(--cb-fb);}
+#chat-toggle{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--cb-purple),var(--cb-cyan));border:2px solid rgba(255,255,255,.4);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 24px rgba(189,91,42,.45),0 0 48px rgba(185,134,44,.2);margin-left:auto;-webkit-appearance:none;appearance:none;transition:transform .2s,box-shadow .2s;animation:cb-chatpulse 3s ease-in-out infinite;}
+#chat-toggle:hover{transform:scale(1.08);}
+#chat-box{background:rgba(32,36,15,.97);border:1px solid rgba(185,134,44,.3);backdrop-filter:blur(20px);display:none;flex-direction:column;margin-bottom:10px;overflow:hidden;border-radius:6px;box-shadow:0 0 40px rgba(0,0,0,.5);}
+#chat-box.open{display:flex;}
+#chat-head{padding:12px 16px;border-bottom:1px solid rgba(185,134,44,.2);display:flex;justify-content:space-between;align-items:center;background:rgba(185,134,44,.06);}
+.ch-dot{width:5px;height:5px;border-radius:50%;background:var(--cb-green);animation:cb-livepulse 1.5s ease-in-out infinite;}
+#chat-msgs{height:240px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin;scrollbar-color:rgba(185,134,44,.3) transparent;}
+.cmsg{font-size:12.5px;letter-spacing:.3px;line-height:1.55;padding:9px 13px;max-width:88%;position:relative;white-space:pre-wrap;}
+.cmsg.ai{background:rgba(185,134,44,.08);border-left:2px solid var(--cb-cyan);color:#f5ede0;align-self:flex-start;border-radius:0 4px 4px 0;}
+.cmsg.ai::before{content:'AVIDAA';font-family:var(--cb-fd);font-size:6px;letter-spacing:2px;color:rgba(185,134,44,.7);display:block;margin-bottom:4px;}
+.cmsg.user{background:rgba(189,91,42,.12);border-right:2px solid var(--cb-purple);color:#f5ede0;align-self:flex-end;text-align:right;border-radius:4px 0 0 4px;}
+.typing-indicator{display:flex;gap:4px;padding:10px 14px;align-self:flex-start;}
+.typing-indicator span{width:5px;height:5px;background:var(--cb-cyan);border-radius:50%;opacity:.4;animation:cb-typedot .8s ease-in-out infinite;}
+.typing-indicator span:nth-child(2){animation-delay:.15s;}
+.typing-indicator span:nth-child(3){animation-delay:.3s;}
+#chat-suggestions{display:flex;flex-wrap:wrap;gap:5px;padding:8px 14px;border-top:1px solid rgba(185,134,44,.15);}
+.chat-sugg{font-size:10px;letter-spacing:.5px;padding:3px 10px;border:1px solid rgba(185,134,44,.3);color:rgba(245,237,224,.75);cursor:pointer;background:rgba(185,134,44,.06);transition:all .2s;}
+.chat-sugg:hover{border-color:var(--cb-cyan);color:var(--cb-cyan);background:rgba(185,134,44,.14);}
+#chat-input-row{display:flex;border-top:1px solid rgba(185,134,44,.18);}
+#chat-input{flex:1;background:transparent;border:none;outline:none;color:#f5ede0;font-family:var(--cb-fb);font-size:13px;padding:11px 14px;letter-spacing:.3px;-webkit-appearance:none;appearance:none;}
+#chat-input::placeholder{color:rgba(245,237,224,.3);}
+#chat-send{background:transparent;border:none;border-left:1px solid rgba(185,134,44,.18);color:var(--cb-cyan);padding:0 16px;cursor:pointer;font-size:15px;-webkit-appearance:none;appearance:none;transition:color .2s;}
+#chat-send:hover{color:#fff;}
+#rabbit-avatar{display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 0 6px rgba(185,134,44,.5));}
+#pulse-ring{position:absolute;bottom:-6px;right:-6px;width:58px;height:58px;border-radius:50%;pointer-events:none;z-index:-1;}
+@media (max-width:600px){#chatbot{bottom:14px;right:10px;}#chat-msgs{height:50vh;}}
+@media (prefers-reduced-motion:reduce){#chat-toggle{animation:none;}.ch-dot{animation:none;}}
+
+/* quickAsk onclick attributes stripped from page chips: 0 bytes */
