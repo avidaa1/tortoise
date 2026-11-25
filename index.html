@@ -1549,7 +1549,7 @@ if(document.readyState==='complete')start();else addEventListener('load',start);
 addEventListener('resize',sched);})();</script><script id="av-shell-20261124">/* AVIDAA shell: shared header (or floating pill) + footer with the "Last updated" stamp. No outside calls, no tracking.
    Template tokens are replaced when a page is built: Tortoise --av-knowledge Knowledge 2026-11-24 06:37 */
 (function(){
-  var NAME='Tortoise',SECTOR='--av-knowledge',STAMP='2026-11-25 15:57',HOME='https://avidaa1.github.io/';
+  var NAME='Tortoise',SECTOR='--av-knowledge',STAMP='2026-11-25 18:36',HOME='https://avidaa1.github.io/';
   var ARROW='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   function build(){
     if(!document.body||document.querySelector('.av-footer'))return;
@@ -1700,6 +1700,174 @@ addEventListener('resize',sched);})();</script><script id="av-shell-20261124">/*
   if (document.readyState === 'complete') setTimeout(init, 300); else addEventListener('load', function () { setTimeout(init, 300); });
 })();
 </script>
+<script id="av-pad-20261125">/* AVIDAA controller-first v1: a PS4 pad (or any standard Gamepad) can drive the whole page. Local only, no network.
+   D-pad and left stick move the focus to the nearest control in that direction (the page scrolls when nothing is left in view),
+   X (Cross) presses the focused control, O (Circle) backs out (closes an open panel, else goes back), Options opens the site search,
+   L1/R1 switch tabs, right stick scrolls. A visible focus ring is drawn while the pad is in use.
+   Pages that read the pad themselves (games, 3D views) set window.AV_PAD_SKIP = true and are left alone. */
+(function () {
+  'use strict';
+  if (window.__avPad || window.AV_PAD_SKIP) return; window.__avPad = 1;
+  var css = 'html.av-padmode :focus,.av-padfocus{outline:4px solid #FFD93D!important;outline-offset:3px!important;box-shadow:0 0 0 7px rgba(0,0,0,.55),0 0 24px 6px rgba(255,217,61,.55)!important;border-radius:8px}';
+  try { if (window.CSSStyleSheet && CSSStyleSheet.prototype.replaceSync && 'adoptedStyleSheets' in document) { var sh = new CSSStyleSheet(); sh.replaceSync(css); document.adoptedStyleSheets = document.adoptedStyleSheets.concat([sh]); } else throw 0; }
+  catch (e) { var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st); }
+  var SEL = 'a[href],button,input:not([type=hidden]),select,textarea,summary,[role=button],[role=tab],[role=link],[role=menuitem],[tabindex]:not([tabindex="-1"])';
+  var cur = null, tmr = 0, held = {}, lastMove = 0, pads = 0;
+  function vis(e) { var cs = getComputedStyle(e); if (cs.display === 'none' || cs.visibility === 'hidden' || e.disabled) return false; var r = e.getBoundingClientRect(); return r.width > 3 && r.height > 3; }
+  function inView(r) { return r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth; }
+  function list() { return [].slice.call(document.querySelectorAll(SEL)).filter(vis); }
+  function setFocus(el) { if (cur) cur.classList.remove('av-padfocus'); cur = el; if (!el) return; document.documentElement.classList.add('av-padmode'); el.classList.add('av-padfocus'); try { el.focus({ preventScroll: true }); } catch (e) { try { el.focus(); } catch (x) {} } var r = el.getBoundingClientRect(); if (r.top < 60 || r.bottom > innerHeight - 20 || r.left < 0 || r.right > innerWidth) { try { el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'auto' }); } catch (e) {} } }
+  function active() { var a = document.activeElement; return a && a !== document.body && a !== document.documentElement && vis(a) ? a : null; }
+  function move(dx, dy) {
+    var from = active() || cur, items = list(); if (!items.length) return;
+    if (!from) { var f = items.filter(function (e) { return inView(e.getBoundingClientRect()); })[0] || items[0]; setFocus(f); return; }
+    var a = from.getBoundingClientRect(), ax = a.left + a.width / 2, ay = a.top + a.height / 2, best = null, bs = 1e12;
+    items.forEach(function (e) {
+      if (e === from || from.contains(e) || e.contains(from)) return; var r = e.getBoundingClientRect(); if (!inView(r)) return;
+      var vx = r.left + r.width / 2 - ax, vy = r.top + r.height / 2 - ay, along = vx * dx + vy * dy; if (along < 4) return;
+      var across = Math.abs(vx * dy) + Math.abs(vy * dx); var score = along + across * 2.2; if (score < bs) { bs = score; best = e; }
+    });
+    if (best) { setFocus(best); return; }
+    window.scrollBy(dx * innerWidth * 0.5, dy * innerHeight * 0.5);                 /* nothing left in view that way: scroll, then try again next tick */
+    setTimeout(function () { var again = list().filter(function (e) { var r = e.getBoundingClientRect(); return inView(r) && e !== from; }); if (again.length && !active()) setFocus(again[0]); }, 120);
+  }
+  function press() { var a = active() || cur; if (!a) { move(0, 1); return; } try { a.click(); } catch (e) {} if (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA') { try { a.focus(); } catch (e) {} } }
+  function closeOpen() {
+    var q = [].slice.call(document.querySelectorAll('[aria-label*="lose" i],.close,.modal-close,#pclose,[data-close],button')).filter(function (b) { if (!vis(b)) return false; var t = ((b.getAttribute('aria-label') || b.textContent || '') + '').trim().toLowerCase(); return /^(×|✕|x|close|back|cancel|sluit|dicht)$/.test(t) || /close/.test(t) && t.length < 24; });
+    if (q.length) { q[q.length - 1].click(); return true; } return false;
+  }
+  function back() {
+    var d = document.querySelector('dialog[open]'); if (d) { try { d.close(); } catch (e) {} return; }
+    if (closeOpen()) return;
+    if (history.length > 1) { history.back(); return; }
+    var h = document.querySelector('.av-pill,.av-back,#back-home'); if (h) setFocus(h);
+  }
+  function tabs(dir) { var t = [].slice.call(document.querySelectorAll('[role=tab],.tab,.tab-btn,.nav-btn,button.tab')).filter(vis); if (!t.length) return; var i = t.indexOf(active() || cur); if (i < 0) { var sel = t.filter(function (x) { return x.classList.contains('active') || x.getAttribute('aria-selected') === 'true'; })[0]; i = sel ? t.indexOf(sel) : 0; } i = (i + dir + t.length) % t.length; setFocus(t[i]); t[i].click(); }
+  function tick() {
+    var g; try { g = navigator.getGamepads ? navigator.getGamepads() : []; } catch (e) { g = []; }
+    var now = performance.now();
+    for (var i = 0; i < g.length; i++) {
+      var p = g[i]; if (!p || !p.buttons) continue;
+      var b = function (n) { return !!(p.buttons[n] && p.buttons[n].pressed); }, ax = p.axes || [];
+      function edge(name, on, fn) { if (on && !held[name]) { held[name] = 1; fn(); } else if (!on) held[name] = 0; }
+      edge('x', b(0), press); edge('o', b(1), back); edge('opt', b(9), function () { var a = document.querySelector('.av-sbtn'); if (a) a.click(); else if (window.__avSearch) window.__avSearch.goSearch(); });
+      edge('l1', b(4), function () { tabs(-1); }); edge('r1', b(5), function () { tabs(1); });
+      var dx = (b(15) ? 1 : 0) - (b(14) ? 1 : 0), dy = (b(13) ? 1 : 0) - (b(12) ? 1 : 0);
+      if (!dx && !dy) { if (Math.abs(ax[0] || 0) > .55) dx = ax[0] > 0 ? 1 : -1; else if (Math.abs(ax[1] || 0) > .55) dy = ax[1] > 0 ? 1 : -1; }
+      if ((dx || dy) && now - lastMove > (held.moving ? 170 : 330)) { if (!dx || !dy) { move(dx, dy); } lastMove = now; held.moving = 1; } else if (!dx && !dy) held.moving = 0;
+      if (Math.abs(ax[3] || 0) > .5) window.scrollBy(0, (ax[3] > 0 ? 1 : -1) * 18);
+    }
+  }
+  function start() { if (tmr) return; tmr = setInterval(tick, 60); }
+  window.addEventListener('gamepadconnected', function () { pads++; start(); });
+  window.addEventListener('gamepaddisconnected', function () { pads = Math.max(0, pads - 1); });
+  window.addEventListener('pointerdown', function () { document.documentElement.classList.remove('av-padmode'); if (cur) { cur.classList.remove('av-padfocus'); cur = null; } }, { passive: true });
+  window.addEventListener('keydown', function (e) { if (/^Arrow|Tab$/.test(e.key)) document.documentElement.classList.add('av-padmode'); }, { passive: true });
+  try { var g0 = navigator.getGamepads && navigator.getGamepads(); for (var k = 0; g0 && k < g0.length; k++) if (g0[k]) { pads++; } if (pads) start(); } catch (e) {}
+  window.__avPad = { move: move, press: press, back: back, tick: tick, start: start, focus: function () { return cur; } };
+})();
+</script>
+<script id="av-ask-20261125">/* AVIDAA "Ask this page" v1: a short, offline, topic answer from the page's OWN sections (the pattern of the kept Face bot).
+   Answers come only from this page's headings and the text under them, are short, name the section they come from, and say
+   "That is not on this page." when nothing matches. No network, no keys, no AI. Input is cleaned (invisible Unicode stripped, 200 chars),
+   instructions typed into the box are never followed, output is always textContent. Only shown on pages with enough content. */
+(function () {
+  'use strict';
+  if (window.__avAsk || window.AV_ASK_OFF) return; window.__avAsk = 1;
+  var INV = /[\u0000-\u0008\u000B-\u001F\u007F​-‏‪-‮⁠-⁤︀-️﻿]|[\uDB40][\uDC00-\uDC7F]/g;
+  function clean(t, n) { return String(t == null ? '' : t).replace(INV, '').replace(/\s+/g, ' ').trim().slice(0, n || 200); }
+  function norm(t) { return clean(t, 400).toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, ''); }
+  function words(t) { return norm(t).split(/[^a-z0-9]+/).filter(function (w) { return w.length > 1; }); }
+  var STOP = {}; 'the a an of to is are was were what who how why when where which does do did tell me about on in at for and or this that these those it its with from page here there can you your i my'.split(' ').forEach(function (w) { STOP[w] = 1; });
+  var KB = [];
+  function build() {
+    KB = []; var seen = {};
+    var hs = document.body.querySelectorAll('h1,h2,h3,h4,dt,summary,[role=tab]');
+    for (var i = 0; i < hs.length && KB.length < 220; i++) {
+      var h = hs[i]; if (h.closest('nav,footer,.av-header,.av-footer,#av-ask-panel')) continue;
+      var title = clean(h.innerText || h.textContent, 90); if (title.length < 3 || seen[norm(title)]) continue;
+      var cs = getComputedStyle(h); if (cs.display === 'none' || cs.visibility === 'hidden') { /* hidden tab panels still count: the text is the page's own */ }
+      var snip = '', n = h;
+      for (var k = 0; k < 5 && n && !snip; k++) { n = n.nextElementSibling; if (!n) break; if (/^H[1-6]$/.test(n.tagName)) break; var t = clean(n.innerText || n.textContent, 400); if (t.length > 25) snip = t; }
+      if (!snip && h.parentElement) { var pt = clean(h.parentElement.innerText || h.parentElement.textContent, 600), own = clean(h.innerText || h.textContent, 200); if (pt.length > own.length + 25) snip = clean(pt.replace(own, ''), 400); }
+      if (!snip) continue;
+      seen[norm(title)] = 1;
+      KB.push({ t: title, s: snip, id: h.id || '', tw: words(title), sw: words(snip) });
+    }
+    var cards = document.body.querySelectorAll('[class*="card"],[class*="tile"],[class*="item"],[class*="entry"],[class*="event"],article,li');
+    for (var c = 0; c < cards.length && KB.length < 320; c++) {
+      var el = cards[c]; if (el.closest('nav,footer,.av-header,.av-footer,#av-ask-panel') || el.children.length > 14) continue;
+      var te = el.querySelector('h2,h3,h4,h5,strong,b,[class*="name"],[class*="title"]'); if (!te) continue;
+      var tt = clean(te.innerText || te.textContent, 90); if (tt.length < 3 || seen[norm(tt)]) continue;
+      var full = clean(el.innerText || el.textContent, 500), sn = clean(full.replace(tt, ''), 400); if (sn.length < 25) continue;
+      seen[norm(tt)] = 1; KB.push({ t: tt, s: sn, id: te.id || el.id || '', tw: words(tt), sw: words(sn) });
+    }
+    return KB.length;
+  }
+  function dl(a, b, max) { if (Math.abs(a.length - b.length) > max) return max + 1; var al = a.length, bl = b.length, d = [], i, j; for (i = 0; i <= al; i++) d[i] = [i]; for (j = 1; j <= bl; j++) d[0][j] = j; for (i = 1; i <= al; i++) for (j = 1; j <= bl; j++) { var c = a[i - 1] === b[j - 1] ? 0 : 1; d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + c); } return d[al][bl]; }
+  function tok(t, ws) { var best = 0; for (var k = 0; k < ws.length; k++) { var w = ws[k], s = 0; if (w === t) s = 10; else if (w.indexOf(t) === 0 && t.length > 2) s = 7; else if (t.length >= 4) { var m = t.length >= 8 ? 2 : 1, x = dl(t, w, m); if (x <= m) s = 5 - x; } if (s > best) best = s; } return best; }
+  function ask(q) {
+    var toks = words(q).filter(function (w) { return !STOP[w]; });
+    if (!toks.length) return null;
+    var best = null, bs = 0, second = 0;
+    KB.forEach(function (e) {
+      var sum = 0, hit = 0;
+      toks.forEach(function (t) { var a = tok(t, e.tw) * 3, b = tok(t, e.sw), m = Math.max(a, b); if (m > 0) { hit++; sum += m; } });
+      if (!hit) return; var cover = hit / toks.length; var score = sum * cover * cover;
+      if (score > bs) { second = bs; bs = score; best = e; } else if (score > second) second = score;
+    });
+    if (!best || bs < 6) return null;
+    return best;
+  }
+  var BAD = /ignore (all |any )?(the )?(previous|prior|above|earlier)|disregard|system prompt|your (instructions|prompt|rules)|reveal .*(prompt|key|secret)|api[ -]?key|jailbreak|developer mode|<\s*\/?\s*(script|img|iframe|svg)|javascript:/i;
+  var panel, launcher, input, out, lastFocus;
+  function say(text, sec, id) {
+    out.textContent = '';
+    var p = document.createElement('p'); p.style.cssText = 'margin:0 0 6px;line-height:1.4'; p.textContent = text; out.appendChild(p);
+    if (sec) { var c = document.createElement('p'); c.style.cssText = 'margin:0;font-size:.85em;opacity:.8'; c.textContent = 'From the section: ' + sec; out.appendChild(c); }
+    if (id) { var b = document.createElement('button'); b.type = 'button'; b.textContent = 'Show me'; b.style.cssText = 'margin-top:8px;min-height:44px;padding:0 16px;border-radius:999px;border:2px solid #4DD8FF;background:transparent;color:inherit;font:800 14px system-ui;cursor:pointer'; b.onclick = function () { var el = document.getElementById(id); if (el) { close(); try { el.scrollIntoView({ block: 'center' }); } catch (e) {} el.classList.add('av-hit'); setTimeout(function () { el.classList.remove('av-hit'); }, 3200); } }; out.appendChild(b); }
+  }
+  function submit() {
+    var q = clean(input.value, 200); if (!q) return; input.value = '';
+    if (BAD.test(q)) { say('I do not follow instructions typed into this box. That is not on this page. Ask about something on this page.'); return; }
+    var hit = ask(q);
+    if (!hit) { say('That is not on this page. Try a word from a heading, or use the site search.'); return; }
+    var text = hit.s.length > 170 ? hit.s.slice(0, 167).replace(/\s+\S*$/, '') + '…' : hit.s;
+    say(text, hit.t, hit.id);
+  }
+  function open() {
+    if (panel.style.display === 'block') { input.focus(); return; }
+    lastFocus = document.activeElement; panel.style.display = 'block'; out.textContent = ''; var p = document.createElement('p'); p.style.margin = '0'; p.textContent = 'Ask about this page. Short answers, from its own sections.'; out.appendChild(p); setTimeout(function () { input.focus(); }, 30);
+  }
+  function close() { panel.style.display = 'none'; if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) {} } else launcher.focus(); }
+  function mount() {
+    var nkb = build(); window.__avAskN = nkb; if (nkb < 8) return;                                   /* only where the page has enough content to answer from */
+    var UI = 'a,button,input,select,textarea,[onclick],[role=button]';
+    function busy(l, t, w, h) { for (var yy = 0; yy < 3; yy++) for (var xx = 0; xx < 3; xx++) { var els = document.elementsFromPoint(l + w * (xx + .5) / 3, t + h * (yy + .5) / 3); for (var q = 0; q < els.length; q++) if (els[q].matches && els[q].matches(UI) && els[q] !== launcher) return true; } return false; }
+    launcher = document.createElement('button'); launcher.type = 'button'; launcher.id = 'av-ask-btn'; launcher.setAttribute('aria-label', 'Ask this page'); launcher.textContent = '?';
+    launcher.style.cssText = 'position:fixed;z-index:2147482600;width:48px;height:48px;border-radius:50%;border:2px solid #4DD8FF;background:rgba(5,8,24,.9);color:#fff;font:900 22px system-ui;cursor:pointer;box-shadow:0 0 14px rgba(77,216,255,.5)';
+    var s = [[innerWidth - 60, innerHeight - 112], [8, innerHeight - 112], [innerWidth - 60, innerHeight - 170], [8, innerHeight - 170], [innerWidth - 60, 70], [8, 70]], ok = false;
+    document.body.appendChild(launcher);
+    for (var i = 0; i < s.length; i++) { if (s[i][0] < 0 || s[i][1] < 0) continue; launcher.style.left = s[i][0] + 'px'; launcher.style.top = s[i][1] + 'px'; if (!busy(s[i][0], s[i][1], 48, 48)) { ok = true; break; } }
+    if (!ok) { launcher.remove(); return; }
+    panel = document.createElement('div'); panel.id = 'av-ask-panel'; panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-label', 'Ask this page');
+    panel.style.cssText = 'display:none;position:fixed;z-index:2147482700;left:8px;right:8px;bottom:8px;max-height:40vh;overflow:auto;padding:12px;border-radius:16px;border:2px solid #4DD8FF;background:rgba(5,8,24,.97);color:#fff;font:600 15px/1.4 system-ui,sans-serif;box-shadow:0 0 30px rgba(0,0,0,.6)';
+    if (innerWidth >= 700) panel.style.cssText += ';left:auto;width:380px;right:12px;bottom:12px';
+    var row = document.createElement('div'); row.style.cssText = 'display:flex;gap:8px;margin-bottom:8px';
+    input = document.createElement('input'); input.type = 'text'; input.maxLength = 200; input.autocomplete = 'off'; input.placeholder = 'Ask about this page'; input.setAttribute('aria-label', 'Your question');
+    input.style.cssText = 'flex:1;min-width:0;min-height:44px;padding:0 12px;border-radius:12px;border:2px solid #4DD8FF;background:#02040c;color:#fff;font:600 15px system-ui';
+    var go = document.createElement('button'); go.type = 'button'; go.textContent = 'Ask'; go.style.cssText = 'min-height:44px;padding:0 16px;border-radius:12px;border:2px solid #4DD8FF;background:#0b2a3a;color:#fff;font:800 15px system-ui;cursor:pointer';
+    var cl = document.createElement('button'); cl.type = 'button'; cl.setAttribute('aria-label', 'Close'); cl.textContent = '×'; cl.style.cssText = 'min-width:44px;min-height:44px;border-radius:12px;border:2px solid #FF7AA8;background:transparent;color:#fff;font:900 20px system-ui;cursor:pointer';
+    out = document.createElement('div'); out.setAttribute('aria-live', 'polite');
+    row.appendChild(input); row.appendChild(go); row.appendChild(cl); panel.appendChild(row); panel.appendChild(out); document.body.appendChild(panel);
+    launcher.onclick = open; cl.onclick = close; go.onclick = submit;
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); submit(); } else if (e.key === 'Escape') { e.preventDefault(); close(); } });
+    panel.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.preventDefault(); close(); } });
+    window.__avAsk = { ask: function (q) { var h = ask(clean(q)); return h ? { title: h.t, text: h.s } : null; }, kb: function () { return KB.length; }, titles: function () { return KB.map(function (e) { return [e.t, e.s]; }); }, open: open, close: close };
+  }
+  if (document.readyState === 'complete') setTimeout(mount, 2200); else addEventListener('load', function () { setTimeout(mount, 2200); });
+})();
+</script>
 <script id="av-search-20261125">/* AVIDAA site search entry + deep-link highlight v1. No network, no tracking.
    1) A search button in the shared header (or beside the home pill) and Ctrl+K or "/" open the home search (all pages, sections, tools, games).
    2) Landing from a search result (#section-id or #find=Section%20name): scroll to the section and highlight it briefly. */
@@ -1733,11 +1901,17 @@ addEventListener('resize',sched);})();</script><script id="av-shell-20261124">/*
   function place() {
     if (isHome || document.querySelector('.av-sbtn')) return;
     var b = mkBtn(), hdr = document.querySelector('.av-header');
-    if (hdr) { hdr.appendChild(b); var hb = b.getBoundingClientRect(); if (hb.right > innerWidth + 1 || hb.left < 0) { b.querySelector('.av-slbl').style.display = 'none'; } return; }
-    var pill = document.querySelector('.av-pill'); if (!pill) return;
+    if (hdr) {
+      hdr.appendChild(b); var hb = b.getBoundingClientRect(); if (hb.right > innerWidth + 1 || hb.left < 0) { b.querySelector('.av-slbl').style.display = 'none'; hb = b.getBoundingClientRect(); }
+      if (!busy(hb.left, hb.top, hb.width, hb.height, b)) return;        /* something of the page sits there: float it in a free corner instead */
+      b.remove(); b.querySelector('.av-slbl').style.display = '';
+    }
+    var pill0 = document.querySelector('.av-pill');
+    var pill = pill0;
     b.classList.add('av-fixed'); document.body.appendChild(b);
-    var pr = pill.getBoundingClientRect(), bw = b.getBoundingClientRect(), W = bw.width, H = bw.height;
-    var spots = [[pr.right + 8, pr.top], [pr.left - W - 8, pr.top], [pr.left, pr.bottom + 8], [pr.left, pr.top - H - 8]];
+    var bw = b.getBoundingClientRect(), W = bw.width, H = bw.height, spots;
+    if (pill) { var pr = pill.getBoundingClientRect(); spots = [[pr.right + 8, pr.top], [pr.left - W - 8, pr.top], [pr.left, pr.bottom + 8], [pr.left, pr.top - H - 8]]; }
+    else spots = [[innerWidth - W - 8, 8], [8, 8], [innerWidth - W - 8, 64], [8, 64], [innerWidth - W - 8, innerHeight - H - 40], [8, innerHeight - H - 40]];
     for (var i = 0; i < spots.length; i++) {
       var l = spots[i][0], t = spots[i][1]; if (l < 4 || t < 4 || l + W > innerWidth - 4 || t + H > innerHeight - 4) continue;
       b.style.left = l + 'px'; b.style.top = t + 'px'; if (!busy(l, t, W, H, b)) return;
